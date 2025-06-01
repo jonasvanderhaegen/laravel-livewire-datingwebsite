@@ -154,7 +154,7 @@ return [
             'rules' => ['path' => 'Rules', 'generate' => false],
             'services' => ['path' => 'Services', 'generate' => false],
             'scopes' => ['path' => 'Models/Scopes', 'generate' => false],
-            'traits' => ['path' => 'Traits', 'generate' => false],
+            'traits' => ['path' => 'Concerns', 'generate' => false],
 
             // app/Http/
             'controller' => ['path' => 'Http/Controllers', 'generate' => true],
