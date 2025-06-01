@@ -2,43 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Modules\Core\Providers;
+namespace Modules\Core\Concerns;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-final class CoreServiceProvider extends ServiceProvider
+trait HasSamePrimaryServiceProviderFunctions
 {
     use PathNamespace;
-
-    protected string $name = 'Core';
-
-    protected string $nameLower = 'core';
-
-    /**
-     * Boot the application events.
-     */
-    public function boot(): void
-    {
-        $this->registerCommands();
-        $this->registerCommandSchedules();
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-    }
-
-    /**
-     * Register the service provider.
-     */
-    public function register(): void
-    {
-        $this->app->register(EventServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
-    }
 
     /**
      * Register translations.
@@ -83,32 +56,14 @@ final class CoreServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return string[]
+     * Merge config from the given path recursively.
      */
-    public function provides(): array
+    protected function merge_config_from(string $path, string $key): void
     {
-        return [];
-    }
+        $existing = config($key, []);
+        $module_config = require $path;
 
-    /**
-     * Register commands in the format of Command::class
-     */
-    protected function registerCommands(): void
-    {
-        // $this->commands([]);
-    }
-
-    /**
-     * Register command Schedules.
-     */
-    protected function registerCommandSchedules(): void
-    {
-        // $this->app->booted(function () {
-        //     $schedule = $this->app->make(Schedule::class);
-        //     $schedule->command('inspire')->hourly();
-        // });
+        config([$key => array_replace_recursive($existing, $module_config)]);
     }
 
     // @codeCoverageIgnoreStart
@@ -168,18 +123,6 @@ final class CoreServiceProvider extends ServiceProvider
             }
         }
     }
-    // @codeCoverageIgnoreEnd
-
-    /**
-     * Merge config from the given path recursively.
-     */
-    protected function merge_config_from(string $path, string $key): void
-    {
-        $existing = config($key, []);
-        $module_config = require $path;
-
-        config([$key => array_replace_recursive($existing, $module_config)]);
-    }
 
     /**
      * Find any "modules/core" subfolders in the configured view.paths.
@@ -198,4 +141,5 @@ final class CoreServiceProvider extends ServiceProvider
 
         return $paths;
     }
+    // @codeCoverageIgnoreEnd
 }
