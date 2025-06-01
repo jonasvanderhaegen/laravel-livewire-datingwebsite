@@ -13,9 +13,15 @@ declare(strict_types=1);
 |
 */
 
-pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+pest()->extend(TestCase::class)
+    ->use(RefreshDatabase::class)
     ->in('Feature');
+
+uses(TestCase::class, RefreshDatabase::class)
+    ->in('Feature', '../Modules/*/tests/Feature');
 
 /*
 |--------------------------------------------------------------------------
