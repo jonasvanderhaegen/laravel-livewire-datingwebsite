@@ -1,3 +1,1 @@
-[![Rector (Instant Upgrades and Automated Refactoring)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/rector.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/rector.yml)
-[![Pest tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/pest-tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/pest-tests.yml)
-[![Larastan all branches (PHPStan)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/phpstan.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/phpstan.yml)
+[![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
