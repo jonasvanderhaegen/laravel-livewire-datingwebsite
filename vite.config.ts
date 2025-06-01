@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import laravel from "laravel-vite-plugin";
 import { defineConfig } from "vite";
-import collectModuleAssetsPaths from "../../vite-module-loader.ts";
+import collectModuleAssetsPaths from "./vite-module-loader.ts";
 
 async function getConfig() {
     const paths = ["resources/css/app.css", "resources/ts/app.ts"];

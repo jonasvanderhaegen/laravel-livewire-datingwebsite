@@ -18,7 +18,9 @@
     "require": {
         "php": "^8.2",
         "mhmiton/laravel-modules-livewire": "^5.1",
-        "nwidart/laravel-modules": "^12.0"
+        "nwidart/laravel-modules": "^12.0",
+        "livewire/livewire": "^3.6",
+        "masmerise/livewire-toaster": "^2.8"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.0",
