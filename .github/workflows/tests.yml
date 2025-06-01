@@ -1,4 +1,4 @@
-name:  Pest tests
+name:  Tests
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Setup PHP Environment
         uses: ./.github/actions/setup
@@ -47,7 +47,7 @@ jobs:
           coverage: xdebug
 
       - name: Install Project Dependencies
-        run: composer install -q --no-interaction --no-progress --prefer-dist --optimize-autoloader
+        run: composer install -q --no-interaction --no-progress
 
       - name: Install Node.js Dependencies
         run: npm install
@@ -66,4 +66,4 @@ jobs:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_DATABASE: laravel
-        run: php artisan test --parallel
+        run: composer test
