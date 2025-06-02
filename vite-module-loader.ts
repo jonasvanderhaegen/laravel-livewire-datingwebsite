@@ -1,11 +1,15 @@
 import fs from 'fs/promises';
-import path from 'path';
-import { pathToFileURL } from 'url';
+import { dirname, join } from 'path';
+import { pathToFileURL, fileURLToPath } from 'url';
 
-async function collectModuleAssetsPaths(paths, modulesPath) {
-  modulesPath = path.join(__dirname, modulesPath);
+// “Polyfill” __filename and __dirname in ESM:
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  const moduleStatusesPath = path.join(__dirname, 'modules_statuses.json');
+async function collectModuleAssetsPaths(paths: string, modulesPath: string) {
+  modulesPath = join(__dirname, modulesPath);
+
+  const moduleStatusesPath = join(__dirname, 'modules_statuses.json');
 
   try {
     // Read module_statuses.json
@@ -23,7 +27,7 @@ async function collectModuleAssetsPaths(paths, modulesPath) {
 
       // Check if the module is enabled (status is true)
       if (moduleStatuses[moduleDir] === true) {
-        const viteConfigPath = path.join(modulesPath, moduleDir, 'vite.config.js');
+        const viteConfigPath = join(modulesPath, moduleDir, 'vite.config.js');
 
         try {
           await fs.access(viteConfigPath);
