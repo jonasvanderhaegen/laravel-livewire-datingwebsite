@@ -9,7 +9,7 @@ parameters:
         - Modules/
 
     # Level 10 is the highest level
-    level: 7
+    level: 8
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'
