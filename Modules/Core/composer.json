@@ -11,12 +11,12 @@
         "laravel": {
             "providers": [],
             "aliases": {
-
             }
         }
     },
     "require": {
         "php": "^8.2",
+        "nunomaduro/essentials": "@dev",
         "jenssegers/agent": "^2.6",
         "mhmiton/laravel-modules-livewire": "^5.1",
         "nwidart/laravel-modules": "^12.0",
