@@ -7,7 +7,9 @@ namespace Modules\Core\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
+use Modules\Core\Http\Middleware\DetectDevice;
 
 final class RouteServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,9 @@ final class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        $router = $this->app->make(Router::class);
+        $router->pushMiddlewareToGroup('web', DetectDevice::class);
 
         RateLimiter::for('guest-auth', fn (Request $r) => Limit::perMinute(10)->by($r->ip()));
 

@@ -45,19 +45,30 @@
     </head>
 
     <body
-        class="bg-slate-50 font-sans text-gray-700 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50"
+        @class([
+            'min-h-screen overflow-x-clip bg-slate-50 font-sans text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50',
+            'pb-27' => $isMobile ?? false,
+        ])
     >
-        @php
-            $links = [
-                __('home') => 'flowbite.home',
-            ];
-        @endphp
+        @unless ($isMobile ?? false)
+            @php
+                $links = [
+                    __('home') => 'flowbite.home',
+                ];
+            @endphp
 
-        <x-flowbite::body-partials.default-header-navigation :links="$links" />
+            <x-flowbite::body-partials.default-header-navigation
+                :links="$links"
+            />
+        @endif
 
         {{ $slot }}
 
-        <x-flowbite::body-partials.default-footer-section />
+        @if ($isMobile ?? false)
+            <livewire:flowbite::components.body-partials.mobile-bottom-menu />
+        @else
+            <x-flowbite::body-partials.default-footer-section />
+        @endif
 
         @livewireScripts
         {{-- Vite JS --}}

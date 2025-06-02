@@ -70,7 +70,10 @@
                 document.body.style.overflow = ''
             }
         "
-        class="min-h-screen overflow-x-clip bg-slate-50 font-sans text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-50"
+        @class([
+            'min-h-screen overflow-x-clip bg-white font-sans text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50',
+            'pb-27' => $isMobile,
+        ])
     >
         @php
             $links = [
@@ -83,7 +86,11 @@
 
         {{ $slot }}
 
-        <x-customtheme::body-partials.footer />
+        @if ($isMobile)
+            <livewire:customtheme::components.body-partials.mobile-bottom-menu />
+        @else
+            <x-customtheme::body-partials.footer />
+        @endif
 
         @livewireScripts
         {{-- Vite JS --}}
