@@ -1,0 +1,11 @@
+{
+    "name": "WebAuthn",
+    "alias": "webauthn",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\WebAuthn\\Providers\\PrimaryServiceProvider"
+    ],
+    "files": []
+}

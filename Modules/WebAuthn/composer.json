@@ -1,0 +1,30 @@
+{
+    "name": "Skylence/webauthn",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jonas Vanderhaegen",
+            "email": "jonasvanderh@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\WebAuthn\\": "app/",
+            "Modules\\WebAuthn\\Database\\Factories\\": "database/factories/",
+            "Modules\\WebAuthn\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\WebAuthn\\Tests\\": "tests/"
+        }
+    }
+}

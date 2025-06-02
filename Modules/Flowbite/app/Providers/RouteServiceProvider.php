@@ -36,6 +36,6 @@ final class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->prefix('flowbite')->name('flowbite.')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware(['web', 'throttle:info-pages'])->prefix('flowbite')->name('flowbite.')->group(module_path($this->name, '/routes/web.php'));
     }
 }

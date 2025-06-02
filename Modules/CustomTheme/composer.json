@@ -1,0 +1,30 @@
+{
+    "name": "Skylence/customtheme",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jonas Vanderhaegen",
+            "email": "jonasvanderh@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\CustomTheme\\": "app/",
+            "Modules\\CustomTheme\\Database\\Factories\\": "database/factories/",
+            "Modules\\CustomTheme\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\CustomTheme\\Tests\\": "tests/"
+        }
+    }
+}
