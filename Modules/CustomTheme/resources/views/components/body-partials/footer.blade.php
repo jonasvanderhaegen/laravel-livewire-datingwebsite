@@ -106,7 +106,7 @@
                                 class="flex items-center rounded-lg bg-white p-3"
                             >
                                 {{-- Icon --}}
-                                <img alt="Studio Boris" loading="lazy" width="220" height="60" decoding="async" data-nimg="1" style="color:transparent" src="{{asset('assets/studio-boris.svg')}}">
+                                <img alt="Studio Boris" loading="lazy" width="220" height="60" decoding="async" data-nimg="1" style="color:transparent" src="{{ asset('assets/studio-boris.svg') }}">
 
                             </div>
 
