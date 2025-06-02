@@ -1,57 +1,28 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import { readdirSync, statSync } from 'fs';
-import { join,relative,dirname } from 'path';
-import { fileURLToPath } from 'url';
+import tailwindcss from "@tailwindcss/vite";
+import laravel from "laravel-vite-plugin";
+import { defineConfig } from "vite";
+import collectModuleAssetsPaths from "../../vite-module-loader.ts";
 
-export default defineConfig({
-    build: {
-        outDir: '../../public/build-core',
-        emptyOutDir: true,
-        manifest: true,
-    },
-    plugins: [
-        laravel({
-            publicDirectory: '../../public',
-            buildDirectory: 'build-core',
-            input: [
-                __dirname + '/resources/assets/sass/app.scss',
-                __dirname + '/resources/assets/js/app.js'
-            ],
-            refresh: true,
-        }),
-    ],
-});
-// Scen all resources for assets file. Return array
-//function getFilePaths(dir) {
-//    const filePaths = [];
-//
-//    function walkDirectory(currentPath) {
-//        const files = readdirSync(currentPath);
-//        for (const file of files) {
-//            const filePath = join(currentPath, file);
-//            const stats = statSync(filePath);
-//            if (stats.isFile() && !file.startsWith('.')) {
-//                const relativePath = 'Modules/Core/'+relative(__dirname, filePath);
-//                filePaths.push(relativePath);
-//            } else if (stats.isDirectory()) {
-//                walkDirectory(filePath);
-//            }
-//        }
-//    }
-//
-//    walkDirectory(dir);
-//    return filePaths;
-//}
+async function getConfig() {
+    const paths = ["resources/css/app.css", "resources/ts/app.ts"];
+    const allPaths = await collectModuleAssetsPaths(paths, "Modules");
 
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = dirname(__filename);
+    return defineConfig({
+        resolve: {
+            extensions: [".js", ".ts"], // allow .ts imports
+            alias: {
+                "@": "/resources/js",
+                Modules: "/Modules",
+            },
+        },
+        plugins: [
+            tailwindcss(),
+            laravel({
+                input: allPaths,
+                refresh: true,
+            }),
+        ],
+    });
+}
 
-//const assetsDir = join(__dirname, 'resources/assets');
-//export const paths = getFilePaths(assetsDir);
-
-
-//export const paths = [
-//    'Modules/Core/resources/assets/sass/app.scss',
-//    'Modules/Core/resources/assets/js/app.js',
-//];
+export default getConfig();

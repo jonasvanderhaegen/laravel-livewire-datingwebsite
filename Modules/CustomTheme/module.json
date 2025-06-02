@@ -1,0 +1,11 @@
+{
+    "name": "CustomTheme",
+    "alias": "customtheme",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CustomTheme\\Providers\\PrimaryServiceProvider"
+    ],
+    "files": []
+}

@@ -1,3 +1,7 @@
 {
-    "Core": true
+    "Core": true,
+    "Flowbite": true,
+    "Page": true,
+    "CustomTheme": true,
+    "WebAuthn": true
 }
