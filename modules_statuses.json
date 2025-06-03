@@ -3,5 +3,6 @@
     "Flowbite": true,
     "Page": true,
     "CustomTheme": true,
-    "WebAuthn": true
+    "WebAuthn": true,
+    "Auth": true
 }
