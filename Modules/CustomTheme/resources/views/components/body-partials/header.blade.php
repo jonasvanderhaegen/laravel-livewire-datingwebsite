@@ -9,7 +9,7 @@
     @endguest
 </div>
 
-@unless ($isMobile)
+@unless ($isMobile ?? false)
     <nav
         class="sticky top-0 z-31 flex flex-col items-center justify-center"
         aria-label="Main Navigation"

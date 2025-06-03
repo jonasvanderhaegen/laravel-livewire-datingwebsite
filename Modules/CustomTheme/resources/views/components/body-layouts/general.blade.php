@@ -72,7 +72,7 @@
         "
         @class([
             'min-h-screen overflow-x-clip bg-white font-sans text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50',
-            'pb-27' => $isMobile,
+            'pb-27' => $isMobile ?? false,
         ])
     >
         @php
@@ -86,7 +86,7 @@
 
         {{ $slot }}
 
-        @if ($isMobile)
+        @if ($isMobile ?? false)
             <livewire:customtheme::components.body-partials.mobile-bottom-menu />
         @else
             <x-customtheme::body-partials.footer />
