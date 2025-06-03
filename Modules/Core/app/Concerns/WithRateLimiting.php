@@ -33,8 +33,18 @@ trait WithRateLimiting
         $this->secondsUntilReset = $this->secondsUntilReset($method, $component);
     }
 
-    protected function rateLimitByEmail(int $maxAttempts, int $decaySeconds, string $email, $auth): void
-    {
+    /**
+     * Throttle by email: max $maxAttempts sends per $decaySeconds seconds.
+     *
+     *
+     * @throws TooManyRequestsException
+     */
+    protected function rateLimitByEmail(
+        int $maxAttempts,
+        int $decaySeconds,
+        string $email,
+        string|bool $auth
+    ): void {
         if (app()->environment(['local'])) {
             return;
         }
@@ -60,10 +70,12 @@ trait WithRateLimiting
         RateLimiter::hit($key, $decaySeconds);
     }
 
-    protected function clearRateLimiter($method = null, $component = null): void
+    /**
+     * Clear a Livewire‐specific rate limit counter.
+     */
+    protected function clearRateLimiter(?string $method = null, ?string $component = null): void
     {
         $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
-
         $component ??= static::class;
 
         $key = $this->getRateLimitKey($method, $component);
@@ -71,19 +83,23 @@ trait WithRateLimiting
         RateLimiter::clear($key);
     }
 
-    protected function getRateLimitKey($method, $component = null)
+    /**
+     * Build the unique key for a method/component/IP combination.
+     */
+    protected function getRateLimitKey(?string $method, ?string $component = null): string
     {
         $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
-
         $component ??= static::class;
 
         return 'livewire-rate-limiter:'.sha1($component.'|'.$method.'|'.request()->ip());
     }
 
-    protected function hitRateLimiter($method = null, $decaySeconds = 60, $component = null)
+    /**
+     * Hit (increment) the rate limiter for a given Livewire method.
+     */
+    protected function hitRateLimiter(?string $method = null, int $decaySeconds = 60, ?string $component = null): void
     {
         $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
-
         $component ??= static::class;
 
         $key = $this->getRateLimitKey($method, $component);
@@ -91,10 +107,19 @@ trait WithRateLimiting
         RateLimiter::hit($key, $decaySeconds);
     }
 
-    protected function rateLimit($maxAttempts, $decaySeconds = 60, $method = null, $component = null)
-    {
+    /**
+     * General-purpose rate limit check/hit for a Livewire method.
+     *
+     *
+     * @throws TooManyRequestsException
+     */
+    protected function rateLimit(
+        int $maxAttempts,
+        int $decaySeconds = 60,
+        ?string $method = null,
+        ?string $component = null
+    ): void {
         $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
-
         $component ??= static::class;
 
         $key = $this->getRateLimitKey($method, $component);
@@ -109,6 +134,9 @@ trait WithRateLimiting
         $this->hitRateLimiter($method, $decaySeconds, $component);
     }
 
+    /**
+     * How many seconds until a Livewire method is available again.
+     */
     private function secondsUntilReset(?string $method = null, ?string $component = null): int
     {
         $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]['function'];
