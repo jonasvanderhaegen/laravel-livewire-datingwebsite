@@ -7,7 +7,7 @@
                 <ul class="flex items-center justify-start gap-6 md:gap-8">
                     <li>
                         <a
-                            href="{{ route('discover') }}"
+                            href="{{ route('protected.discover') }}"
                             wire:navigate
                             class="group relative z-0 inline-flex items-center overflow-hidden rounded-full bg-white px-5 py-3 text-xs transition duration-200 will-change-transform hover:scale-x-105 dark:bg-slate-800"
                             target="_blank"
@@ -36,7 +36,7 @@
                             <span
                                 class="relative inline-flex items-center gap-1"
                             >
-                                <x-core::icons.heart
+                                <x-customtheme::icons.heart
                                     class="-mt-px size-3.5 text-red-400"
                                     aria-hidden="true"
                                 />
@@ -47,6 +47,7 @@
                             </span>
                         </a>
                     </li>
+                    {{--
                     <li>
                         <a
                             href="{{ route('browser.index') }}"
@@ -55,6 +56,7 @@
                             Browse
                         </a>
                     </li>
+                    --}}
                     <!-- <li class="shrink-0">
                         <a href="#" title=""
                             class="flex text-sm font-medium text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-slate-50">
@@ -65,6 +67,7 @@
             </div>
 
             <div class="flex items-center lg:space-x-2">
+                {{--
                 <a
                     type="button"
                     wire:navigate.hover
@@ -121,43 +124,4 @@
                         8
                     </div>
                 </a>
-
-                <button
-                    type="button"
-                    class="relative inline-flex cursor-pointer items-center rounded-full bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                    <svg
-                        class="me-2 h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 16"
-                    >
-                        <path
-                            d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"
-                        />
-                        <path
-                            d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"
-                        />
-                    </svg>
-
-                    <span class="sr-only">Messages</span>
-
-                    <span class="hidden sm:flex">Messages</span>
-
-                    <div
-                        class="absolute -end-5 -top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-pink-50 bg-green-500 text-xs font-bold text-white dark:border-gray-800"
-                    >
-                        99+
-                    </div>
-
-                    <div
-                        class="absolute -end-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-pink-50 bg-orange-400 text-xs font-bold text-white dark:border-gray-800"
-                    >
-                        99+
-                    </div>
-                </button>
-            </div>
-        </div>
-    </div>
-</nav>
+                --}}
