@@ -406,3 +406,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 **Note**: This project is a learning exercise—a demonstration of building a complex, real-time application with Laravel
 Livewire. If the codebase’s performance becomes a bottleneck at scale, consider migrating critical user-facing flows (
 browsing, chatting) to a dedicated frontend framework like Next.js or Nuxt.js, backed by Laravel APIs.
+
+#### Current homepage
+
+<img src="docs/img/homepage.jpg" width="100%" alt="homepage">
