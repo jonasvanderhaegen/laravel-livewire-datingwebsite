@@ -16,6 +16,7 @@
     },
     "require": {
         "php": "^8.2",
+        "spatie/laravel-responsecache": "^7.7",
         "nunomaduro/essentials": "@dev",
         "jenssegers/agent": "^2.6",
         "mhmiton/laravel-modules-livewire": "^5.1",
