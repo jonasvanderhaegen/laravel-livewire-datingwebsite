@@ -1,4 +1,4 @@
-<nav class="bg-pink-50 antialiased dark:bg-slate-900">
+<nav class="antialiased">
     <div
         class="mx-auto w-full max-w-5xl px-5 py-3 xl:max-w-7xl 2xl:max-w-[90rem]"
     >
@@ -47,7 +47,7 @@
                             </span>
                         </a>
                     </li>
-                    <li>
+                    <li class="text-slate-50">
                         <a
                             href="{{ route('browser.index') }}"
                             wire:navigate.hover
@@ -64,12 +64,12 @@
                 </ul>
             </div>
 
-            <div class="flex items-center lg:space-x-2">
+            <div class="flex items-center text-slate-50 lg:space-x-2">
                 <a
                     type="button"
                     wire:navigate.hover
                     href="{{ route('settings.preferences') }}"
-                    class="mr-4 inline-flex cursor-pointer items-center justify-center text-sm leading-none font-medium text-gray-900 dark:text-white"
+                    class="mr-4 inline-flex cursor-pointer items-center justify-center text-sm leading-none font-medium"
                 >
                     <span class="sr-only">Match Preferences</span>
 
@@ -116,7 +116,7 @@
                     <span class="hidden sm:flex">Likes</span>
 
                     <div
-                        class="absolute -end-5 -top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-pink-50 bg-green-500 text-xs font-bold text-white dark:border-gray-800"
+                        class="absolute -end-5 -top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-blue-950 bg-green-500 text-xs font-bold text-white"
                     >
                         8
                     </div>
@@ -146,13 +146,13 @@
                     <span class="hidden sm:flex">Messages</span>
 
                     <div
-                        class="absolute -end-5 -top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-pink-50 bg-green-500 text-xs font-bold text-white dark:border-gray-800"
+                        class="absolute -end-5 -top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-blue-950 bg-green-500 text-xs font-bold text-white"
                     >
                         99+
                     </div>
 
                     <div
-                        class="absolute -end-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-pink-50 bg-orange-400 text-xs font-bold text-white dark:border-gray-800"
+                        class="absolute -end-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-blue-950 bg-orange-400 text-xs font-bold text-white"
                     >
                         99+
                     </div>

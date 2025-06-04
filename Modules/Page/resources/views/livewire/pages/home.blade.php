@@ -353,7 +353,7 @@
             </x-flowbite::boxed-width>
         </section>
     @else
-        <section class="bg-slate-50 dark:bg-gray-900">
+        <section class="text-slate-50">
             <div class="grid lg:grid-cols-2">
                 <div
                     class="flex items-center justify-center px-4 py-6 sm:px-0 lg:py-0"
@@ -365,9 +365,7 @@
                         <div
                             class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16"
                         >
-                            <div
-                                class="text-gray-500 sm:text-lg dark:text-gray-400"
-                            >
+                            <div class="text-slate-50 sm:text-lg">
                                 <h2
                                     x-init="
                                         () => {
@@ -384,7 +382,7 @@
                                             )
                                         }
                                     "
-                                    class="mb-4 text-4xl font-extrabold tracking-tight text-orange-300 opacity-0 dark:text-white"
+                                    class="mb-4 text-4xl font-extrabold tracking-tight text-orange-300 opacity-0"
                                 >
                                     {{ __('page::home.hero.title') }}
                                 </h2>
@@ -410,16 +408,14 @@
                                         {{ __('page::home.hero.subtitle') }}
                                     </p>
 
-                                    <p
-                                        class="mb-8 font-bold text-orange-500 dark:text-white"
-                                    >
+                                    <p class="mb-8 font-bold text-orange-200">
                                         {{ __('page::home.hero.subtitle2') }}
                                     </p>
 
                                     <!-- List -->
                                     <ul
                                         role="list"
-                                        class="my-7 space-y-5 border-t border-gray-200 pt-8 dark:border-gray-700"
+                                        class="my-7 space-y-5 border-t border-gray-200 pt-8"
                                     >
                                         @foreach ([
                                                       'see_everyone',
@@ -431,11 +427,11 @@
                                             <li class="flex space-x-3">
                                                 <!-- Icon -->
                                                 <x-customtheme::icons.check-circle
-                                                    class="h-5 w-5 flex-shrink-0 text-blue-500"
+                                                    class="h-5 w-5 flex-shrink-0 text-green-400"
                                                 />
 
                                                 <span
-                                                    class="text-base leading-tight font-medium text-gray-900 dark:text-white"
+                                                    class="text-base leading-tight font-medium text-white"
                                                 >
                                                     {{ __("page::home.hero.feature_list.{$key}") }}
                                                 </span>
@@ -559,7 +555,7 @@
                                             )
                                         }
                                     "
-                                    class="mb-4 text-4xl font-extrabold tracking-tight text-orange-300 dark:text-white"
+                                    class="dark mb-4 text-4xl font-extrabold tracking-tight text-orange-300"
                                 >
                                     {{ __('page::home.what_is_asked.heading') }}
                                 </h2>
@@ -582,23 +578,25 @@
                                     "
                                     class="opacity-0"
                                 >
-                                    <p class="mb-8 font-light lg:text-xl">
+                                    <p
+                                        class="mb-8 font-light text-slate-50 lg:text-xl"
+                                    >
                                         {{ __('page::home.what_is_asked.description') }}
                                     </p>
                                     <!-- List -->
                                     <ul
                                         role="list"
-                                        class="my-7 space-y-5 border-t border-gray-200 pt-8 dark:border-gray-700"
+                                        class="my-7 space-y-5 border-t border-gray-200 pt-8"
                                     >
                                         @foreach (['daily_checkin', 'passkey', 'flag_accounts', 'be_honest'] as $item)
                                             <li class="flex space-x-3">
                                                 <!-- Icon -->
                                                 <x-customtheme::icons.check-circle
-                                                    class="h-5 w-5 text-blue-500"
+                                                    class="h-5 w-5 text-green-400"
                                                 />
 
                                                 <span
-                                                    class="text-base leading-tight font-medium text-gray-900 dark:text-white"
+                                                    class="text-base leading-tight font-medium text-white"
                                                 >
                                                     {{ __("page::home.what_is_asked.list.{$item}") }}
                                                 </span>
@@ -634,7 +632,7 @@
                 </div>
 
                 <div
-                    class="flex items-center justify-center bg-blue-500 px-4 pt-30 pb-6 sm:px-0 lg:py-0"
+                    class="flex items-center justify-center px-4 pt-30 pb-6 sm:px-0 lg:py-0"
                 >
                     <div
                         x-init="
@@ -816,9 +814,7 @@
             </div>
         </section>
 
-        <section
-            class="bg-gradient-to-b from-pink-200 via-white to-white py-8 lg:py-16 dark:from-blue-950 dark:via-slate-900 dark:to-slate-950"
-        >
+        <section class="py-8 lg:py-16">
             <div
                 x-init="
                     () => {
@@ -840,26 +836,31 @@
                 class="mx-auto mb-8 w-full max-w-5xl px-4 text-center opacity-0 md:mb-16 lg:px-0 xl:max-w-7xl 2xl:max-w-[90rem]"
             >
                 <h2
-                    class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl dark:text-white"
+                    class="mb-4 text-3xl font-extrabold tracking-tight text-white md:text-4xl"
                 >
                     {{ __('page::home.transparency.heading') }}
                 </h2>
+
                 <div>
                     <a
-                        href="#"
-                        class="inline-flex items-center justify-center text-base font-medium text-blue-500 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700"
+                        href="{{ route('statistics') }}"
+                        wire:navigate.hover
+                        class="inline-flex items-center rounded-full bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                     >
-                        {{ __('page::home.transparency.learn_more') }}
+                        Click here for more information
                         <svg
-                            class="ml-1 h-5 w-5"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
+                            class="ms-2 h-3.5 w-3.5 rtl:rotate-180"
+                            aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 10"
                         >
                             <path
-                                fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9"
                             ></path>
                         </svg>
                     </a>
@@ -884,7 +885,7 @@
                         })
                     }
                 "
-                class="mx-auto mt-8 grid max-w-screen-xl grid-cols-2 gap-8 text-gray-900 sm:grid-cols-3 lg:mt-14 xl:grid-cols-6 dark:text-white"
+                class="mx-auto mt-8 grid max-w-screen-xl grid-cols-2 gap-8 text-white sm:grid-cols-3 lg:mt-14 xl:grid-cols-6"
             >
                 @foreach ([
                               'unique_users',

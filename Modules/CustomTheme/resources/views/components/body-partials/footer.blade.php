@@ -1,5 +1,5 @@
 <footer aria-labelledby="footer-heading">
-    <x-flowbite::boxed-width class="pt-20 pb-5">
+    <x-flowbite::boxed-width class="pt-20 pb-5 text-slate-400">
         <x-slot name="body">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
             <div
@@ -92,7 +92,7 @@
                     <a
                         data-pan="footer-block-studio-boris"
                         href="https://studioboris.be"
-                        class="opcgroup dark:hover:ring-cloud relative z-0 flex items-center gap-6 overflow-hidden rounded-2xl bg-pink-50/50 py-5 pr-7 pl-6 ring-1 ring-black/5 transition duration-300 ease-in-out hover:bg-pink-50 hover:ring-black/10 md:max-w-lg dark:bg-gray-800 dark:hover:bg-gray-700"
+                        class="opcgroup dark:hover:ring-cloud relative z-0 flex items-center gap-6 overflow-hidden rounded-4xl bg-transparent py-5 pr-7 pl-6 ring-1 ring-black/5 transition duration-300 ease-in-out hover:bg-gray-700 hover:ring-black/10 md:max-w-lg"
                     >
                         {{-- Decorative circle --}}
                         <div
@@ -106,13 +106,21 @@
                                 class="flex items-center rounded-lg bg-white p-3"
                             >
                                 {{-- Icon --}}
-                                <img alt="Studio Boris" loading="lazy" width="220" height="60" decoding="async" data-nimg="1" style="color:transparent" src="{{ asset('assets/studio-boris.svg') }}">
-
+                                <img
+                                    alt="Studio Boris"
+                                    loading="lazy"
+                                    width="220"
+                                    height="60"
+                                    decoding="async"
+                                    data-nimg="1"
+                                    style="color: transparent"
+                                    src="{{ asset('assets/studio-boris.svg') }}"
+                                />
                             </div>
 
                             {{-- Message --}}
                             <p
-                                class="leading-relaxed opacity-50 transition duration-300 will-change-transform group-hover:translate-x-0.5"
+                                class="leading-relaxed text-white transition duration-300 will-change-transform group-hover:translate-x-0.5"
                             >
                                 helpt schrijvers en bedrijven om hun ideeën op
                                 een heldere manier te verwoorden.
@@ -146,20 +154,14 @@
 
             {{-- Divider --}}
             <div class="flex items-center pt-3 pb-3" aria-hidden="true">
-                <div
-                    class="size-1.5 rotate-45 bg-gray-200/90 dark:bg-[#242734]"
-                ></div>
-                <div
-                    class="h-0.5 w-full bg-gray-200/90 dark:bg-[#242734]"
-                ></div>
-                <div
-                    class="size-1.5 rotate-45 bg-gray-200/90 dark:bg-[#242734]"
-                ></div>
+                <div class="size-1.5 rotate-45 bg-slate-400"></div>
+                <div class="h-0.5 w-full bg-slate-400"></div>
+                <div class="size-1.5 rotate-45 bg-slate-400"></div>
             </div>
 
             {{-- Copyright --}}
             <section
-                class="flex flex-col flex-wrap items-center gap-x-5 gap-y-3 text-center text-sm text-gray-500 md:flex-row md:justify-between md:text-left dark:text-gray-400/80"
+                class="flex flex-col flex-wrap items-center gap-x-5 gap-y-3 text-center text-sm text-slate-400 md:flex-row md:justify-between md:text-left"
                 aria-label="Credits and copyright information"
             >
                 <div
@@ -187,7 +189,7 @@
                         <a
                             href="https://skylence.be"
                             target="_blank"
-                            class="group relative font-medium text-black/80 transition duration-200 hover:text-black dark:text-white/80 dark:hover:text-white"
+                            class="group relative font-medium text-slate-50 transition duration-200 hover:text-white"
                             aria-label="Hassan's website"
                         >
                             Skylence
@@ -221,7 +223,7 @@
                     <a
                         href="https://skylence.be"
                         target="_blank"
-                        class="group relative font-medium text-black/80 transition duration-200 hover:text-black dark:text-white/80 dark:hover:text-white"
+                        class="group relative font-medium text-slate-50 transition duration-200 hover:text-white"
                         aria-label="Marcel Pociot's Twitter profile"
                         rel="noopener noreferrer"
                     >

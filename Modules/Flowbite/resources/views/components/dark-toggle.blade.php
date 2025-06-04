@@ -132,7 +132,8 @@
             })
         },
     }"
-    {{ $attributes->merge(['class' => 'theme-selector relative -mx-1.5 size-9 cursor-pointer text-gray-900 select-none hover:text-slate-600 dark:text-white dark:hover:text-[#bcc1ef]']) }}
+    {{ $attributes->merge(['class' => 'theme-selector relative -mx-1.5 size-9 cursor-pointer select-none ']) }}
+    @class([$isMobile ?? false ? 'text-gray-900 hover:text-slate-600 dark:text-white dark:hover:text-[#bcc1ef]' : 'text-white hover:text-[#bcc1ef]'])
     @click="toggle()"
     role="button"
     aria-label="Toggle between light and dark mode"

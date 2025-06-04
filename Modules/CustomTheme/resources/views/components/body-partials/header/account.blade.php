@@ -226,7 +226,7 @@
             route="login"
             label="Sign in"
         />
-        <span class="text-gray-500">/</span>
+        <span class="text-gray-500">|</span>
         <x-customtheme::body-partials.header.navigation-link
             route="register"
             label="Sign up"

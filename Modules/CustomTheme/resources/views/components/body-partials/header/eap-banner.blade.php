@@ -1,7 +1,10 @@
 <a
     href="{{ route('home') }}"
     wire:navigate.hover
-    class="group relative z-30 flex flex-col items-center justify-center gap-x-3 gap-y-2.5 bg-blue-500 px-5 py-3 md:flex-row dark:bg-blue-950"
+    @class([
+        'group relative z-30 flex flex-col items-center justify-center gap-x-3 gap-y-2.5  px-5 py-3 md:flex-row ',
+        'bg-blue-500 dark:bg-blue-950' => $isMobile ?? false,
+    ])
 >
     <div class="flex items-center justify-center gap-3">
         {{-- Text --}}

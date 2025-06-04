@@ -173,7 +173,6 @@
 
         <x-webauthn::info-webauthn />
     @else
-
         <x-customtheme::page-layouts.horizontal-split-left-page>
             <x-slot name="left">
                 <form
@@ -190,13 +189,13 @@
                         wire:navigate.hover
                         class="mb-8 flex cursor-pointer items-center justify-start text-sm font-medium text-blue-600 dark:text-blue-500"
                     >
-                <span>
-                    Read how to save passkey with registration
-                    <br />
-                    <span class="text-xs text-gray-400">
-                        Highly recommended for first-timers
-                    </span>
-                </span>
+                        <span>
+                            Read how to save passkey with registration
+                            <br />
+                            <span class="text-xs text-gray-400">
+                                Highly recommended for first-timers
+                            </span>
+                        </span>
 
                         <svg
                             class="ms-2 h-4 w-4 rtl:rotate-180"
@@ -216,7 +215,9 @@
                     </a>
 
                     <fieldset class="space-y-4 md:space-y-6">
-                        <div class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                        <div
+                            class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2"
+                        >
                             <x-flowbite::input.text-field
                                 field="form.firstname"
                                 type="text"
@@ -281,7 +282,9 @@
                         </button>
                     </fieldset>
 
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                    <p
+                        class="text-sm font-light text-gray-500 dark:text-gray-400"
+                    >
                         Already have an account?
                         <a
                             href="{{ route('login') }}"
@@ -292,12 +295,11 @@
                         </a>
                     </p>
                 </form>
-
             </x-slot>
         </x-customtheme::page-layouts.horizontal-split-left-page>
 
         <x-webauthn::info-webauthn />
     @endif
 
-        @include('passkeys::livewire.partials.createScript')
+    @include('passkeys::livewire.partials.createScript')
 </div>

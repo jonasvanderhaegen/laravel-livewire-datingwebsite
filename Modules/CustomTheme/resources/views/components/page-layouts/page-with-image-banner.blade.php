@@ -4,8 +4,15 @@
     'image' => 'https://raw.githubusercontent.com/creativetimofficial/public-assets/master/twcomponents/header.webp',
 ])
 
-<main class="bg-slate-50 pb-16 antialiased lg:pb-24 dark:bg-gray-900">
-    <x-customtheme::page-partials.page-with-image-banner.header :image="$image">
+<main
+    @class([
+        'pb-16 antialiased lg:pb-24',
+        'bg-slate-50 dark:bg-gray-900' => $isMobile ?? false,
+    ])
+>
+    <x-customtheme::page-partials.page-with-image-banner.header
+        :image="$image"
+    >
         <x-customtheme::page-partials.page-with-image-banner.header-title
             :image="(bool) $image"
             :title="$title"
@@ -13,7 +20,9 @@
         />
     </x-customtheme::page-partials.page-with-image-banner.header>
 
-    <x-customtheme::page-partials.page-with-image-banner.body :image="(bool) $image">
+    <x-customtheme::page-partials.page-with-image-banner.body
+        :image="(bool) $image"
+    >
         <x-slot name="body">
             {{ $body }}
         </x-slot>

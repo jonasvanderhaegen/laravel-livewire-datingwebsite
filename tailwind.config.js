@@ -1,7 +1,11 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 export default {
     darkMode: "selector",
-
+    safelist: [
+        {
+            pattern: /^from-\[#[0-9A-Fa-f]{6}]$/,
+        },
+    ],
     content: [
         "./resources/**/*.{js,vue,blade.php}",
         "./app/**/*.php",
@@ -27,8 +31,5 @@ export default {
             },
         },
     },
-    plugins: [
-        require("@tailwindcss/typography"),
-        require("flowbite/plugin"),
-    ],
+    plugins: [require("@tailwindcss/typography"), require("flowbite/plugin")],
 };

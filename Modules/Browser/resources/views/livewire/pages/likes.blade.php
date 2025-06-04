@@ -1,4 +1,7 @@
-<section class="bg-gray-50 antialiased dark:bg-gray-900">
+<section     @class([
+        'rounded-4xl px-4 lg:px-6',
+        $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : ' backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-white/50',
+    ])>
     <div
         class="mx-auto w-full max-w-5xl px-5 py-3 xl:max-w-7xl 2xl:max-w-[90rem]"
     >

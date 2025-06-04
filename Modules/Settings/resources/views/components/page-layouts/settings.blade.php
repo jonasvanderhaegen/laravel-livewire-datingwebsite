@@ -1,4 +1,9 @@
-<main class="bg-slate-50 px-4 lg:px-6 dark:bg-gray-900">
+<main
+    @class([
+        'rounded-4xl px-4 lg:px-6',
+        $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : ' backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-white/50',
+    ])
+>
     <x-flowbite::boxed-width>
         <x-slot name="body">
             <div class="flex flex-wrap items-center justify-between">

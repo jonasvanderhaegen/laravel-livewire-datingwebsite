@@ -1,7 +1,9 @@
 @props(['hasMenu' => false])
 <div x-collapse x-show="!showDocsNavigation">
     @auth
-        <x-customtheme::body-partials.header.top-menu-banner />
+        @unless ($isMobile ?? false)
+            <x-customtheme::body-partials.header.top-menu-banner />
+        @endunless
     @endauth
 
     @guest
@@ -16,13 +18,13 @@
     >
         <div
             :class="{
-            'ring-gray-200/80 dark:ring-gray-800/50 bg-white/50 dark:bg-white/5 translate-y-3': scrolled || showDocsNavigation,
-            'ring-transparent dark:bg-transparent': ! scrolled && ! showDocsNavigation,
+            'translate-y-3 ring-[#00000015] backdrop-blur-md': scrolled || showDocsNavigation,
+            'ring-transparent bg-transparent': ! scrolled && ! showDocsNavigation,
         }"
-            class="mx-auto flex w-full max-w-5xl items-center justify-between gap-5 rounded-full px-4 py-4 ring-1 backdrop-blur-md transition duration-200 ease-out xl:max-w-7xl 2xl:max-w-[90rem]"
+            class="mx-auto flex w-full max-w-5xl items-center justify-between gap-5 rounded-full px-4 py-4 ring-1 transition duration-200 ease-out xl:max-w-7xl 2xl:max-w-[90rem]"
         >
             {{-- Left side --}}
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 text-white">
                 {{-- Logo --}}
                 <a
                     href="{{ route('home') }}"
@@ -37,7 +39,7 @@
                 {{-- V1 Announcement --}}
                 <a
                     href="https://github.com/orgs/NativePHP/discussions/547"
-                    class="group relative z-0 hidden items-center overflow-hidden rounded-full bg-gray-200 px-2.5 py-1.5 text-xs transition duration-200 will-change-transform hover:scale-x-105 lg:inline-flex dark:bg-slate-800"
+                    class="group relative z-0 hidden items-center overflow-hidden rounded-full bg-gray-200 px-2.5 py-1.5 text-xs text-slate-950 transition duration-200 will-change-transform hover:scale-x-105 lg:inline-flex dark:bg-slate-800 dark:text-slate-50"
                     target="_blank"
                     aria-label="Read about NativePHP version 1 release"
                     title="Read the NativePHP v1 announcement"
@@ -78,7 +80,7 @@
             <div class="flex items-center gap-3.5">
                 {{-- Desktop menu --}}
                 <div
-                    class="flex items-center gap-3.5 text-sm"
+                    class="flex items-center gap-3.5 text-sm text-white"
                     aria-label="Primary navigation"
                 >
                     {{-- Link --}}
@@ -160,7 +162,7 @@
                     <button
                         id="drawer-navigation-button"
                         type="button"
-                        class="cursor-pointer transition duration-200"
+                        class="cursor-pointer opacity-60 transition duration-200 hover:opacity-100"
                     >
                         <span class="">info</span>
                     </button>

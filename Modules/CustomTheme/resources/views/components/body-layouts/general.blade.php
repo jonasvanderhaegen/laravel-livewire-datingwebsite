@@ -71,8 +71,8 @@
             }
         "
         @class([
-            'min-h-screen overflow-x-clip bg-white font-sans text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50',
-            'pb-27' => $isMobile ?? false,
+            'overflow-x-clip font-sans text-slate-900 antialiased dark:text-slate-50',
+            $isMobile ?? false ? 'min-h-screen bg-white pb-27 dark:bg-slate-950' : 'relative max-w-screen bg-blue-950',
         ])
     >
         @php
@@ -82,6 +82,10 @@
             ];
         @endphp
 
+        @unless ($isMobile ?? false)
+            <x-customtheme::top />
+        @endunless
+
         <x-customtheme::body-partials.header :links="$links" />
 
         {{ $slot }}
@@ -90,6 +94,7 @@
             <livewire:customtheme::components.body-partials.mobile-bottom-menu />
         @else
             <x-customtheme::body-partials.footer />
+            <x-customtheme::bottom />
         @endif
 
         @livewireScripts
