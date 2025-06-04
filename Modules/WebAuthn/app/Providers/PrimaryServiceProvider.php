@@ -6,6 +6,7 @@ namespace Modules\WebAuthn\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
+use Modules\WebAuthn\Console\TestPasskey;
 
 final class PrimaryServiceProvider extends ServiceProvider
 {
@@ -20,10 +21,18 @@ final class PrimaryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registercommands();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+    }
+
+    public function registerCommands(): void
+    {
+        $this->commands([
+            TestPasskey::class,
+        ]);
     }
 
     /**

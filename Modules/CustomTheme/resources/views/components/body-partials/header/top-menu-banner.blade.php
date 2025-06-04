@@ -1,4 +1,4 @@
-<nav class="bg-pink-50 antialiased dark:bg-gray-800">
+<nav class="bg-pink-50 antialiased dark:bg-slate-900">
     <div
         class="mx-auto w-full max-w-5xl px-5 py-3 xl:max-w-7xl 2xl:max-w-[90rem]"
     >
@@ -7,7 +7,7 @@
                 <ul class="flex items-center justify-start gap-6 md:gap-8">
                     <li>
                         <a
-                            href="{{ route('discover') }}"
+                            href="{{ route('protected.discover') }}"
                             wire:navigate
                             class="group relative z-0 inline-flex items-center overflow-hidden rounded-full bg-white px-5 py-3 text-xs transition duration-200 will-change-transform hover:scale-x-105 dark:bg-slate-800"
                             target="_blank"
@@ -36,7 +36,7 @@
                             <span
                                 class="relative inline-flex items-center gap-1"
                             >
-                                <x-core::icons.heart
+                                <x-customtheme::icons.heart
                                     class="-mt-px size-3.5 text-red-400"
                                     aria-hidden="true"
                                 />

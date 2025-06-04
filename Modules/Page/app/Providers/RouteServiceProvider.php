@@ -53,6 +53,12 @@ final class RouteServiceProvider extends ServiceProvider
      */
     protected function mapProtectedRoutes(): void
     {
-        Route::middleware(['auth', 'verified', 'throttle:info-pages'])->name('protected.')->group(module_path($this->name, '/routes/protected.php'));
+        Route::middleware([
+            'web',
+            'auth',
+            'verified',
+            'onboarded',
+            'throttle:info-pages',
+        ])->name('protected.')->group(module_path($this->name, '/routes/protected.php'));
     }
 }

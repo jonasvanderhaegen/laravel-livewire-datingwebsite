@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Settings\Livewire\Forms\Profile\General;
+
+use Livewire\Attributes\Computed;
+use Livewire\Form;
+use Modules\Settings\Traits\SelectSummary;
+
+final class OrientationForm extends Form
+{
+    use SelectSummary;
+
+    public $orientations = [];
+
+    public bool $prefer_not_say = false;
+
+    #[Computed('orientations')]
+    public function selected(): string
+    {
+        return $this->summarizeSelect(
+            $this->orientations,
+            'profile.orientations'         // your config key
+        );
+    }
+
+    public function rules(): array
+    {
+        return [
+            'orientations' => ['required_unless:prefer_not_say,true', 'array'],
+            'orientations.*' => ['integer'], // each item should be an integer value
+            'prefer_not_say' => ['boolean'],
+        ];
+    }
+}

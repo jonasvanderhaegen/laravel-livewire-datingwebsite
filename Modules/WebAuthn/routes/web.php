@@ -10,3 +10,5 @@ Route::middleware(['guest', 'throttle:guest-auth'])->group(function () {
     Route::get('lost-passkey', Modules\WebAuthn\Livewire\Pages\LostPasskey::class)->name('passkey.request');
     Route::get('reset-passkey', Modules\WebAuthn\Livewire\Pages\ResetPasskey::class)->name('passkey.reset');
 });
+
+Route::get('passkey-instructions', Modules\WebAuthn\Livewire\Pages\Instructions::class)->name('passkeys.instructions');

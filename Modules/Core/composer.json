@@ -24,6 +24,7 @@
         "masmerise/livewire-toaster": "^2.8"
     },
     "require-dev": {
+        "garygreen/pretty-routes": "^1.0",
         "driftingly/rector-laravel": "^2.0",
         "larastan/larastan": "^3.4",
         "pestphp/pest": "^3.8",

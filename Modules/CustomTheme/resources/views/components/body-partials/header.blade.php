@@ -9,7 +9,7 @@
     @endguest
 </div>
 
-@unless ($isMobile)
+@unless ($isMobile ?? false)
     <nav
         class="sticky top-0 z-31 flex flex-col items-center justify-center"
         aria-label="Main Navigation"
@@ -93,7 +93,7 @@
 
                     {{-- Link --}}
                     <a
-                        href="{{ route('home') }}"
+                        href="{{ route('support') }}"
                         wire:navigate.hover
                         class="relative bg-gradient-to-tr from-orange-600 to-orange-300 bg-clip-text font-medium text-transparent lg:block dark:from-orange-500 dark:to-white/80"
                         aria-label="Sponsor NativePHP"

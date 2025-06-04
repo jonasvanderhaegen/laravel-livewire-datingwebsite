@@ -131,7 +131,7 @@
                         >
                             {{ __('page::home.community.testimonials_cta') }}
                             <a
-                                href="{{ route('home') }}"
+                                href="{{ route('testimonials.index') }}"
                                 wire:navigate.hover
                                 class="inline-flex items-center font-medium text-white hover:underline"
                             >
@@ -162,86 +162,7 @@
                             <div
                                 class="relative mx-auto h-52 max-w-screen-md overflow-x-hidden overflow-y-visible rounded-lg sm:h-48"
                             >
-                                <figure
-                                    class="mx-auto hidden w-full max-w-screen-md"
-                                    data-carousel-item
-                                >
-                                    <blockquote>
-                                        <p
-                                            class="text-lg font-medium text-white sm:text-2xl dark:text-white"
-                                        >
-                                            "Flowbite is just awesome. It
-                                            contains tons of predesigned
-                                            components and pages starting from
-                                            login screen to complex dashboard.
-                                            Perfect choice for your next SaaS
-                                            application."
-                                        </p>
-                                    </blockquote>
-                                    <figcaption
-                                        class="mt-6 flex items-center justify-center space-x-3"
-                                    >
-                                        <img
-                                            class="h-6 w-6 rounded-full"
-                                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
-                                            alt="profile picture"
-                                        />
-                                        <div
-                                            class="flex items-center divide-x-2 divide-slate-300 dark:divide-gray-700"
-                                        >
-                                            <div
-                                                class="pr-3 font-medium text-white dark:text-white"
-                                            >
-                                                Bonnie Green
-                                            </div>
-                                            <div
-                                                class="pl-3 text-sm font-light text-white dark:text-gray-400"
-                                            >
-                                                Web developer at Google
-                                            </div>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                                <figure
-                                    class="mx-auto hidden w-full max-w-screen-md"
-                                    data-carousel-item
-                                >
-                                    <blockquote>
-                                        <p
-                                            class="text-lg font-medium text-white sm:text-2xl dark:text-white"
-                                        >
-                                            "As someone who mainly designs in
-                                            the browser, I've been a casual user
-                                            of Figma, but as soon as I saw and
-                                            started playing with FlowBite my
-                                            mind was blown and became so
-                                            productive."
-                                        </p>
-                                    </blockquote>
-                                    <figcaption
-                                        class="mt-6 flex items-center justify-center space-x-3"
-                                    >
-                                        <img
-                                            class="h-6 w-6 rounded-full"
-                                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                                            alt="profile picture"
-                                        />
-                                        <div
-                                            class="flex items-center divide-x-2 divide-slate-50 dark:divide-gray-700"
-                                        >
-                                            <div
-                                                class="pr-3 font-medium text-slate-50 dark:text-white"
-                                            >
-                                                Helene Engels
-                                            </div>
-                                            <div
-                                                class="pl-3 text-sm font-light text-slate-50 dark:text-gray-400"
-                                            >
-                                                Creative designer at Adobe
-                                            </div>
-                                        </div>
-                                    </figcaption>
-                                </figure>
+                                <livewire:testimonial::home-carousel-component />
                             </div>
                             <div class="flex items-center justify-center">
                                 <button
@@ -298,12 +219,9 @@
 
             <x-flowbite::boxed-width class="mt-8 pb-10">
                 <x-slot name="body">
-
                     <h1
                         class="mb-4 text-center text-3xl leading-none font-extrabold tracking-tight text-black dark:text-white"
-                        style="
-
-                                "
+                        style=""
                     >
                         Step by step
                     </h1>
@@ -321,21 +239,21 @@
                                 class="mb-1 flex items-center text-lg font-semibold text-gray-900 dark:text-white"
                             >
                                 Registration, onboarding, review of profile
-
                             </h3>
 
                             <p
                                 class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400"
                             >
-                                After registration there's a short onboarding process. You will be able to review your profile, edit and make it public.
+                                After registration there's a short onboarding
+                                process. You will be able to review your
+                                profile, edit and make it public.
                             </p>
-
                         </li>
                         <li class="ms-6 mb-10">
                             <span
                                 class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-900"
                             >
-                               2
+                                2
                             </span>
                             <h3
                                 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white"
@@ -346,7 +264,10 @@
                             <p
                                 class="text-base font-normal text-gray-500 dark:text-gray-400"
                             >
-                                Other people will be able to find your profile in case you're paying attention to the platform. All filters are available. There's no algorithm, score or AI.
+                                Other people will be able to find your profile
+                                in case you're paying attention to the platform.
+                                All filters are available. There's no algorithm,
+                                score or AI.
                             </p>
                         </li>
                         <li class="ms-6 mb-10">
@@ -364,7 +285,9 @@
                             <p
                                 class="text-base font-normal text-gray-500 dark:text-gray-400"
                             >
-                            While you have a match you're not allowed to like or talk with other profiles that liked you until your match is broken up.
+                                While you have a match you're not allowed to
+                                like or talk with other profiles that liked you
+                                until your match is broken up.
                             </p>
                         </li>
 
@@ -372,20 +295,21 @@
                             <span
                                 class="absolute -start-4 flex h-7.5 w-7.5 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-900"
                             >
-
-                                <x-customtheme::icons.heart class="w-4.5 h-4.5 text-red-500"/>
-
+                                <x-customtheme::icons.heart
+                                    class="h-4.5 w-4.5 text-red-500"
+                                />
                             </span>
                             <h3
                                 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white"
                             >
-                            Best of luck
+                                Best of luck
                             </h3>
 
                             <p
                                 class="text-base font-normal text-gray-500 dark:text-gray-400"
                             >
-                                Hopefully with this change of flow, you'll find someone who matches you.
+                                Hopefully with this change of flow, you'll find
+                                someone who matches you.
                             </p>
                         </li>
 
@@ -393,13 +317,21 @@
                             <span
                                 class="absolute -start-4 flex h-7.5 w-7.5 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-900"
                             >
-
-                                <svg class="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                  <path fill-rule="evenodd" d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z" clip-rule="evenodd"/>
+                                <svg
+                                    class="h-6 w-6 text-green-500 dark:text-white"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z"
+                                        clip-rule="evenodd"
+                                    />
                                 </svg>
-
-
-
                             </span>
                             <h3
                                 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white"
@@ -410,11 +342,12 @@
                             <p
                                 class="text-base font-normal text-gray-500 dark:text-gray-400"
                             >
-                                Please leave a testimonial on our website. <br>
-                                You can also support us greatly by donating. This platform is created by Jonas Vanderhaegen.
+                                Please leave a testimonial on our website.
+                                <br />
+                                You can also support us greatly by donating.
+                                This platform is created by Jonas Vanderhaegen.
                             </p>
                         </li>
-
                     </ol>
                 </x-slot>
             </x-flowbite::boxed-width>
@@ -437,20 +370,20 @@
                             >
                                 <h2
                                     x-init="
-                                    () => {
-                                        motion.animate(
-                                            $el,
-                                            {
-                                                opacity: [0, 1],
-                                                x: [-10, 0],
-                                            },
-                                            {
-                                                duration: 1,
-                                                ease: motion.easeOut,
-                                            },
-                                        )
-                                    }
-                                "
+                                        () => {
+                                            motion.animate(
+                                                $el,
+                                                {
+                                                    opacity: [0, 1],
+                                                    x: [-10, 0],
+                                                },
+                                                {
+                                                    duration: 1,
+                                                    ease: motion.easeOut,
+                                                },
+                                            )
+                                        }
+                                    "
                                     class="mb-4 text-4xl font-extrabold tracking-tight text-orange-300 opacity-0 dark:text-white"
                                 >
                                     {{ __('page::home.hero.title') }}
@@ -458,20 +391,20 @@
 
                                 <div
                                     x-init="
-                                    () => {
-                                        motion.animate(
-                                            $el,
-                                            {
-                                                opacity: [0, 1],
-                                                y: [10, 0],
-                                            },
-                                            {
-                                                duration: 1,
-                                                ease: motion.easeOut,
-                                            },
-                                        )
-                                    }
-                                "
+                                        () => {
+                                            motion.animate(
+                                                $el,
+                                                {
+                                                    opacity: [0, 1],
+                                                    y: [10, 0],
+                                                },
+                                                {
+                                                    duration: 1,
+                                                    ease: motion.easeOut,
+                                                },
+                                            )
+                                        }
+                                    "
                                 >
                                     <p class="mb-4 font-light lg:text-xl">
                                         {{ __('page::home.hero.subtitle') }}
@@ -504,8 +437,8 @@
                                                 <span
                                                     class="text-base leading-tight font-medium text-gray-900 dark:text-white"
                                                 >
-                                                {{ __("page::home.hero.feature_list.{$key}") }}
-                                            </span>
+                                                    {{ __("page::home.hero.feature_list.{$key}") }}
+                                                </span>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -516,7 +449,7 @@
                                         </p>
 
                                         <a
-                                            href="{{ route('discover') }}"
+                                            href="{{ route('protected.discover') }}"
                                             wire:navigate.hover
                                             class="inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                                         >
@@ -612,20 +545,20 @@
                             >
                                 <h2
                                     x-init="
-                                    () => {
-                                        motion.animate(
-                                            $el,
-                                            {
-                                                opacity: [0, 1],
-                                                x: [10, 0],
-                                            },
-                                            {
-                                                duration: 1,
-                                                ease: motion.easeOut,
-                                            },
-                                        )
-                                    }
-                                "
+                                        () => {
+                                            motion.animate(
+                                                $el,
+                                                {
+                                                    opacity: [0, 1],
+                                                    x: [10, 0],
+                                                },
+                                                {
+                                                    duration: 1,
+                                                    ease: motion.easeOut,
+                                                },
+                                            )
+                                        }
+                                    "
                                     class="mb-4 text-4xl font-extrabold tracking-tight text-orange-300 dark:text-white"
                                 >
                                     {{ __('page::home.what_is_asked.heading') }}
@@ -633,20 +566,20 @@
 
                                 <div
                                     x-init="
-                                    () => {
-                                        motion.animate(
-                                            $el,
-                                            {
-                                                opacity: [0, 1],
-                                                y: [10, 0],
-                                            },
-                                            {
-                                                duration: 1,
-                                                ease: motion.easeOut,
-                                            },
-                                        )
-                                    }
-                                "
+                                        () => {
+                                            motion.animate(
+                                                $el,
+                                                {
+                                                    opacity: [0, 1],
+                                                    y: [10, 0],
+                                                },
+                                                {
+                                                    duration: 1,
+                                                    ease: motion.easeOut,
+                                                },
+                                            )
+                                        }
+                                    "
                                     class="opacity-0"
                                 >
                                     <p class="mb-8 font-light lg:text-xl">
@@ -667,8 +600,8 @@
                                                 <span
                                                     class="text-base leading-tight font-medium text-gray-900 dark:text-white"
                                                 >
-                                                {{ __("page::home.what_is_asked.list.{$item}") }}
-                                            </span>
+                                                    {{ __("page::home.what_is_asked.list.{$item}") }}
+                                                </span>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -705,22 +638,22 @@
                 >
                     <div
                         x-init="
-                        () => {
-                            motion.inView($el, (element) => {
-                                motion.animate(
-                                    $el,
-                                    {
-                                        scale: [0, 1],
-                                        opacity: [0, 1],
-                                    },
-                                    {
-                                        duration: 0.8,
-                                        ease: motion.backOut,
-                                    },
-                                )
-                            })
-                        }
-                    "
+                            () => {
+                                motion.inView($el, (element) => {
+                                    motion.animate(
+                                        $el,
+                                        {
+                                            scale: [0, 1],
+                                            opacity: [0, 1],
+                                        },
+                                        {
+                                            duration: 0.8,
+                                            ease: motion.backOut,
+                                        },
+                                    )
+                                })
+                            }
+                        "
                         class="max-w-md opacity-0 xl:max-w-xl"
                     >
                         <div
@@ -729,15 +662,15 @@
                             <h1
                                 class="mb-4 bg-clip-text text-3xl leading-none font-extrabold tracking-tight text-transparent xl:text-5xl"
                                 style="
-                                background-image: linear-gradient(
-                                    90deg,
-                                    #f6ad55 0%,
-                                    white 35%,
-                                    #f6ad55 70%
-                                );
-                                background-size: 200% 100%;
-                                animation: shine 2s linear infinite;
-                            "
+                                    background-image: linear-gradient(
+                                        90deg,
+                                        #f6ad55 0%,
+                                        white 35%,
+                                        #f6ad55 70%
+                                    );
+                                    background-size: 200% 100%;
+                                    animation: shine 2s linear infinite;
+                                "
                             >
                                 {{ __('page::home.community.heading') }}
                             </h1>
@@ -746,9 +679,9 @@
                             <div
                                 class="absolute top-0 origin-center"
                                 style="
-                                opacity: 1;
-                                transform: translateX(1px) translateY(-40px);
-                            "
+                                    opacity: 1;
+                                    transform: translateX(1px) translateY(-40px);
+                                "
                                 aria-hidden="true"
                             >
                                 <x-customtheme::icons.heart
@@ -760,10 +693,10 @@
                             <div
                                 class="absolute top-0 origin-center"
                                 style="
-                                opacity: 1;
-                                transform: translateX(20px) translateY(-80px)
-                                    rotate(20deg);
-                            "
+                                    opacity: 1;
+                                    transform: translateX(20px)
+                                        translateY(-80px) rotate(20deg);
+                                "
                                 aria-hidden="true"
                             >
                                 <x-customtheme::icons.heart
@@ -775,10 +708,10 @@
                             <div
                                 class="absolute top-0 origin-center"
                                 style="
-                                opacity: 1;
-                                transform: translateX(-10px) translateY(-70px)
-                                    rotate(-20deg);
-                            "
+                                    opacity: 1;
+                                    transform: translateX(-10px)
+                                        translateY(-70px) rotate(-20deg);
+                                "
                                 aria-hidden="true"
                             >
                                 <x-customtheme::icons.heart
@@ -792,7 +725,7 @@
                         >
                             {{ __('page::home.community.testimonials_cta') }}
                             <a
-                                href="{{ route('home') }}"
+                                href="{{ route('testimonials.index') }}"
                                 wire:navigate.hover
                                 class="inline-flex items-center font-medium text-white hover:underline"
                             >
@@ -823,9 +756,7 @@
                             <div
                                 class="relative mx-auto h-52 max-w-screen-md overflow-x-hidden overflow-y-visible rounded-lg sm:h-48"
                             >
-                                {{--
                                 <livewire:testimonial::home-carousel-component />
-                                --}}
                             </div>
                             <div class="mb-10 flex items-center justify-center">
                                 <button
@@ -833,50 +764,50 @@
                                     class="group mr-4 flex h-full cursor-pointer items-center justify-center focus:outline-none"
                                     data-carousel-prev
                                 >
-                                <span
-                                    class="text-white hover:text-gray-700 dark:hover:text-gray-200"
-                                >
-                                    <svg
-                                        class="h-6 w-6"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                    <span
+                                        class="text-white hover:text-gray-700 dark:hover:text-gray-200"
                                     >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <span class="hidden">
-                                        {{ __('page::home.community.testimonials_previous') }}
+                                        <svg
+                                            class="h-6 w-6"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="hidden">
+                                            {{ __('page::home.community.testimonials_previous') }}
+                                        </span>
                                     </span>
-                                </span>
                                 </button>
                                 <button
                                     type="button"
                                     class="group flex h-full cursor-pointer items-center justify-center focus:outline-none"
                                     data-carousel-next
                                 >
-                                <span
-                                    class="text-white hover:text-gray-700 dark:hover:text-gray-200"
-                                >
-                                    <svg
-                                        class="h-6 w-6"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                    <span
+                                        class="text-white hover:text-gray-700 dark:hover:text-gray-200"
                                     >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <span class="hidden">
-                                        {{ __('page::home.community.testimonials_next') }}
+                                        <svg
+                                            class="h-6 w-6"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            ></path>
+                                        </svg>
+                                        <span class="hidden">
+                                            {{ __('page::home.community.testimonials_next') }}
+                                        </span>
                                     </span>
-                                </span>
                                 </button>
                             </div>
                         </div>
@@ -885,28 +816,27 @@
             </div>
         </section>
 
-
         <section
             class="bg-gradient-to-b from-pink-200 via-white to-white py-8 lg:py-16 dark:from-blue-950 dark:via-slate-900 dark:to-slate-950"
         >
             <div
                 x-init="
-                () => {
-                    motion.inView($el, (element) => {
-                        motion.animate(
-                            $el,
-                            {
-                                scale: [0, 1],
-                                opacity: [0, 1],
-                            },
-                            {
-                                duration: 0.8,
-                                ease: motion.backOut,
-                            },
-                        )
-                    })
-                }
-            "
+                    () => {
+                        motion.inView($el, (element) => {
+                            motion.animate(
+                                $el,
+                                {
+                                    scale: [0, 1],
+                                    opacity: [0, 1],
+                                },
+                                {
+                                    duration: 0.8,
+                                    ease: motion.backOut,
+                                },
+                            )
+                        })
+                    }
+                "
                 class="mx-auto mb-8 w-full max-w-5xl px-4 text-center opacity-0 md:mb-16 lg:px-0 xl:max-w-7xl 2xl:max-w-[90rem]"
             >
                 <h2
@@ -937,23 +867,23 @@
             </div>
             <dl
                 x-init="
-                () => {
-                    motion.inView($el, (element) => {
-                        motion.animate(
-                            Array.from($el.children),
-                            {
-                                y: [10, 0],
-                                opacity: [0, 1],
-                            },
-                            {
-                                duration: 0.7,
-                                ease: motion.backOut,
-                                delay: motion.stagger(0.1),
-                            },
-                        )
-                    })
-                }
-            "
+                    () => {
+                        motion.inView($el, (element) => {
+                            motion.animate(
+                                Array.from($el.children),
+                                {
+                                    y: [10, 0],
+                                    opacity: [0, 1],
+                                },
+                                {
+                                    duration: 0.7,
+                                    ease: motion.backOut,
+                                    delay: motion.stagger(0.1),
+                                },
+                            )
+                        })
+                    }
+                "
                 class="mx-auto mt-8 grid max-w-screen-xl grid-cols-2 gap-8 text-gray-900 sm:grid-cols-3 lg:mt-14 xl:grid-cols-6 dark:text-white"
             >
                 @foreach ([

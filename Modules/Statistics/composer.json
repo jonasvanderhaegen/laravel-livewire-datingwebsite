@@ -1,0 +1,29 @@
+{
+    "name": "skylence/statistics",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jonas Vanderhaegen",
+            "email": "jonasvanderh@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Statistics\\": "app/",
+            "Modules\\Statistics\\Database\\Factories\\": "database/factories/",
+            "Modules\\Statistics\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Statistics\\Tests\\": "tests/"
+        }
+    }
+}

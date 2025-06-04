@@ -1,0 +1,11 @@
+{
+    "name": "OnboardUser",
+    "alias": "onboarduser",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\OnboardUser\\Providers\\OnboardUserServiceProvider"
+    ],
+    "files": []
+}

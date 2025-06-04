@@ -1,0 +1,32 @@
+{
+    "name": "skylence/onboarduser",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jonas Vanderhaegen",
+            "email": "jonasvanderh@gmail.com"
+        }
+    ],
+    "require": {
+        "spatie/laravel-onboard": "^2.6"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\OnboardUser\\": "app/",
+            "Modules\\OnboardUser\\Database\\Factories\\": "database/factories/",
+            "Modules\\OnboardUser\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\OnboardUser\\Tests\\": "tests/"
+        }
+    }
+}
