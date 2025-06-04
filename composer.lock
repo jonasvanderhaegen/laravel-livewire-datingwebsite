@@ -3030,32 +3030,31 @@
         },
         {
             "name": "nunomaduro/essentials",
-            "version": "dev-main",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/essentials.git",
-                "reference": "1bd3e89209ed6714dfadc76fbc99f4a1e2211973"
+                "reference": "ccfd36a8e7ec5ad7ce83109775bd75851b123a41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/1bd3e89209ed6714dfadc76fbc99f4a1e2211973",
-                "reference": "1bd3e89209ed6714dfadc76fbc99f4a1e2211973",
+                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/ccfd36a8e7ec5ad7ce83109775bd75851b123a41",
+                "reference": "ccfd36a8e7ec5ad7ce83109775bd75851b123a41",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^11.44.2|^12.9.2",
+                "laravel/framework": "^11.44.2|^12.17.0",
                 "php": "^8.3.0"
             },
             "require-dev": {
-                "laravel/pint": "^1.22.0",
-                "orchestra/testbench": "^10.2.1",
-                "pestphp/pest": "^3.8.1",
-                "pestphp/pest-plugin-type-coverage": "^3.5",
-                "phpstan/phpstan": "^2.1.12",
-                "rector/rector": "^2.0.11",
-                "symfony/var-dumper": "^7.2.3"
+                "laravel/pint": "^1.22.1",
+                "orchestra/testbench": "^10.3.0",
+                "pestphp/pest": "^3.8.2",
+                "pestphp/pest-plugin-type-coverage": "^3.5.1",
+                "phpstan/phpstan": "^2.1.17",
+                "rector/rector": "^2.0.17",
+                "symfony/var-dumper": "^7.3.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -3089,7 +3088,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/essentials/issues",
-                "source": "https://github.com/nunomaduro/essentials/tree/main"
+                "source": "https://github.com/nunomaduro/essentials/tree/v0.1.0"
             },
             "funding": [
                 {
@@ -3105,7 +3104,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-04-29T10:54:37+00:00"
+            "time": "2025-06-04T18:20:41+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -12077,9 +12076,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "nunomaduro/essentials": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
