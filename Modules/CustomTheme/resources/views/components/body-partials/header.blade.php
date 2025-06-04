@@ -93,7 +93,7 @@
 
                     {{-- Link --}}
                     <a
-                        href="{{ route('home') }}"
+                        href="{{ route('support') }}"
                         wire:navigate.hover
                         class="relative bg-gradient-to-tr from-orange-600 to-orange-300 bg-clip-text font-medium text-transparent lg:block dark:from-orange-500 dark:to-white/80"
                         aria-label="Sponsor NativePHP"

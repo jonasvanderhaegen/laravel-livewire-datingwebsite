@@ -7,11 +7,13 @@
             "email": "jonasvanderh@gmail.com"
         }
     ],
+    "require": {
+        "spatie/laravel-passkeys": "^1.0"
+    },
     "extra": {
         "laravel": {
             "providers": [],
             "aliases": {
-
             }
         }
     },

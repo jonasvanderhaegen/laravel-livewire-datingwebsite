@@ -1,5 +1,5 @@
-
-        <div class="flex items-center justify-center px-4 py-6 sm:px-0 lg:py-0">
+<x-customtheme::page-layouts.horizontal-split-left-page>
+    <x-slot name="left">
             <form
                 x-data="{
                     remaining: @entangle('secondsUntilReset'),
@@ -74,5 +74,5 @@
                     </button>
                 </fieldset>
             </form>
-        </div>
-
+    </x-slot>
+</x-customtheme::page-layouts.horizontal-split-left-page>

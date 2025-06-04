@@ -1,8 +1,12 @@
 {
-  "private": true,
-  "type": "module",
-  "scripts": {
-  },
-  "devDependencies": {
-  }
+    "name": "@myapp/webauthn-module",
+    "private": true,
+    "type": "module",
+    "scripts": {
+    },
+    "dependencies": {
+        "@simplewebauthn/browser": "^13.1.0"
+    },
+    "devDependencies": {
+    }
 }

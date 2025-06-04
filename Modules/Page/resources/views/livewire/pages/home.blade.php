@@ -1,4 +1,5 @@
 <div>
+
     @if ($isMobile ?? false)
         <section class="bg-white dark:bg-gray-900">
             <x-flowbite::boxed-width class="pt-8 text-center">
@@ -131,7 +132,7 @@
                         >
                             {{ __('page::home.community.testimonials_cta') }}
                             <a
-                                href="{{ route('home') }}"
+                                href="{{ route('testimonials.index') }}"
                                 wire:navigate.hover
                                 class="inline-flex items-center font-medium text-white hover:underline"
                             >
@@ -162,86 +163,7 @@
                             <div
                                 class="relative mx-auto h-52 max-w-screen-md overflow-x-hidden overflow-y-visible rounded-lg sm:h-48"
                             >
-                                <figure
-                                    class="mx-auto hidden w-full max-w-screen-md"
-                                    data-carousel-item
-                                >
-                                    <blockquote>
-                                        <p
-                                            class="text-lg font-medium text-white sm:text-2xl dark:text-white"
-                                        >
-                                            "Flowbite is just awesome. It
-                                            contains tons of predesigned
-                                            components and pages starting from
-                                            login screen to complex dashboard.
-                                            Perfect choice for your next SaaS
-                                            application."
-                                        </p>
-                                    </blockquote>
-                                    <figcaption
-                                        class="mt-6 flex items-center justify-center space-x-3"
-                                    >
-                                        <img
-                                            class="h-6 w-6 rounded-full"
-                                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
-                                            alt="profile picture"
-                                        />
-                                        <div
-                                            class="flex items-center divide-x-2 divide-slate-300 dark:divide-gray-700"
-                                        >
-                                            <div
-                                                class="pr-3 font-medium text-white dark:text-white"
-                                            >
-                                                Bonnie Green
-                                            </div>
-                                            <div
-                                                class="pl-3 text-sm font-light text-white dark:text-gray-400"
-                                            >
-                                                Web developer at Google
-                                            </div>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                                <figure
-                                    class="mx-auto hidden w-full max-w-screen-md"
-                                    data-carousel-item
-                                >
-                                    <blockquote>
-                                        <p
-                                            class="text-lg font-medium text-white sm:text-2xl dark:text-white"
-                                        >
-                                            "As someone who mainly designs in
-                                            the browser, I've been a casual user
-                                            of Figma, but as soon as I saw and
-                                            started playing with FlowBite my
-                                            mind was blown and became so
-                                            productive."
-                                        </p>
-                                    </blockquote>
-                                    <figcaption
-                                        class="mt-6 flex items-center justify-center space-x-3"
-                                    >
-                                        <img
-                                            class="h-6 w-6 rounded-full"
-                                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                                            alt="profile picture"
-                                        />
-                                        <div
-                                            class="flex items-center divide-x-2 divide-slate-50 dark:divide-gray-700"
-                                        >
-                                            <div
-                                                class="pr-3 font-medium text-slate-50 dark:text-white"
-                                            >
-                                                Helene Engels
-                                            </div>
-                                            <div
-                                                class="pl-3 text-sm font-light text-slate-50 dark:text-gray-400"
-                                            >
-                                                Creative designer at Adobe
-                                            </div>
-                                        </div>
-                                    </figcaption>
-                                </figure>
+                                <livewire:testimonial::home-carousel-component />
                             </div>
                             <div class="flex items-center justify-center">
                                 <button
@@ -516,7 +438,7 @@
                                         </p>
 
                                         <a
-                                            href="{{ route('discover') }}"
+                                            href="{{ route('protected.discover') }}"
                                             wire:navigate.hover
                                             class="inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                                         >
@@ -823,9 +745,9 @@
                             <div
                                 class="relative mx-auto h-52 max-w-screen-md overflow-x-hidden overflow-y-visible rounded-lg sm:h-48"
                             >
-                                {{--
+
                                 <livewire:testimonial::home-carousel-component />
-                                --}}
+
                             </div>
                             <div class="mb-10 flex items-center justify-center">
                                 <button

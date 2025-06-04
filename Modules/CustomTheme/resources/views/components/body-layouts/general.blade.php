@@ -97,5 +97,7 @@
         @vite(['resources/ts/app.ts'])
 
         @stack('scripts')
+
+        <x-toaster-hub />
     </body>
 </html>

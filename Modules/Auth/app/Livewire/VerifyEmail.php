@@ -56,7 +56,7 @@ final class VerifyEmail extends General
 
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(
-                default: route('discover', absolute: false),
+                default: route('protected.discover', absolute: false),
                 navigate: true
             );
 

@@ -12,6 +12,7 @@ final class MobileBottomMenu extends Component
     public function render(): View
     {
         $tabs = [
+            'match',
             'general',
             'preferences',
         ];

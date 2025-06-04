@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\ClassicAuth\Livewire;
+
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Support\Facades\Session;
+use Masmerise\Toaster\Toaster;
+use Modules\ClassicAuth\Livewire\Forms\ForgotPasswordForm;
+use Modules\Core\Exceptions\TooManyRequestsException;
+use Modules\CustomTheme\Livewire\Layouts\General;
+
+final class Forgot extends General
+{
+    public ForgotPasswordForm $form;
+
+    public function mount()
+    {
+        $this->form->initRateLimitCountdown('sendResetUrl', null, 'forgotPassword');
+    }
+
+    public function submit()
+    {
+        try {
+            $this->form->sendResetUrl();
+
+            Session::flash('status', 'password-request-sent');
+            Toaster::success(__('A link will be sent if the account exists.'));
+
+        } catch (TooManyRequestsException $e) {
+            $this->form->secondsUntilReset = $e->secondsUntilAvailable;
+            Toaster::error(__('Too many attempts, wait for :minutes minutes',
+                ['minutes' => $e->minutesUntilAvailable]));
+        } catch (ThrottleRequestsException $e) {
+            Toaster::error($e->getMessage());
+        }
+    }
+
+    public function updatedFormEmail(): void
+    {
+        $this->validateOnly('form.email');
+    }
+
+    public function render()
+    {
+        return view('auth::livewire.forgot', ['intent' => 'passkey'])
+            ->title(__('Reset password'));
+    }
+}

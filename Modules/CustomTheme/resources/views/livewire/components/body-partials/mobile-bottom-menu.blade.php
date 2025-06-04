@@ -3,7 +3,7 @@
 >
     <div class="w-full">
         <div
-            class="mx-auto my-2 grid max-w-xs grid-cols-2 gap-1 rounded-full bg-gray-100 p-1 dark:bg-slate-800"
+            class="grid-cols-{{ count($tabs) }} mx-auto my-2 grid max-w-xs gap-1 rounded-full bg-gray-100 p-1 dark:bg-slate-800"
             data-tabs-toggle="#menu-tab-content"
             role="tablist"
             data-tabs-active-classes="bg-gray-500 text-white dark:bg-slate-400 dark:!text-slate-950"
@@ -17,6 +17,90 @@
     </div>
 
     <div id="menu-tab-content">
+        <div
+            id="match"
+            role="tabpanel"
+            aria-labelledby="match-tab"
+            class="mx-auto grid hidden h-full max-w-lg grid-cols-4"
+        >
+            <a
+                href="{{ route('browser.likes') }}"
+                wire:navigate.hover
+                type="button"
+                class="group inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+                <svg
+                    class="mb-1 h-5 w-5 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                </svg>
+                <span class="sr-only">Home</span>
+            </a>
+
+            <a
+                href="{{ route('browser.likes') }}"
+                wire:navigate.hover
+                type="button"
+                class="group inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+                <svg
+                    class="mb-1 h-5 w-5 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                </svg>
+                <span class="sr-only">Home</span>
+            </a>
+            <a
+                href="{{ route('browser.likes') }}"
+                wire:navigate.hover
+                type="button"
+                class="group inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+                <svg
+                    class="mb-1 h-5 w-5 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                </svg>
+                <span class="sr-only">Home</span>
+            </a>
+            <a
+                href="{{ route('browser.likes') }}"
+                wire:navigate.hover
+                type="button"
+                class="group inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+                <svg
+                    class="mb-1 h-5 w-5 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+                    />
+                </svg>
+                <span class="sr-only">Home</span>
+            </a>
+        </div>
         <div
             id="general"
             role="tabpanel"

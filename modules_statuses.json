@@ -4,5 +4,13 @@
     "Page": true,
     "CustomTheme": true,
     "WebAuthn": true,
-    "Auth": true
+    "Auth": true,
+    "Profile": true,
+    "ClassicAuth": false,
+    "Testimonial": true,
+    "Contact": true,
+    "Settings": true,
+    "OnboardUser": true,
+    "Statistics": true,
+    "Browser": true
 }

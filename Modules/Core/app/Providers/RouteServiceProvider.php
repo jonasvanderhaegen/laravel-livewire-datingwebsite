@@ -28,11 +28,16 @@ final class RouteServiceProvider extends ServiceProvider
         $router->pushMiddlewareToGroup('web', DetectDevice::class);
 
         // 10 requests / minute for guest auth pages (login/register/reset)
-        RateLimiter::for('guest-auth', fn (Request $r) => Limit::perMinute(10)->by($r->ip()));
+        RateLimiter::for('guest-auth',
+            fn (Request $r) => Limit::perMinute(10)->by($r->ip()));
 
         // 30 requests / minute across user settings & messages
         RateLimiter::for('user-actions',
             fn (Request $r) => Limit::perMinute(30)->by(optional($r->user())->id ?: $r->ip()));
+
+        // 5 posts / minute for contact form
+        RateLimiter::for('contact-form',
+            fn (Request $r) => Limit::perMinute(5)->by($r->ip()));
 
     }
 

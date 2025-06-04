@@ -58,7 +58,6 @@
                     class="mb-4 border-b border-gray-100 pb-4 text-sm font-medium sm:mb-0 sm:border-0 sm:pb-0"
                 >
                     @auth
-                        {{--
                         @if (auth()->user()->onboarding()->inProgress())
                             <li class="px-4 pb-2">
                                 <p
@@ -99,7 +98,6 @@
                                 </p>
                             </li>
                         @endif
-                        ---}}
                     @endauth
                 </ul>
 
@@ -113,7 +111,6 @@
                             My Account
                         </p>
                     </li>
-                    {{--
                     <li>
                         <a
                             href="{{ route('settings.profile') }}"
@@ -139,8 +136,6 @@
                             Edit my profile
                         </a>
                     </li>
-                    --}}
-                    {{--
                     <li>
                         <a
                             href="{{ route('settings.preferences') }}"
@@ -191,7 +186,7 @@
                             Account and security
                         </a>
                     </li>
-                    --}}
+
                     <li>
                         <form
                             method="POST"

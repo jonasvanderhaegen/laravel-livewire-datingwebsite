@@ -20,6 +20,5 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
-        "@types/node": "^22.15.29"
     }
 }

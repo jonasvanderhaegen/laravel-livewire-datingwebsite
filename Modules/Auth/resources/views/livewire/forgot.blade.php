@@ -1,4 +1,5 @@
-
+<x-customtheme::page-layouts.horizontal-split-left-page>
+<x-slot name="left">
         <form
             x-data="{
                 remaining: @entangle('form.secondsUntilReset'),
@@ -103,7 +104,7 @@
                     .
                 </p>
 
-                <x-core::input.text-field
+                <x-flowbite::input.text-field
                     field="form.email"
                     type="email"
                     :label="__('E-mail address')"
@@ -136,3 +137,5 @@
                 </button>
             </fieldset>
         </form>
+    </x-slot>
+</x-customtheme::page-layouts.horizontal-split-left-page>
