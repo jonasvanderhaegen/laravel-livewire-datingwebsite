@@ -359,7 +359,7 @@
                     class="flex items-center justify-center px-4 py-6 sm:px-0 lg:py-0"
                 >
                     <div
-                        class="mx-auto max-w-screen-xl space-y-12 px-4 py-8 sm:py-16 lg:space-y-20 lg:px-30"
+                        class="mx-auto max-w-screen-xl space-y-12 px-4 py-8 sm:py-16 lg:space-y-20 lg:px-6"
                     >
                         <!-- Row -->
                         <div
