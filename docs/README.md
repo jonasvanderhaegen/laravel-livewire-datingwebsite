@@ -13,9 +13,9 @@
 
 ## Project Setup & Local Development
 
-[For more extensive information click here](docs/project-setup-local-development.md)
+[For more extensive information click here](project-setup-local-development.md)
 
-##### TLDR
+##### TLDR;
 
 ```bash
 composer install
@@ -23,7 +23,7 @@ composer install
 
 ## Modules
 
-[For more extensive information click here](docs/modules.md)
+[For more extensive information click here](modules.md)
 
 ## Tests
 
