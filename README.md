@@ -1,302 +1,408 @@
 [![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
 
-## Project Setup & Local Development
+## Free online dating platform
 
-This README provides a high‐level overview of getting the project up and running locally, whether you choose **Laravel
-Sail**, **Laravel Herd (Free or Pro)**, or **MAMP Pro**. Follow the sections below based on your chosen environment.
+A high‐level overview of this project, outlining its goals, core features, and technology choices. This is intended as a
+reference for developers joining the team or exploring the codebase.
+
+> **For developers**, [go here for technical documentation](docs/README.md)
 
 ---
 
 ### Table of Contents
 
-1. [Prerequisites](#prerequisites)
-2. [Clone & Basic Installation](#clone--basic-installation)
-3. [Environment Bootstrapping (`core:init`)](#environment-bootstrapping-coreinit)
-4. [Laravel Sail](#laravel-sail)
-5. [Laravel Herd (Free & Pro)](#laravel-herd-free--pro)
-6. [MAMP Pro](#mamp-pro)
-7. [Common Commands & Tips](#common-commands--tips)
+1. [Project Vision](#project-vision)
+2. [Guiding Principles](#guiding-principles)
+3. [Core Features](#core-features)
+
+    * [Authentication & Security](#authentication--security)
+    * [Location & Activity](#location--activity)
+    * [Matching & Browsing](#matching--browsing)
+    * [Messaging & Communication](#messaging--communication)
+    * [User Experience Enhancements](#user-experience-enhancements)
+4. [Technology Stack](#technology-stack)
+
+    * [Backend](#backend)
+    * [Frontend / Livewire](#frontend--livewire)
+    * [Search & Discovery](#search--discovery)
+    * [Real-Time & Notifications](#real-time--notifications)
+    * [Optional & Future Integrations](#optional--future-integrations)
+5. [Data Models & Matching Logic](#data-models--matching-logic)
+6. [Additional Pages & Documentation](#additional-pages--documentation)
+7. [Handling Abuse & Moderation](#handling-abuse--moderation)
+8. [Scalability & Performance Notes](#scalability--performance-notes)
+9. [Next Steps & Roadmap](#next-steps--roadmap)
 
 ---
 
-## Prerequisites
+## Project Vision
 
-Before you begin, ensure you have the following installed on your machine:
+Most commercial dating apps intentionally slow down or frustrate user engagement—paywalls, opaque algorithms, and “match
+scores” designed to keep people scrolling. This project seeks to:
 
-* **Git** (to clone the repository)
-* **PHP 8.4** (compatible with Laravel 12+)
-* **Composer** (for PHP dependency management)
-* **Node.js ≥ 22 and npm (or Yarn)** (for frontend tooling)
-* **Docker & Docker Compose** (only if you plan to use Laravel Sail)
-* **Laravel Herd** (macOS; Free or Pro) – if choosing Herd
-* **MAMP Pro** (macOS) – if choosing MAMP Pro
+* **Eliminate artificial throttling.** No hidden paywalls, no retroactive limits on likes, no algorithmic “Elo scores.”
+* **Prioritize genuine connection.** Only active, verified users participate—no ghost accounts, no bots.
+* **Promote transparency.** Real-time location, clear matching rules, and straightforward UI/UX without manipulative
+  design.
 
-> **Note:** You do *not* need all three choices—pick the one that matches your local workflow.
-
----
-
-## Clone & Basic Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/your‐org/your‐repo.git
-   cd your‐repo
-   ```
-
-2. **Install PHP dependencies**
-
-   ```bash
-   composer install
-   ```
-
-3. **Install JavaScript dependencies & build assets**
-
-   ```bash
-   npm ci
-   npm run dev
-   ```
-
-   Or, if you prefer Yarn:
-
-   ```bash
-   yarn install
-   yarn dev
-   ```
-
-4. **Copy example environment file**
-   If not automatically created, ensure you have a `.env` in the project root:
-
-   ```bash
-   cp .env.example .env
-   ```
+This is primarily a **learning exercise** and **technical showcase** using Laravel Livewire. If the final performance is
+insufficient at scale, we may later migrate to a frontend framework like Next.js or Nuxt.js.
 
 ---
 
-## Environment Bootstrapping (`core:init`)
+## Guiding Principles
 
-We provide a single Artisan command to help you configure your `.env` for whichever local environment you choose. This
-command will:
+1. **No hidden algorithms or rankings.**
 
-* Generate (or preserve) `APP_KEY`
-* Prompt for database & cache settings
-* Write correct values into `.env`
-* Clear any cached config
+    * Users see exactly who they’ve liked, who has liked them, and mutual matches—without a proprietary “attractiveness
+      score.”
 
-Run:
+2. **WebAuthn for authentication.**
 
-```bash
-php artisan core:init
-```
+    * Leverage passkeys (FIDO2/WebAuthn) for login/registration to minimize fake accounts and bots.
 
-* If you don’t pass any flags, you’ll be asked to choose between:
+3. **Precise, real-time location.**
 
-    * **herd‐free** (Herd Free + PostgreSQL)
-    * **herd‐pro** (Herd Pro + PostgreSQL + HTTPS)
-    * **sail** (Laravel Sail + MySQL + Valkey)
-    * **mamp** (MAMP Pro + MySQL)
+    * Enforce GPS-level accuracy to prevent VPN or location spoofing.
 
-* To skip the interactive prompt, pass `--env=`:
+4. **Active user focus.**
 
-  ```bash
-  php artisan core:init --env=sail
-  php artisan core:init --env=herd-free
-  php artisan core:init --env=herd-pro
-  php artisan core:init --env=mamp
-  ```
+    * Only users who have recently engaged with the platform (e.g., liked, browsed, messaged) appear in other users’
+      feeds.
 
-After running `core:init`, your `.env` will contain the correct `DB_*`, `APP_URL`, and (if using Sail)
-`REDIS_CLIENT=valkey` + `VALKEY_*` entries.
+5. **Mutual-only matching lock.**
+
+    * Once User A and User B match, they cannot like anyone else until one of them “breaks up.”
+    * Prevents “like back” bypass: If User A already likes User C, then C cannot like back until A’s existing match is
+      ended.
+
+6. **Transparent, real-time messaging.**
+
+    * “Destructive” chat: messages are only visible while both users remain matched. Once a match ends, chat history is
+      purged.
 
 ---
 
-## Laravel Sail
+## Core Features
 
-If you choose **Laravel Sail**, you’ll run everything inside Docker containers. Sail is the recommended approach if you
-want an environment that closely mirrors production.
+### Authentication & Security
 
-1. **Ensure Docker & Docker Compose are running**.
+* **WebAuthn / Passkeys**
 
-2. **Run the `core:init` command for Sail**
+    * Users register/login via FIDO2 devices, platform authenticators, or security keys.
+    * Minimizes stolen passwords, phishing, and account-takeover risk.
 
-   ```bash
-   php artisan core:init --env=sail
-   ```
+* **Email Verification & Password Fallback**
 
-    * By default, it will configure:
+    * Classic email/password registration as a backup.
+    * Email verification flow (optional for passkey-only users).
 
-        * `DB_CONNECTION=mysql`
-        * `DB_HOST=mysql`, `DB_PORT=3306`
-        * `DB_USERNAME=sail`, `DB_PASSWORD=password`
-        * `REDIS_CLIENT=valkey`, along with `VALKEY_HOST=valkey`, `VALKEY_PORT=6379`, `VALKEY_PASSWORD=`
-        * `APP_URL=http://localhost` (you can override)
+* **(Future) Third-Party Verification**
 
-3. **Bring up Sail containers**
-
-   ```bash
-   ./vendor/bin/sail up -d
-   ```
-
-   This command will:
-
-    * Start MySQL at `mysql:3306`
-    * Start Valkey (instead of Redis) at `valkey:6379`
-    * Spin up PHP, Nginx, and any other configured services
-
-4. **Run migrations & seeders**
-
-   ```bash
-   ./vendor/bin/sail artisan migrate --force
-   ./vendor/bin/sail artisan db:seed --force
-   ```
-
-5. **Access your application**
-   Open your browser to `http://localhost` (or whatever you set `APP_URL` to).
-
-6. **Stopping Sail**
-
-   ```bash
-   ./vendor/bin/sail down
-   ```
-
-   This will tear down all containers.
+    * Potential integration with Itsme (or similar) for identity checks—depending on cost/feasibility.
 
 ---
 
-## Laravel Herd (Free & Pro)
+### Location & Activity
 
-**Laravel Herd** (macOS) provides a lightweight native PHP + MySQL/Postgres environment. Use Herd Free for a simple
-`.test` domain without TLS, or Herd Pro if you want HTTPS + custom domains.
+* **Mandatory GPS location**
 
-### 1. Herd Free
+    * Each user’s true geolocation is captured (via browser or mobile GPS).
+    * No VPN/spoofing: location must meet accuracy thresholds before browsing or matching.
 
-1. **Install Herd Free** from laravel.com/desktop if you haven’t already.
-2. **Point Herd to this project folder** (e.g. in Herd’s dashboard, add a new site and select your repo directory).
-3. **Specify your desired `.test` domain** in Herd’s site settings (e.g. `my-app.test`). Herd Free auto-configs PHP and
-   MySQL.
-4. **Run `core:init --env=herd-free`**
+* **Active‐Only Visibility**
 
-   ```bash
-   php artisan core:init --env=herd-free
-   ```
-
-    * Defaults to `DB_CONNECTION=pgsql`, `DB_HOST=127.0.0.1`, `DB_PORT=5432` (PostgreSQL).
-    * Asks for database name (e.g. `laravel`), user (e.g. `postgres`), password (often blank).
-    * Suggests `APP_URL=http://my-app.test`.
-5. **Create / migrate your database**
-   Herd Free typically provides a local Postgres instance listening on port 5432. Ensure you’ve created the database
-   name you specified in Step 4. Then run:
-
-   ```bash
-   php artisan migrate --force
-   php artisan db:seed --force
-   ```
-6. **Visit your site**
-   Open browser to `http://my-app.test`.
-
-### 2. Herd Pro
-
-1. **Install Herd Pro** and create a profile for your app, choosing a custom domain (e.g. `https://my-app.local`). Herd
-   Pro will handle TLS for you.
-2. **Run `core:init --env=herd-pro`**
-
-   ```bash
-   php artisan core:init --env=herd-pro
-   ```
-
-    * Defaults to Postgres (`DB_CONNECTION=pgsql`, etc.).
-    * Prompts you to enter your Herd Pro URL (e.g. `https://my-app.local`).
-3. **Ensure your Postgres database exists** (create via `psql` or a GUI).
-4. **Run migrations & seeders**
-
-   ```bash
-   php artisan migrate --force
-   php artisan db:seed --force
-   ```
-5. **Preview in browser**
-   Visit `https://my-app.local` (Herd’s TLS layer is already in place).
+    * Users who haven’t liked, chatted, or browsed in the last 48 hours are temporarily hidden.
+    * Encourages continual engagement and reduces ghost-user clutter.
 
 ---
 
-## MAMP Pro
+### Matching & Browsing
 
-**MAMP Pro** is a popular macOS stack (Apache/PHP/MySQL). This section assumes you have MAMP Pro installed and
-configured.
+* **No Black-Box Algorithms**
 
-1. **Open MAMP Pro** and create a new Virtual Host, pointing to this project’s folder.
-2. **Assign a hostname** (e.g. `my-app.test`) and port (usually `8888` for HTTP, `8889` for MySQL).
-3. **Run `core:init --env=mamp`**
+    * Browse all available, active, and location-proximate profiles in a simple grid or list.
+    * No “smart sort,” “ranking,” or “Elo” behind the scenes.
 
-   ```bash
-   php artisan core:init --env=mamp
-   ```
+* **Meilisearch (or TypeSense) via Laravel Scout**
 
-    * Prompts for:
+    * Full-text search on profile fields (interests, bio, tags).
+    * Faceted filters (age range, gender preference, distance radius).
 
-        * `DB_HOST` (default: `127.0.0.1`)
-        * `DB_PORT` (default: `8889`)
-        * `DB_DATABASE` (e.g. `laravel`)
-        * `DB_USERNAME` (e.g. `root`)
-        * `DB_PASSWORD` (e.g. `root`)
-        * `APP_URL` (e.g. `http://localhost:8888` or your custom hostname)
-4. **Start MAMP Pro servers** (Apache & MySQL).
-5. **Create / migrate your database**
-   In MAMP Pro, open “Tools → phpMyAdmin” (or use `mysql` CLI) to create the database name you specified. Then, from
-   your terminal:
+* **Mutual Match Lock**
 
-   ```bash
-   php artisan migrate --force
-   php artisan db:seed --force
-   ```
-6. **Open your site**
-   Visit `http://localhost:8888` (or your chosen hostname) to see the app.
+    * When A likes B and B likes A, they become a “locked match.”
+    * Neither can like anyone else until the match is explicitly broken by one party.
 
 ---
 
-## Common Commands & Tips
+### Messaging & Communication
 
-* **Run Laravel Tinker**
+* **Destructive Chat**
 
-  ```bash
-  php artisan tinker
-  ```
-* **Clear & cache configuration**
+    * Messages persist only for the lifetime of the match.
+    * If User A or B unmatches, all exchanged messages are deleted.
 
-  ```bash
-  php artisan config:clear
-  php artisan config:cache
-  php artisan route:clear
-  php artisan route:cache
-  php artisan view:clear
-  php artisan view:cache
-  ```
-* **Creating a New Migration**
+* **Icebreaker Prompts**
 
-  ```bash
-  php artisan make:migration create_foo_table
-  ```
-* **Generating a New Controller**
+    * When a new chat opens, pre-built “icebreaker” questions or conversation starters appear.
+    * Helps avoid awkward silences and keeps engagement high.
 
-  ```bash
-  php artisan make:controller FooController
-  ```
+* **(Future) WebRTC Integration**
 
-> **Note:** If you make changes to `.env` outside of `core:init`, run `php artisan config:clear` to pick them up.
+    * Voice or video calls within the browser/mobile—no external apps.
+    * Peer-to-peer media via Laravel broadcasting or a TURN/STUN server.
+
+* **Real-Time Notifications**
+
+    * Use \[Laravel WebSockets / Reverb] to push new likes, matches, and messages instantly.
 
 ---
 
-## Summary
+### User Experience Enhancements
 
-1. **Clone & install dependencies** (`composer install`, `npm ci`, `npm run dev`).
-2. **Run** `php artisan core:init` **and choose** `herd-free`, `herd-pro`, `sail`, or `mamp`.
-3. **Bring up services**:
+* **Intuitive, Livewire-Powered UI**
 
-    * **Sail** → `./vendor/bin/sail up -d`
-    * **Herd Free/Pro** → toggle on the site in Herd’s GUI
-    * **MAMP Pro** → click “Start Servers” in MAMP
-4. **Create database** (ensure it exists based on your choice)
-5. **Run migrations & seeds** (`php artisan migrate --force`, `php artisan db:seed --force`)
-6. **Visit your chosen `APP_URL`** and you’re ready to develop!
+    * Dynamic, server-driven components minimize JavaScript complexity.
+    * Blade views focus on layout and design only.
 
-That’s it—you should now have a fully functional local environment tailored to your preference (Sail, Herd, or MAMP
-Pro). Happy coding!
+* **Transparent “Break Up” Flow**
+
+    * Clear UI for ending a match.
+    * Upon unmatching, both parties see a confirmation and chat history disappears.
+
+* **Profile Completeness Meter** (optional)
+
+    * Encourage users to fill out bio, add photos, set preferences.
+    * Light UX nudge, not a “score” that gates functionality.
+
+---
+
+## Technology Stack
+
+### Backend
+
+* **Laravel 12.x**
+
+    * Core framework for routing, Eloquent ORM, database migrations, etc.
+
+* **PostgreSQL**
+
+    * Depending on hosting environment (MAMP has no postgres).
+
+* **Laravel Sail / Docker** (dev)
+
+    * Containerized development environment.
+    * Valkey (Redis alternative) for caching/queue in Sail.
+
+* **Herd (Free & Pro) / MAMP Pro** (macOS dev)
+
+    * Native PHP/Postgres or Apache/MySQL stacks.
+
+---
+
+### Frontend / Livewire
+
+* **Blade + Livewire**
+
+    * Real-time components without building a separate SPA.
+    * Leverages server-side rendering for initial load + minimal JS complexity.
+
+* **Flowbite + Custom Theme**
+
+    * Reusable UI components (buttons, navigation, forms, modals).
+    * Custom Blade layouts for branding and UX consistency.
+
+---
+
+### Search & Discovery
+
+* **Laravel Scout**
+
+    * Abstract layer to integrate various search engines.
+
+* **Meilisearch** (or **TypeSense**)
+
+    * Blazing-fast, typo-tolerant search for profiles.
+    * Used for full-text queries, filtering, and faceting.
+
+---
+
+### Real-Time & Notifications
+
+* **Laravel WebSockets (Laravel Reverb)**
+
+    * Self-hosted WebSocket server for broadcasting events.
+    * Push notifications: new likes, matches, chat messages in real time.
+
+* **Event Broadcasting**
+
+    * Laravel’s native broadcasting (Pusher protocol) to notify the front end.
+
+---
+
+### Optional & Future Integrations
+
+* **WebAuthn (FIDO2)**
+
+    * Leverage the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package for full passkey flows.
+
+* **WebRTC**
+
+    * Peer-to-peer audio/video calls.
+    * Might require a TURN/STUN server or a third-party service like Twilio.
+
+* **Itsme or Other KYC Providers**
+
+    * For commercial identity verification (e.g., Belgian Itsme).
+    * Evaluate pricing and API reliability before full integration.
+
+---
+
+## Data Models & Matching Logic
+
+1. **Users** (`users` table)
+
+    * Standard Laravel authentication fields (`email`, `password`, etc.)
+    * Passkey columns (`webauthn_credentials`, etc.) if using WebAuthn.
+    * Profile completeness flags, location data (`latitude`, `longitude`, `last_active_at`).
+
+2. **Profiles** (`profiles` table; one-to-one)
+
+    * Extended bio, interests, age, gender, preferences, photos (JSON or related table).
+    * Indexable fields for Meilisearch (e.g., `bio`, `tags`, `city`, `state`).
+
+3. **Likes** (`likes` table)
+
+    * `liker_id` → `likee_id`; timestamp for when the “like” occurred.
+    * Unique constraint on `(liker_id, likee_id)`.
+
+4. **Matches** (`matches` table)
+
+    * Created when User A and B mutually like each other.
+    * Fields: `user_a_id`, `user_b_id`, `created_at`, `status` (active/ended).
+    * Enforce rule: once matched, neither party can initiate another “like” until they unmatch.
+
+5. **Messages** (`messages` table)
+
+    * `match_id` foreign key, `sender_id`, `body`, `created_at`.
+    * On “unmatch,” cascade delete all messages for that `match_id`.
+
+6. **Icebreakers** (`icebreakers` table; optional)
+
+    * Predefined prompts to help start a conversation.
+    * Each message is inserted when a new match is created.
+
+---
+
+## Additional Pages & Documentation
+
+* **Security Center**
+
+    * Guides on safe swiping, reporting abuse, managing privacy settings (e.g., “hide from searches”).
+    * Explains how location data is used & stored.
+
+* **FAQ & Legal**
+
+    * Standard “Frequently Asked Questions” page (livewire or static blade).
+    * Terms of Service & Privacy Policy (legal requirements).
+
+---
+
+## Handling Abuse & Moderation
+
+1. **User Reporting**
+
+    * Users can report profiles or chats from within the match or profile view.
+    * “Reports” table logs `reporter_id`, `reported_user_id`, `reason`, `details`, `created_at`.
+
+2. **Anti-Spam / Automated Checks**
+
+    * Basic rate limiting: no more than X likes per minute/hour.
+    * Re‐use Laravel’s throttling middleware (or a custom solution) to prevent bots.
+
+3. **Dirty Content / Inappropriate Photos**
+
+    * Flagging system: if a photo is flagged by multiple users, it’s automatically hidden pending review.
+    * (Future) Third-party image moderation API (e.g., Google Vision SafeSearch or a paid service).
+
+4. **Scammer / Bad Intent Users**
+
+    * If a user is flagged > N times, temporarily suspend or require identity verification via Itsme / KYC.
+    * Admin dashboard (in a “Core/Admin” module) to review flags and enforce bans.
+
+---
+
+## Scalability & Performance Notes
+
+* **Livewire & Server Rendering**
+
+    * Livewire keeps most logic server‐side, but may require careful caching of components (with `@cache`).
+    * Limit excessive reactivity on high-traffic pages (e.g., browsing thousands of profiles).
+
+* **Search Engine**
+
+    * Meilisearch can be self-hosted or run in a managed cluster for production.
+    * For very large data sets (> 1M profiles), consider sharding or switching to TypeSense.
+
+* **WebSockets**
+
+    * Use a dedicated server (Soketi/laravel-websockets) behind a load balancer.
+    * Horizontal scaling: ensure sticky sessions or Redis as the WebSocket broadcaster.
+
+* **Geohashing / Proximity Queries**
+
+    * For location-based browsing, use a geospatial index (latitude/longitude) or a geohash column.
+    * Meilisearch supports radius filters, but for extremely high traffic, move to a specialized geospatial database
+      like PostGIS.
+
+* **Resource Cleanup**
+
+    * Periodic jobs to delete expired matches, messages, or flagged content.
+    * Laravel’s scheduler (cron) handles daily pruning tasks.
+
+---
+
+## Next Steps & Roadmap
+
+1. **Finalize Core MVP**
+
+    * Registration & login flows (Classic + WebAuthn).
+    * Basic profile creation and browsing.
+    * Mutual match logic and destructive messaging.
+
+2. **Deploy Search & Real-Time**
+
+    * Meilisearch integration with Laravel Scout.
+    * WebSocket server (Soketi / Reverb) for instant notifications.
+
+3. **User Reporting & Moderation**
+
+    * Build admin dashboard to handle flags, bans, and content review.
+    * Integrate basic image moderation API for profile photos.
+
+4. **User Engagement Features**
+
+    * Icebreaker questions library + UI.
+    * In-app notifications (e.g., via Toasts or a dropdown).
+
+5. **(Optional) Voice/Video Calling**
+
+    * Prototype WebRTC inside a Livewire dialog.
+    * Evaluate TURN/STUN server solutions or third-party SDKs.
+
+6. **Identity Verification (Itsme or KYC)**
+
+    * Research pricing and API reliability.
+    * Add an optional “verified user” badge for higher trust.
+
+7. **Performance Audit & Scaling Plan**
+
+    * Load test browsing and match flows.
+    * Adjust MySQL/Postgres indexing, caching layers, and server resources.
+
+---
+
+**Note**: This project is a learning exercise—a demonstration of building a complex, real-time application with Laravel
+Livewire. If the codebase’s performance becomes a bottleneck at scale, consider migrating critical user-facing flows (
+browsing, chatting) to a dedicated frontend framework like Next.js or Nuxt.js, backed by Laravel APIs.
