@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Testimonial\Providers;
+namespace Modules\ClassicAuth\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -10,21 +10,19 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-final class TestimonialServiceProvider extends ServiceProvider
+final class PrimaryServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Testimonial';
+    protected string $name = 'ClassicAuth';
 
-    protected string $nameLower = 'testimonial';
+    protected string $nameLower = 'classicauth';
 
     /**
      * Boot the application events.
      */
     public function boot(): void
     {
-        $this->registerCommands();
-        $this->registerCommandSchedules();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
