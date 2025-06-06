@@ -129,4 +129,16 @@ final class ProfileFactory extends Factory
             'lng' => $faker->longitude,
         ];
     }
+
+    public function configure(): self
+    {
+        return $this->afterCreating(function (Profile $profile) {
+            // Delete any other “empty” profile for this user, so that
+            // $user->profile() will point at *this* one from now on:
+            $user = $profile->user;
+            $user->profile()
+                ->where('id', '!=', $profile->id)
+                ->delete();
+        });
+    }
 }

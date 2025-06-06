@@ -4,32 +4,28 @@ declare(strict_types=1);
 
 use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
-use Modules\Settings\Livewire\Pages\Account;
-use Modules\Settings\Livewire\Pages\Images;
-use Modules\Settings\Livewire\Pages\Preferences;
-use Modules\Settings\Livewire\Pages\Profile;
 
 // name it whatever makes sense—you can even scope by directory
-dataset('settings pages', [
-    'account' => [
-        'routeName' => 'settings.account',
-        'componentClass' => Account::class,
+dataset('onboarding pages', [
+    'step1' => [
+        'routeName' => 'onboard.step1',
+        'componentClass' => Modules\OnboardUser\Livewire\Step1::class,
         'limit' => 30,
     ],
 
-    'profile' => [
-        'routeName' => 'settings.profile',
-        'componentClass' => Profile::class,
+    'step2' => [
+        'routeName' => 'onboard.step2',
+        'componentClass' => Modules\OnboardUser\Livewire\Step2::class,
         'limit' => 30,
     ],
-    'preferences' => [
-        'routeName' => 'settings.preferences',
-        'componentClass' => Preferences::class,
+    'step3' => [
+        'routeName' => 'onboard.step3',
+        'componentClass' => Modules\OnboardUser\Livewire\Step3::class,
         'limit' => 30,
     ],
-    'images' => [
-        'routeName' => 'settings.images',
-        'componentClass' => Images::class,
+    'finalstep' => [
+        'routeName' => 'onboard.finalstep',
+        'componentClass' => Modules\OnboardUser\Livewire\Finalstep::class,
         'limit' => 30,
     ],
 
@@ -53,7 +49,7 @@ it('renders the Livewire component', function (
 ) {
     Livewire::test($componentClass)
         ->assertStatus(200);
-})->with('settings pages');
+})->with('onboarding pages');
 
 it('responds OK over HTTP', function (
     string $routeName,
@@ -62,7 +58,7 @@ it('responds OK over HTTP', function (
 ) {
     $this->get(route($routeName))
         ->assertOk();
-})->with('settings pages');
+})->with('onboarding pages');
 
 it('throttles after the configured limit', function (
     string $routeName,
@@ -76,4 +72,4 @@ it('throttles after the configured limit', function (
     }
 
     $this->get($url)->assertStatus(429);
-})->with('settings pages');
+})->with('onboarding pages');

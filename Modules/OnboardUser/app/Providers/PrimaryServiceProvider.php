@@ -44,7 +44,6 @@ final class PrimaryServiceProvider extends ServiceProvider
     {
         Factory::macro('verifiedAndOnboarded', function () {
             return $this->state(fn (array $attrs) => [
-                'email_verified_at' => now(),
                 'onboarding_complete' => true,
                 'onboarding_steps' => ['location' => true, 'profile' => true, 'final' => true],
             ]);

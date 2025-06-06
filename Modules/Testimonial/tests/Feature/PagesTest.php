@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\RateLimiter;
 dataset('pages', [
     'Testimonial overview' => [
         'routeName' => 'testimonials.index',
-        'componentClass' => \Modules\Testimonial\Livewire\Pages\Index::class,
+        'componentClass' => Modules\Testimonial\Livewire\Pages\Index::class,
         'limit' => 60,
     ],
 ]);

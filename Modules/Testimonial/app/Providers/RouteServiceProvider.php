@@ -38,5 +38,4 @@ final class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware(['web', 'throttle:info-pages'])->group(module_path($this->name, '/routes/web.php'));
     }
-
 }

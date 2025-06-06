@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\RateLimiter;
 dataset('pages', [
     'statistics overview' => [
         'routeName' => 'statistics',
-        'componentClass' => \Modules\Statistics\Livewire\Pages\Index::class,
+        'componentClass' => Modules\Statistics\Livewire\Pages\Index::class,
         'limit' => 60,
     ],
 ]);
