@@ -40,6 +40,7 @@ and also [mhmiton/laravel-modules-livewire](https://github.com/mhmiton/laravel-m
 
 ## Core
 
+> [!IMPORTANT]
 > **Notice:** Do **not** delete any composer or npm packages
 
 The **Core** module contains foundational code shared across the application. Outside of the `Modules/` directory, we
@@ -69,6 +70,7 @@ strive to keep Laravel’s default files unchanged. In the Core module, you will
 
 These modules provide reusable UI components and layouts.
 
+> [!IMPORTANT]
 > **Note:** You should **not** modify Livewire logic here—only adjust Blade templates as needed.
 
 ### Flowbite
@@ -103,12 +105,14 @@ These modules handle all user authentication flows.
 
 > **Note:** They are reusable—only Blade views (form layout,
 > styling) should be changed, not business logic.<br>
-> **Do enable both WebAuthn or ClassicAuth** because they share the same route names, enable only one of the two.
 
-> **Depends on:** Flowbite, CustomTheme for the input fields, layouts, icons, svg's,
+> [!IMPORTANT]
+> **Do enable both WebAuthn or ClassicAuth** because they share the same route names, enable only one of the two.<br>
+> **All mentioned modules depend on:** Flowbite, CustomTheme for the input fields, layouts, icons, svg's,
 
 ### Auth Module
 
+> [!IMPORTANT]
 > **Keep always enabled**
 
 * **Purpose**: Manage email verification, password resets, and passkey recovery flows.
@@ -123,6 +127,7 @@ These modules handle all user authentication flows.
 
 ### WebAuthn Module
 
+> [!IMPORTANT]
 > **Depends on:** Auth for forgot blade view
 > <br>**Notice:** Will only work with https scheme
 
@@ -148,6 +153,7 @@ These modules handle all user authentication flows.
 
 ### ClassicAuth Module
 
+> [!IMPORTANT]
 > **Depends on:** Auth for forgot blade view
 
 * **Purpose**: Traditional email/password login and registration flows (non‐passkey).
@@ -175,6 +181,7 @@ These modules handle all user authentication flows.
 These modules are generic functionality that any project might reuse. They do not depend on business‐specific logic and
 can be copied to other apps with minimal changes.
 
+> [!IMPORTANT]
 > **All mentioned modules depends on:** Flowbite, CustomTheme for the input fields, layouts, icons, svg's
 
 ### Page
@@ -220,6 +227,7 @@ can be copied to other apps with minimal changes.
 These modules implement features unique to this application’s domain (e.g., a social/browsing site). They rely on
 project models and business logic, so they are not as reusable in other contexts.
 
+> [!IMPORTANT]
 > **All mentioned modules depends on:** Flowbite, CustomTheme for the input fields, layouts, icons, svg's
 
 ### Browser
@@ -260,6 +268,7 @@ project models and business logic, so they are not as reusable in other contexts
 
     * Mount this module to give users full control over their account and profile data.
 
+> [!IMPORTANT]
 > **Depends on:** WebAuthn if Webauthn is enabled for settings > account > passkeys component
 
 ### Statistics
