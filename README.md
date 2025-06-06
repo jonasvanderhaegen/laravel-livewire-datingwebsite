@@ -5,6 +5,7 @@
 A high‐level overview of this project, outlining its goals, core features, and technology choices. This is intended as a
 reference for developers joining the team or exploring the codebase.
 
+> [!TIP]
 > **For developers**, [go here for technical documentation](docs/README.md)
 
 ---
