@@ -447,7 +447,7 @@
                                         <a
                                             href="{{ route('protected.discover') }}"
                                             wire:navigate.hover
-                                            class="inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                                            class="inline-flex items-center rounded-full bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                                         >
                                             {{ __('page::home.hero.cta.discover') }}
                                             <svg
