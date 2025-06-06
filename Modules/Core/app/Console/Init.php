@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Core\Console;
 
 use Illuminate\Console\Command;
@@ -27,7 +29,7 @@ final class Init extends Command
         $this->info('▶ Starting initialization.');
 
         // 1) Ensure .env exists
-        if (!File::exists(base_path('.env'))) {
+        if (! File::exists(base_path('.env'))) {
             $this->info('No .env file found. Copying .env.example → .env');
             File::copy(base_path('.env.example'), base_path('.env'));
         }
@@ -42,10 +44,10 @@ final class Init extends Command
         }
 
         // 3) Determine the environment choice
-        $envOption = strtolower((string) $this->option('env'));
+        $envOption = mb_strtolower((string) $this->option('env'));
         $validEnvs = ['sail', 'herd-free', 'herd-pro', 'mamp'];
 
-        if (!in_array($envOption, $validEnvs, true)) {
+        if (! in_array($envOption, $validEnvs, true)) {
             $envOption = $this->choice(
                 'Which local environment are you using?',
                 ['herd-free', 'herd-pro', 'sail', 'mamp'],
@@ -162,7 +164,7 @@ final class Init extends Command
     {
         $envPath = base_path('.env');
 
-        if (!File::exists($envPath)) {
+        if (! File::exists($envPath)) {
             // If .env somehow disappeared, re-create
             File::copy(base_path('.env.example'), $envPath);
         }

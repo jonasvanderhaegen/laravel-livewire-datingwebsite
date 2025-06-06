@@ -74,10 +74,10 @@ final class GeneralComponent extends Component
         return cache()->remember(
             "settings:account:general:{$this->userId}",
             now()->addMinutes(60),
-            fn() => User::with([
+            fn () => User::with([
                 'profile' => function ($q) {
                     $q->select('user_id', 'birth_date');
-                }
+                },
             ])
                 ->select('id', 'name')
                 ->find(auth()->id())
