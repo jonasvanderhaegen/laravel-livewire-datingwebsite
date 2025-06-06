@@ -198,6 +198,19 @@
                             ></div>
                         </a>
                     </div>
+                    <div class="hidden h-3 w-0.5 bg-gray-500 md:block"></div>
+                    <div class="flex gap-1">
+                        <div>Shout-out for background at</div>
+                        <a
+                            href="https://www.worksmarter.be/"
+                            target="_blank"
+                            class="group relative font-medium text-slate-50 transition duration-200 hover:text-white"
+                            aria-label="Caneco's Twitter profile"
+                            rel="noopener noreferrer"
+                        >
+                            WorkSmarter
+                        </a>
+                    </div>
                 </div>
                 <div
                     x-init="
