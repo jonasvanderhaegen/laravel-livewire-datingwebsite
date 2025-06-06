@@ -2,42 +2,46 @@
 
 declare(strict_types=1);
 
-namespace Modules\Contact\Providers;
+namespace Modules\OnboardUser\Providers;
 
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Spatie\Onboard\Facades\Onboard;
 
-final class ContactServiceProvider extends ServiceProvider
+final class PrimaryServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Contact';
+    protected string $name = 'OnboardUser';
 
-    protected string $nameLower = 'contact';
+    protected string $nameLower = 'onboarduser';
 
     /**
      * Boot the application events.
      */
     public function boot(): void
     {
+        Factory::macro('verifiedAndOnboarded', function () {
+            return $this->state(fn(array $attrs) => [
+                'email_verified_at' => now(),
+                'onboarding_complete' => true,
+                'onboarding_steps' => ['location' => true, 'profile' => true, 'final' => true],
+            ]);
+        });
+
         $this->registerCommands();
         $this->registerCommandSchedules();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-    }
 
-    /**
-     * Register the service provider.
-     */
-    public function register(): void
-    {
-        $this->app->register(EventServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
+        $this->registerSteps();
     }
 
     /**
@@ -69,6 +73,15 @@ final class ContactServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
 
         Blade::componentNamespace(config('modules.namespace').'\\'.$this->name.'\\View\\Components', $this->nameLower);
+    }
+
+    /**
+     * Register the service provider.
+     */
+    public function register(): void
+    {
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
 
     /**
@@ -140,6 +153,18 @@ final class ContactServiceProvider extends ServiceProvider
         $module_config = require $path;
 
         config([$key => array_replace_recursive($existing, $module_config)]);
+    }
+
+    protected function registerSteps(): void
+    {
+        foreach (config('onboarduser.steps') as $key => $opts) {
+
+            Onboard::addStep($opts['label'])
+                ->link($opts['route'])
+                ->cta($opts['cta'] ?? 'Next')
+                ->completeIf(fn(User $model
+                ) => $model->hasOnboardingStep($opts['complete'] ?? $key));
+        }
     }
 
     private function getPublishableViewPaths(): array

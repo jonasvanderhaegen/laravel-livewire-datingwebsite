@@ -10,7 +10,7 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-final class StatisticsServiceProvider extends ServiceProvider
+final class PrimaryServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 

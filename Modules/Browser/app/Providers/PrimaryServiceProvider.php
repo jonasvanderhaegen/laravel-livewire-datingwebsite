@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Settings\Providers;
+namespace Modules\Browser\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -10,13 +10,13 @@ use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-final class SettingsServiceProvider extends ServiceProvider
+final class PrimaryServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Settings';
+    protected string $name = 'Browser';
 
-    protected string $nameLower = 'settings';
+    protected string $nameLower = 'browser';
 
     /**
      * Boot the application events.
