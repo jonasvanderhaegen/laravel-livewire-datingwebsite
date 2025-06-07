@@ -10,6 +10,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    env:
       SCOUT_DRIVER: meilisearch
       SCOUT_QUEUE: true
       MEILISEARCH_HOST: http://127.0.0.1:7700
