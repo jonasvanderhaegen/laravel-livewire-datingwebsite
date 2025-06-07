@@ -75,7 +75,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Create meilisearch index
-        run: php artisan scout:import "App\Models\Profile"
+        run: php artisan scout:import "Modules\Profile\Models\Profile"
 
       - name: Run Tests
         env:
