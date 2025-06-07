@@ -83,9 +83,6 @@ jobs:
       - name: Create meilisearch index
         run: php artisan scout:import "Modules\Profile\Models\Profile"
 
-      - name: Sync your configured index settings
-        run: php artisan scout:sync-index-settings
-
       - name: Run Tests
         env:
           MEILISEARCH_KEY: G6oifHLMJ6skToyN9fwgMZLbvqxxwgaUrw9f8eOVB7s
