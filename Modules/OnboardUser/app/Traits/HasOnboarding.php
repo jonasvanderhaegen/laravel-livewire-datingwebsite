@@ -56,7 +56,7 @@ trait HasOnboarding
         $steps = $this->onboarding_steps ?? [];
 
         // coerce anything truthy/”1” to boolean
-        return ! empty($steps[$step]);
+        return !empty($steps[$step]);
 
         // return data_get($this->onboarding_steps, $step, false) === true;
     }
@@ -72,14 +72,19 @@ trait HasOnboarding
     /**
      * Given an array of required steps, mark the
      * overall onboarding_complete flag if all are done.
+     *
+     * @param  string[]  $requiredSteps  List of step‐keys to check
      */
     public function finalizeOnboarding(array $requiredSteps): void
     {
-        $allDone = collect($this->onboarding_steps)
-            ->only($requiredSteps)
-            ->every(fn ($v) => $v === true);
+        /** @var array<string,bool> $stepsMap */
+        $stepsMap = $this->onboarding_steps ?? [];
 
-        if ($allDone && ! $this->onboarding_complete) {
+        $allDone = collect($stepsMap)
+            ->only($requiredSteps)
+            ->every(fn($v) => $v === true);
+
+        if ($allDone && !$this->onboarding_complete) {
             $this->setAttribute('onboarding_complete', true);
             $this->saveQuietly();
         }

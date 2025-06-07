@@ -13,7 +13,7 @@ final class RedirectToUnfinishedOnboardingStep
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if (! $user) {
+        if (!$user) {
             return $next($request);
         }
 
@@ -23,13 +23,19 @@ final class RedirectToUnfinishedOnboardingStep
             // get all steps, drop those excluded, then pick the first incomplete
             $nextStep = $onboarding
                 ->steps()
-                ->filter(fn ($step) => $step->notExcluded())
-                ->first(fn ($step) => $step->incomplete());
+                ->filter(fn($step) => $step->notExcluded())
+                ->first(fn($step) => $step->incomplete());
 
             if ($nextStep) {
 
-                $pattern = mb_ltrim(parse_url((string) $nextStep->link, PHP_URL_PATH), '/');
-                if (! $request->is($pattern)) {
+                // Safely extract and normalize the path
+                $rawPath = parse_url((string) $nextStep->link, PHP_URL_PATH);
+
+                $path = is_string($rawPath) ? $rawPath : '';
+
+                $pattern = mb_ltrim($path, '/');
+
+                if (!$request->is($pattern)) {
                     return redirect($nextStep->link)
                         ->warning('In order to start looking for people we first must have some information about you');
                 }

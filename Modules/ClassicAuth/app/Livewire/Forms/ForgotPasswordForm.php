@@ -17,6 +17,9 @@ final class ForgotPasswordForm extends Form
 
     public string $email = '';
 
+    /**
+     * @return array<string, mixed[]>  Lists each field’s validation rules.
+     */
     public function rules(): array
     {
         return [
@@ -86,8 +89,6 @@ final class ForgotPasswordForm extends Form
                     $this->rateLimitByEmail(2, 3600, $this->email, 'forgotPassword');
                 } catch (TooManyRequestsException $e) {
                     throw $e;
-
-                    return;
                 }
 
                 break;
@@ -102,7 +103,6 @@ final class ForgotPasswordForm extends Form
                     ['Retry-After' => $throttle]
                 );
 
-                break;
 
             case Password::RESET_LINK_SENT:
                 $this->reset('email');

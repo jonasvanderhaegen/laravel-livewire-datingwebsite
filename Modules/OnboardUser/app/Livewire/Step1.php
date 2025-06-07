@@ -11,6 +11,10 @@ use Modules\CustomTheme\Livewire\Layouts\General;
 
 final class Step1 extends General
 {
+
+    /**
+     * @var array<string,string>  Livewire event → handler mappings
+     */
     public $listeners = [
         'locationEnabled' => 'handleMountedData',
     ];
@@ -25,7 +29,7 @@ final class Step1 extends General
 
     public function goNextStep(): void
     {
-        if (! auth()->user()->hasOnboardingStep('location')) {
+        if (!auth()->user()->hasOnboardingStep('location')) {
             auth()->user()->markOnboardingStep('location');
             Toaster::success('Location saved, on to next and last step');
         }

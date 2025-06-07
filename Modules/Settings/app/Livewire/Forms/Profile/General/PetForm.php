@@ -14,7 +14,7 @@ final class PetForm extends Form
     use SelectSummary;
 
     /**
-     * @var Collection<int, int|string>|null
+     * @var Collection<int,mixed>|null
      */
     public ?Collection $pets = null;
 

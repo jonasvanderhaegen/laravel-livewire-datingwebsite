@@ -29,6 +29,9 @@ final class ResetPasswordForm extends Form
 
     public string $password = '';
 
+    /**
+     * @return array<string, mixed[]>  Lists each field’s validation rules.
+     */
     public function rules(): array
     {
         return [
@@ -47,25 +50,22 @@ final class ResetPasswordForm extends Form
     public function resetPassword(): void
     {
         $this->validate();
+
         // 1) Quick IP‐burst guard: max 5 tries / minute
         try {
             $this->rateLimit(5, 60);
         } catch (TooManyRequestsException $e) {
-            throw $e;
-
-            return;
+            throw $e;          // PHPStan no longer sees code after this as “dead”
         }
 
         // 2) Account‐scoped guard: max 3 resets / hour per email
         try {
             $this->rateLimitByEmail(3, 3600, $this->email, 'resetPassword');
         } catch (TooManyRequestsException $e) {
-            throw $e;
-
-            return;
+            throw $e;          // same here: no trailing `return;`
         }
 
-        // 3) Attempt the actual password reset
+        // 3) Attempt the actual password reset…
         $status = Password::reset(
             $this->except(['secondsUntilReset']),
             function ($user) {
@@ -74,9 +74,7 @@ final class ResetPasswordForm extends Form
                     'remember_token' => Str::random(60),
                 ])->save();
 
-                // Automatically log them in
                 Auth::login($user);
-
                 event(new PasswordReset($user));
             }
         );
@@ -84,21 +82,17 @@ final class ResetPasswordForm extends Form
         // 4) Handle each status
         switch ($status) {
             case Password::PASSWORD_RESET:
-                // Success! Clear buckets and redirect
                 $this->clearRateLimiter();
                 $this->clearRateLimiter('resetPassword', $this->email);
                 Toaster::success(__($status));
-
                 return;
 
             case Password::INVALID_TOKEN:
-                // Invalid or expired token
                 throw ValidationException::withMessages([
                     'token' => Password::INVALID_TOKEN,
                 ]);
 
             default:
-                // Fallback for any other broker error
                 throw ValidationException::withMessages([
                     'email' => __($status),
                 ]);

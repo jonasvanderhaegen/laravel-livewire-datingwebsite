@@ -17,6 +17,9 @@ final class ProfileDynamicExtra extends Model
 
     protected $table = 'profile_dynamic_extras';
 
+    /**
+     * @return BelongsTo<Profile, $this>
+     */
     public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class);

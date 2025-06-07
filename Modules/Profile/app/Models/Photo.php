@@ -11,6 +11,9 @@ final class Photo extends Model
 {
     protected $fillable = [];
 
+    /**
+     * @return BelongsTo<Profile, $this>
+     */
     public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class);

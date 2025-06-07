@@ -13,6 +13,9 @@ final class Language extends Model
 
     protected $fillable = [];
 
+    /**
+     * @return BelongsToMany<Profile, $this>
+     */
     public function profile(): BelongsToMany
     {
         return $this->belongsToMany(Profile::class);

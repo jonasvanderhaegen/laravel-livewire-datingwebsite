@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Profile\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,13 +27,14 @@ use Modules\Profile\Models\Pivots\OrientationProfile;
 use Modules\Profile\Models\Pivots\PetProfile;
 
 /**
+ * @template-uses \Illuminate\Database\Eloquent\Factories\HasFactory<\Modules\Profile\Database\Factories\ProfileFactory>
+ * @method static \Modules\Profile\Database\Factories\ProfileFactory factory(...$parameters)
+ *
  * @property-read Collection|Pass[] $likes
  * @property-read Collection|Profile[] $likedByProfiles
  * @property string $first_name
  * @property string $last_name
- *
- * @mixin HasLikes
- *
+ **
  * @property bool $public
  * @property bool $js_location
  * @property float|null $lat
@@ -146,7 +148,7 @@ final class Profile extends Model
         $field = $field ?: $this->getRouteKeyName();
         $cacheKey = "profile.route.{$field}.{$value}";
 
-        $data = Cache::rememberForever($cacheKey, fn () => $this->loadForBinding($field, $value)->toArray());
+        $data = Cache::rememberForever($cacheKey, fn() => $this->loadForBinding($field, $value)->toArray());
         $model = new self;
         $model->exists = true;
         $model->setRawAttributes($data, true);
@@ -195,12 +197,15 @@ final class Profile extends Model
         return 'profiles_index';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toSearchableArray(): array
     {
         return [
             '_geo' => [
-                'lat' => (float) $this->lat ?? 0,
-                'lng' => (float) $this->lng ?? 0,
+                'lat' => $this->lat === null ? 0.0 : (float) $this->lat,
+                'lng' => $this->lng === null ? 0.0 : (float) $this->lng,
             ],
             'first name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -266,56 +271,86 @@ final class Profile extends Model
         ];
     }
 
+    /**
+     * @return BelongsToMany<Gender, $this, GenderProfile>
+     */
     public function genders(): BelongsToMany
     {
         return $this->belongsToMany(Gender::class)
             ->using(GenderProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Orientation, $this, OrientationProfile>
+     */
     public function orientations(): BelongsToMany
     {
         return $this->belongsToMany(Orientation::class)
             ->using(OrientationProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Ethnicity, $this, EthnicityProfile>
+     */
     public function ethnicities(): BelongsToMany
     {
         return $this->belongsToMany(Ethnicity::class)
             ->using(EthnicityProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Language, $this, LanguageProfile>
+     */
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class)
             ->using(LanguageProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Pet, $this, PetProfile>
+     */
     public function pets(): BelongsToMany
     {
         return $this->belongsToMany(Pet::class)
             ->using(PetProfile::class);
     }
 
+    /**
+     * @return HasMany<Photo, $this>
+     */
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
     }
 
+    /**
+     * @return BelongsToMany<Interest, $this>
+     */
     public function interests(): BelongsToMany
     {
         return $this->belongsToMany(Interest::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasOne<Preference, $this>
+     */
     public function preferences(): HasOne
     {
         return $this->hasOne(Preference::class);
     }
 
+    /**
+     * @return HasOne<ProfileDynamicExtra, $this>
+     */
     public function dynamicExtras(): HasOne
     {
         return $this->hasOne(ProfileDynamicExtra::class);
@@ -340,22 +375,36 @@ final class Profile extends Model
         });
     }
 
-    protected function name(): \Illuminate\Database\Eloquent\Casts\Attribute
+    /**
+     * @return Attribute<string, mixed>
+     */
+    protected function name(): Attribute
     {
-        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->user->name);
+        return Attribute::make(get: fn() => $this->user->name);
     }
 
-    protected function age(): \Illuminate\Database\Eloquent\Casts\Attribute
+    /**
+     * @return Attribute<string, mixed>
+     */
+    protected function age(): Attribute
     {
-        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->dynamicExtras->age);
+        return Attribute::make(get: fn() => $this->dynamicExtras->age);
     }
 
-    protected function birthDateFormatted(): \Illuminate\Database\Eloquent\Casts\Attribute
+    /**
+     * @return Attribute<string, mixed>
+     */
+    protected function birthDateFormatted(): Attribute
     {
-        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
+        return Attribute::make(get: fn() => $this->birth_date?->format('d-m-Y'));
     }
 
-    protected function loadForBinding(string $field, $value): self
+    /**
+     * @param  string  $field
+     * @param  int|string  $value
+     * @return Profile
+     */
+    protected function loadForBinding(string $field, int|string $value): self
     {
         return $this->newQuery()
             ->with([

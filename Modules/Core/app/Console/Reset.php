@@ -56,7 +56,7 @@ final class Reset extends Command
     }
 
     /**
-     * Get the console command arguments.
+     * @return array<int, mixed[]>
      */
     protected function getArguments(): array
     {
@@ -66,7 +66,7 @@ final class Reset extends Command
     }
 
     /**
-     * Get the console command options.
+     * @return array<int, mixed[]>
      */
     protected function getOptions(): array
     {

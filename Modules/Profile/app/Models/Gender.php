@@ -14,6 +14,9 @@ final class Gender extends Model
     protected $fillable = [
     ];
 
+    /**
+     * @return BelongsToMany<Profile, $this>
+     */
     public function profile(): BelongsToMany
     {
         return $this->belongsToMany(Profile::class);

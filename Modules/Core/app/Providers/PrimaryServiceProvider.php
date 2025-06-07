@@ -56,7 +56,6 @@ final class PrimaryServiceProvider extends ServiceProvider
     protected function registerCommands(): void
     {
         $this->commands([
-            Test::class,
             Reset::class,
             Init::class,
         ]);
