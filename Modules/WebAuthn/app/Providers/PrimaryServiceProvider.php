@@ -6,7 +6,6 @@ namespace Modules\WebAuthn\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
-use Modules\WebAuthn\Console\TestPasskey;
 
 final class PrimaryServiceProvider extends ServiceProvider
 {
@@ -30,9 +29,7 @@ final class PrimaryServiceProvider extends ServiceProvider
 
     public function registerCommands(): void
     {
-        $this->commands([
-            TestPasskey::class,
-        ]);
+        $this->commands([]);
     }
 
     /**

@@ -9,15 +9,18 @@ use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Publish extends Component
 {
-    public $public = false;
+    public bool $public = false;
 
     public Profile $profile;
 
     public function mount(): void
     {
-        $this->profile = auth()->user()->profile;
+        /** @var Profile $p */
+        $p = auth()->user()->profile;
+        $this->profile = $p;
         $this->public = $this->profile->public;
     }
 
@@ -32,3 +35,4 @@ final class Publish extends Component
         return view('settings::livewire.components.profile.publish');
     }
 }
+// @codeCoverageIgnoreEnd

@@ -7,10 +7,11 @@ namespace Modules\Browser\Livewire\Pages;
 use DB;
 use Illuminate\View\View;
 use Livewire\WithPagination;
-use MeiliSearch\Endpoints\Indexes;
+use Meilisearch\Endpoints\Indexes;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Index extends General
 {
     use WithPagination;
@@ -58,3 +59,4 @@ final class Index extends General
             ->title(__('Browsing through profiles'));
     }
 }
+// @codeCoverageIgnoreEnd

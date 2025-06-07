@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Modules\Profile\Models\Profile;
 
+/**
+ * @extends Factory<Profile>
+ */
 final class ProfileFactory extends Factory
 {
     /**
@@ -128,5 +131,15 @@ final class ProfileFactory extends Factory
             'lat' => $faker->latitude,
             'lng' => $faker->longitude,
         ];
+    }
+
+    public function configure(): self
+    {
+        return $this->afterCreating(function (Profile $profile) {
+            $user = $profile->user;
+            $user->profile()
+                ->where('id', '!=', $profile->id)
+                ->delete();
+        });
     }
 }

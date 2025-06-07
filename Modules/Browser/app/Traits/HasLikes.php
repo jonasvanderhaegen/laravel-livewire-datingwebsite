@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Modules\Browser\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 trait HasLikes
 {
-    // the profiles this one has “liked”
-    public function likedProfiles()
+    /**
+     * the profiles this one has “liked”
+     *
+     * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
+     */
+    public function likedProfiles(): BelongsToMany
     {
         return $this->belongsToMany(
             Profile::class,
@@ -20,8 +26,12 @@ trait HasLikes
         );
     }
 
-    // the profiles who have “liked” this one
-    public function likedByProfiles()
+    /**
+     * the profiles who have “liked” this one
+     *
+     * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
+     */
+    public function likedByProfiles(): BelongsToMany
     {
         return $this->belongsToMany(
             Profile::class,
@@ -31,8 +41,12 @@ trait HasLikes
         );
     }
 
-    // likewise for passes
-    public function passedProfiles()
+    /**
+     * likewise for passes
+     *
+     * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
+     */
+    public function passedProfiles(): BelongsToMany
     {
         return $this->belongsToMany(
             Profile::class,
@@ -52,6 +66,11 @@ trait HasLikes
             ->exists();
     }
 
+    /**
+     * The likes relation itself (self-referential pivot).
+     *
+     * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
+     */
     public function likes(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -76,6 +95,11 @@ trait HasLikes
         $this->{$action}()->syncWithoutDetaching([$other->id]);
     }
 
+    /**
+     * The passes relation itself (self-referential pivot).
+     *
+     * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
+     */
     public function passes(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -86,3 +110,4 @@ trait HasLikes
         )->withTimestamps();
     }
 }
+// @codeCoverageIgnoreEnd

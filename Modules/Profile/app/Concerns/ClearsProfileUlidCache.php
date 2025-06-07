@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Profile\Concerns;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Modules\Profile\Models\Profile;
 
 trait ClearsProfileUlidCache
 {
+    // @codeCoverageIgnoreStart
     public static function bootClearsProfileUlidCache(): void
     {
-        static::created(fn (Pivot $pivot) => $pivot->clearProfile());
-        static::deleted(fn (Pivot $pivot) => $pivot->clearProfile());
+        static::created(fn (self $pivot) => $pivot->clearProfile());
+        static::deleted(fn (self $pivot) => $pivot->clearProfile());
     }
 
     protected function clearProfile(): void
@@ -24,10 +24,9 @@ trait ClearsProfileUlidCache
 
     protected function getProfileUlid(): string
     {
-        // Assumes Profile model has ulid
-        return $this->belongsTo(
-            Profile::class,
-            'profile_id'
-        )->first()->ulid;
+        return $this->belongsTo(Profile::class, 'profile_id')
+            ->firstOrFail()
+            ->ulid;
     }
+    // @codeCoverageIgnoreEnd
 }

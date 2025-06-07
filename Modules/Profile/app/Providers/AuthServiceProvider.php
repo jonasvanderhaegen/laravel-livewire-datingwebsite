@@ -26,12 +26,4 @@ final class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
     }
-
-    /**
-     * Get the services provided by the provider.
-     */
-    public function provides(): array
-    {
-        return [];
-    }
 }

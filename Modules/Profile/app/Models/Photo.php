@@ -7,25 +7,34 @@ namespace Modules\Profile\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
-// use Modules\Profile\Database\Factories\PhotoFactory;
+use Illuminate\Support\Str;
+use Modules\Profile\Database\Factories\PhotoFactory;
 
 final class Photo extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [];
 
-    // protected static function newFactory(): PhotoFactory
-    // {
-    //     // return PhotoFactory::new();
-    // }
-
+    /**
+     * @return BelongsTo<Profile, $this>
+     */
     public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    protected static function booted(): void
+    {
+        self::creating(function (Photo $photo) {
+            if (empty($photo->ulid)) {
+                $photo->ulid = (string) Str::ulid();
+            }
+        });
+    }
+
+    protected static function newFactory(): PhotoFactory
+    {
+        return PhotoFactory::new();
     }
 }

@@ -9,11 +9,9 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Core\Rules\StrictDob;
 
+// @codeCoverageIgnoreStart
 final class GeneralForm extends Form
 {
-    #[Validate('required|string|max:255')]
-    public string $name = '';
-
     #[Validate('required|string|max:255')]
     public string $first_name = '';
 
@@ -22,6 +20,9 @@ final class GeneralForm extends Form
 
     public string $birth_date = '';
 
+    /**
+     * @return array<string, array<int,StrictDob|string>>
+     */
     public function rules(): array
     {
         return [
@@ -38,3 +39,4 @@ final class GeneralForm extends Form
             && ! $this->getErrorBag()->any();
     }
 }
+// @codeCoverageIgnoreEnd

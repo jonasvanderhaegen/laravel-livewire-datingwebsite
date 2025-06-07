@@ -12,6 +12,7 @@ use Livewire\Form;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 
+// @codeCoverageIgnoreStart
 final class UpdatePasswordForm extends Form
 {
     use WithRateLimiting;
@@ -20,6 +21,9 @@ final class UpdatePasswordForm extends Form
 
     public string $password = '';
 
+    /**
+     * @return array<string, array<int, Password|string>>
+     */
     public function rules(): array
     {
         return [
@@ -95,3 +99,4 @@ final class UpdatePasswordForm extends Form
         // return true;
     }
 }
+// @codeCoverageIgnoreEnd

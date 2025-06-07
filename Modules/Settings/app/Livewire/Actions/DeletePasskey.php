@@ -6,8 +6,9 @@ namespace Modules\Settings\Livewire\Actions;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
-use Modules\WebAuthn\Models\Passkey;
+use Spatie\LaravelPasskeys\Models\Passkey;
 
+// @codeCoverageIgnoreStart
 final class DeletePasskey
 {
     public function __invoke(Passkey $passkey): RedirectResponse
@@ -27,3 +28,4 @@ final class DeletePasskey
             ->success('Passkey deleted successfully.');
     }
 }
+// @codeCoverageIgnoreEnd

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Components\Profile;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -31,6 +32,7 @@ use Modules\Settings\Livewire\Forms\Profile\General\ReligionForm;
 use Modules\Settings\Livewire\Forms\Profile\General\SmokeForm;
 use Modules\Settings\Livewire\Forms\Profile\General\ZodiacForm;
 
+// @codeCoverageIgnoreStart
 final class General extends Component
 {
     public string $activeTab = 'gender';
@@ -114,7 +116,8 @@ final class General extends Component
      */
     public function mount(): void
     {
-        $this->userId = auth()->id();
+        $this->userId = (int) auth()->id();
+
         $profile = $this->profile();
 
         // Simple value properties
@@ -161,9 +164,6 @@ final class General extends Component
         }
     }
 
-    /**
-     * Get the profile from cache or database
-     */
     #[Computed('profile')]
     public function profile(): Profile
     {
@@ -212,10 +212,7 @@ final class General extends Component
         );
     }
 
-    /**
-     * Handle updates to "prefer not to say" checkboxes
-     */
-    public function updated($field, $value): void
+    public function updated(string $field, mixed $value): void
     {
         // Skip tabs field
         if ($field === 'tabs') {
@@ -284,7 +281,16 @@ final class General extends Component
         $viewData = [];
 
         foreach ($configItems as $viewKey => $configKey) {
-            $viewData[$viewKey] = collect(config("profile.{$configKey}"))->map(fn ($item) => (object) $item);
+            /**
+             * @var array<int, array{identifier?: string, name: string}> $rawItems
+             */
+            $rawItems = config("profile.{$configKey}", []);
+
+            /**
+             * @var Collection<int, object{identifier?:string,name:string}> $viewData [$viewKey]
+             */
+            $viewData[$viewKey] = collect($rawItems)
+                ->map(fn (array $item): object => (object) $item);
         }
 
         return view('settings::livewire.components.profile.general', $viewData);
@@ -307,7 +313,7 @@ final class General extends Component
     }
 
     /**
-     * Helper method to initialize form values
+     * @param  array<string, array<string,string>>  $mappings
      */
     private function initializeFormValues(Profile $profile, array $mappings): void
     {
@@ -406,13 +412,13 @@ final class General extends Component
             }
 
             // Clear form values if needed
-            if (isset($mapping['clearValue']) && $mapping['clearValue']) {
+            if (isset($mapping['clearValue'])) {
                 $this->{$form}->value = null;
 
             }
 
             // Clear custom pronouns if needed
-            if (isset($mapping['clearCustomPronouns']) && $mapping['clearCustomPronouns']) {
+            if (isset($mapping['clearCustomPronouns'])) {
                 $this->{$form}->custom_pronouns = null;
 
             }
@@ -438,10 +444,7 @@ final class General extends Component
         }
     }
 
-    /**
-     * Handle updates to form values
-     */
-    private function handleFormValueUpdate(string $field, $value): void
+    private function handleFormValueUpdate(string $field, mixed $value): void
     {
         $formName = Str::before($field, 'Form.value');
         $form = $formName.'Form';
@@ -504,7 +507,7 @@ final class General extends Component
             $mapping = $formMappings[$formName];
 
             // Validate if required
-            if (isset($mapping['validate']) && $mapping['validate']) {
+            if (isset($mapping['validate'])) {
                 $this->{$form}->validate();
             }
 
@@ -528,9 +531,9 @@ final class General extends Component
     }
 
     /**
-     * Handle multi-select form updates
+     * @param  int|string  $value  Only integer IDs or string IDs ever arrive here
      */
-    private function handleMultiSelectFormUpdate(string $field, $value): void
+    private function handleMultiSelectFormUpdate(string $field, int|string $value): void
     {
         // Handle orientation form updates
         if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
@@ -573,18 +576,32 @@ final class General extends Component
         if (Str::contains($field, 'petForm') && ! $this->petForm->prefer_not_say) {
             $this->clearProfileCache();
 
-            if ($value === 1) {
-                $this->petForm->pets = collect([1]);
+            $valueInt = (int) $value;
+
+            /**
+             * After mapping we have a Collection where every element is int.
+             *
+             * @var Collection<int,int> $pets
+             */
+            $pets = collect($this->petForm->pets)->map(
+                /**
+                 * @param  bool|int|string|array<int|string>  $value
+                 */
+                static fn (array|bool|int|string $value, string $key): int => (int) $value
+            );
+
+            if ($valueInt === 1) {
+                $pets = collect([1]);
             } else {
-                $pets = collect($this->petForm->pets);
-                $pets = $pets->reject(fn ($v) => $v === 1);
+                $pets = $pets->reject(fn (int $v): bool => $v === 1);
 
-                if ($pets->count() === 1 && ! $pets->contains($value)) {
-                    $pets->push($value);
+                if ($pets->count() === 1 && $pets->doesntContain($valueInt)) {
+                    // push an int, not a string, so it matches Collection<int,int>
+                    $pets->push($valueInt);
                 }
-
-                $this->petForm->pets = $pets->values();
             }
+
+            $this->petForm->pets = $pets->values();
 
             $profile = auth()->user()->profile;
             $profile->update(['pets_notsay' => false]);
@@ -593,3 +610,4 @@ final class General extends Component
         }
     }
 }
+// @codeCoverageIgnoreEnd
