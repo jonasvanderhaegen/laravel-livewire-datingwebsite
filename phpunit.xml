@@ -4,6 +4,9 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
+    <logging>
+        <log type="coverage-html" target="./tests/Coverage/html"/>
+    </logging>
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>

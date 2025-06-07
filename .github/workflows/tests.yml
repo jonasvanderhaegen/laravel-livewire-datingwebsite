@@ -86,3 +86,12 @@ jobs:
 
       - name: Run Tests
         run: composer test
+
+      - name: Deploy coverage to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./tests/Coverage/html
+          publish_branch: gh-pages
+          # if you want it under a subpath like /coverage:
+          destination_dir: coverage
