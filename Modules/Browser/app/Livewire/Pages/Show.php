@@ -81,19 +81,15 @@ final class Show extends General
         // 2) Extract your identifiers and translate each one
         $labels = collect($relItems)
             ->pluck('identifier')                  // ['gen2','gen1', …]
-            ->map(fn(string $id) => $genderConfig->get($id))
+            ->map(fn (string $id) => $genderConfig->get($id))
             ->filter()                             // drop any missing keys
-            ->map(fn(string $translationKey) => __($translationKey))
+            ->map(fn (string $translationKey) => __($translationKey))
             ->toArray();
 
         // 3) Implode into a single string
         return implode(', ', $labels);
     }
 
-    /**
-     * @param  string  $group
-     * @return string
-     */
     public function lookupKey(string $group): string
     {
         $prefer_not_say = '_notsay';
@@ -106,7 +102,7 @@ final class Show extends General
         $index = $code - 1;
         $keys = config("profile.{$group}", []);
 
-        if (!isset($keys[$index])) {
+        if (! isset($keys[$index])) {
             return '';
         }
 
@@ -123,7 +119,8 @@ final class Show extends General
 
     /**
      * Build or retrieve cached excluded IDs list
-     * @return int[]  List of profile IDs to exclude
+     *
+     * @return int[] List of profile IDs to exclude
      * */
     protected function getExcludedIds(): array
     {

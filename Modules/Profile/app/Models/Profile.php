@@ -28,13 +28,13 @@ use Modules\Profile\Models\Pivots\PetProfile;
 
 /**
  * @template-uses \Illuminate\Database\Eloquent\Factories\HasFactory<\Modules\Profile\Database\Factories\ProfileFactory>
+ *
  * @method static \Modules\Profile\Database\Factories\ProfileFactory factory(...$parameters)
  *
  * @property-read Collection|Pass[] $likes
  * @property-read Collection|Profile[] $likedByProfiles
  * @property string $first_name
  * @property string $last_name
- **
  * @property bool $public
  * @property bool $js_location
  * @property float|null $lat
@@ -142,42 +142,6 @@ final class Profile extends Model
         'custom_pronouns',
         'children',
     ];
-
-    public function resolveRouteBinding($value, $field = null): self
-    {
-        $field = $field ?: $this->getRouteKeyName();
-        $cacheKey = "profile.route.{$field}.{$value}";
-
-        $data = Cache::rememberForever($cacheKey, fn() => $this->loadForBinding($field, $value)->toArray());
-        $model = new self;
-        $model->exists = true;
-        $model->setRawAttributes($data, true);
-        if (isset($data['relations'])) {
-            foreach ($data['relations'] as $relation => $relData) {
-                $model->setRelation($relation, $relData);
-            }
-        }
-
-        return $model;
-    }
-
-    /**
-     * Resolve the route binding via ULID, with caching.
-     * public function resolveRouteBinding($value, $field = null)
-     * {
-     *
-     * $field = $field ?: $this->getRouteKeyName();
-     *
-     * // taggable caches require Redis/Memcached—fallback to plain cache if you don't have tags
-     * $cache = Cache::tags(['profiles'])
-     * ?? Cache::driver();
-     *
-     * return $cache->rememberForever(
-     * "profile.route.{$field}.{$value}",
-     * fn () => $this->loadForBinding($field, $value)
-     * );
-     * }
-     */
 
     /**
      * Tell Laravel to use `ulid` for {profile} binding.
@@ -363,7 +327,7 @@ final class Profile extends Model
 
     protected static function booted(): void
     {
-        self::creating(function ($profile) {
+        self::creating(function (Profile $profile) {
             // only set it if it isn't already set
             if (empty($profile->ulid)) {
                 $profile->ulid = (string) Str::ulid();
@@ -380,7 +344,7 @@ final class Profile extends Model
      */
     protected function name(): Attribute
     {
-        return Attribute::make(get: fn() => $this->user->name);
+        return Attribute::make(get: fn () => $this->user->name);
     }
 
     /**
@@ -388,7 +352,7 @@ final class Profile extends Model
      */
     protected function age(): Attribute
     {
-        return Attribute::make(get: fn() => $this->dynamicExtras->age);
+        return Attribute::make(get: fn () => $this->dynamicExtras->age);
     }
 
     /**
@@ -396,14 +360,9 @@ final class Profile extends Model
      */
     protected function birthDateFormatted(): Attribute
     {
-        return Attribute::make(get: fn() => $this->birth_date?->format('d-m-Y'));
+        return Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
     }
 
-    /**
-     * @param  string  $field
-     * @param  int|string  $value
-     * @return Profile
-     */
     protected function loadForBinding(string $field, int|string $value): self
     {
         return $this->newQuery()

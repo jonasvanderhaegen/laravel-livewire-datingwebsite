@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Testimonial extends Model
 {
-
     public $casts = [
         'match' => 'boolean',
         'amount' => 'boolean',
@@ -39,6 +38,6 @@ final class Testimonial extends Model
      */
     protected function lastInitial(): Attribute
     {
-        return Attribute::make(get: fn() => mb_strtoupper(mb_substr($this->lastname ?? '', 0, 1)));
+        return Attribute::make(get: fn () => mb_strtoupper(mb_substr($this->lastname ?? '', 0, 1)));
     }
 }

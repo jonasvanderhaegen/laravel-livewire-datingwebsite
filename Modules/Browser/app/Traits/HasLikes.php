@@ -12,6 +12,7 @@ trait HasLikes
 {
     /**
      * the profiles this one has “liked”
+     *
      * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
      */
     public function likedProfiles(): BelongsToMany
@@ -26,6 +27,7 @@ trait HasLikes
 
     /**
      * the profiles who have “liked” this one
+     *
      * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
      */
     public function likedByProfiles(): BelongsToMany
@@ -40,6 +42,7 @@ trait HasLikes
 
     /**
      * likewise for passes
+     *
      * @return BelongsToMany<Profile, $this, Pivot, 'pivot'>
      */
     public function passedProfiles(): BelongsToMany

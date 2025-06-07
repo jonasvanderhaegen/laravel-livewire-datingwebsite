@@ -11,16 +11,10 @@ final class ProfilePolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Global pre-check: block any abilities until onboarding is complete.
-     *
-     * @param  User  $user
-     * @param  string  $ability
-     * @return bool
      */
     public function before(User $user, string $ability): bool
     {

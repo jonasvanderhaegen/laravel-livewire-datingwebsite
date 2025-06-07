@@ -56,7 +56,7 @@ trait HasOnboarding
         $steps = $this->onboarding_steps ?? [];
 
         // coerce anything truthy/”1” to boolean
-        return !empty($steps[$step]);
+        return ! empty($steps[$step]);
 
         // return data_get($this->onboarding_steps, $step, false) === true;
     }
@@ -82,9 +82,9 @@ trait HasOnboarding
 
         $allDone = collect($stepsMap)
             ->only($requiredSteps)
-            ->every(fn($v) => $v === true);
+            ->every(fn ($v) => $v === true);
 
-        if ($allDone && !$this->onboarding_complete) {
+        if ($allDone && ! $this->onboarding_complete) {
             $this->setAttribute('onboarding_complete', true);
             $this->saveQuietly();
         }

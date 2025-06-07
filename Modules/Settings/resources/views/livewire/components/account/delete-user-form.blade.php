@@ -49,16 +49,6 @@
                     </p>
 
                     <form action="" wire:submit.prevent="submit">
-                        <x-flowbite::input.text-field
-                            disabled
-                            field="form.email"
-                            type="email"
-                            :label="__('E-mail address')"
-                            :helper="__('For example: john.doe@example.com')"
-                            required
-                            divclass="hidden"
-                        />
-
                         <x-settings::secondary-button
                             data-modal-toggle="deleteFormModal"
                         >

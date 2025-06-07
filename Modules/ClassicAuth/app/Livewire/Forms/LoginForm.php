@@ -24,7 +24,7 @@ final class LoginForm extends Form
     public bool $remember = false;
 
     /**
-     * @return array<string, mixed[]>  Lists each field’s validation rules.
+     * @return array<string, mixed[]> Lists each field’s validation rules.
      */
     public function rules(): array
     {
@@ -55,7 +55,7 @@ final class LoginForm extends Form
         }
 
         // 3) Try authentication
-        if (!Auth::attempt([
+        if (! Auth::attempt([
             'email' => $this->email,
             'password' => $this->password,
         ], $this->remember)) {

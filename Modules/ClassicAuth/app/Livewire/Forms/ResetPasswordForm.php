@@ -30,7 +30,7 @@ final class ResetPasswordForm extends Form
     public string $password = '';
 
     /**
-     * @return array<string, mixed[]>  Lists each field’s validation rules.
+     * @return array<string, mixed[]> Lists each field’s validation rules.
      */
     public function rules(): array
     {
@@ -68,7 +68,7 @@ final class ResetPasswordForm extends Form
         // 3) Attempt the actual password reset…
         $status = Password::reset(
             $this->except(['secondsUntilReset']),
-            function ($user) {
+            function (User $user) {
                 $user->forceFill([
                     'password' => Hash::make($this->password),
                     'remember_token' => Str::random(60),
@@ -85,6 +85,7 @@ final class ResetPasswordForm extends Form
                 $this->clearRateLimiter();
                 $this->clearRateLimiter('resetPassword', $this->email);
                 Toaster::success(__($status));
+
                 return;
 
             case Password::INVALID_TOKEN:

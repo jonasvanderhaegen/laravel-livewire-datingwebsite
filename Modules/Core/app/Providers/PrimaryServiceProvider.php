@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
 use Modules\Core\Console\Init;
 use Modules\Core\Console\Reset;
-use Modules\Core\Console\Test;
 
 final class PrimaryServiceProvider extends ServiceProvider
 {

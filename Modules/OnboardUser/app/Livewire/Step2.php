@@ -24,7 +24,7 @@ final class Step2 extends General
     public int|bool|null $relationshipType = false;
 
     /**
-     * @var array<string,string>  Livewire event → handler mappings
+     * @var array<string,string> Livewire event → handler mappings
      */
     protected $listeners = [
         'sendMountedData' => 'handleMountedData',
@@ -33,11 +33,11 @@ final class Step2 extends General
 
     public function goNextStep(): void
     {
-        if (!$this->nextStepAvailable()) {
+        if (! $this->nextStepAvailable()) {
             Toaster::warning('Please fill out all required fields');
         }
 
-        if (!auth()->user()->hasOnboardingStep('profile')) {
+        if (! auth()->user()->hasOnboardingStep('profile')) {
             auth()->user()->markOnboardingStep('profile');
         }
 
@@ -48,7 +48,7 @@ final class Step2 extends General
     #[Computed]
     public function nextStepAvailable(): bool
     {
-        return !is_null($this->relationshipType) && $this->pronounsValid() && $this->orientationValid() && $this->genders > 0;
+        return ! is_null($this->relationshipType) && $this->pronounsValid() && $this->orientationValid() && $this->genders > 0;
     }
 
     #[Computed]
@@ -59,7 +59,7 @@ final class Step2 extends General
                 return true;
             }
 
-            return !is_null($this->pronouns);
+            return ! is_null($this->pronouns);
         }
 
         return false;
@@ -93,8 +93,6 @@ final class Step2 extends General
 
     /**
      * @param  array{genders:int,orientations:int,orientations_notsay:bool,pronouns_notsay:bool,pronouns:string|null,relationshipType:int|null}  $data
-     *
-     * @return void
      */
     public function handleMountedData(array $data): void
     {

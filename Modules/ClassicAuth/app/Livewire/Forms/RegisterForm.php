@@ -36,7 +36,7 @@ final class RegisterForm extends Form
     public int $secondsUntilReset = 0;
 
     /**
-     * @return array<string, mixed[]>  Lists each field’s validation rules.
+     * @return array<string, mixed[]> Lists each field’s validation rules.
      */
     public function rules(): array
     {
@@ -61,7 +61,7 @@ final class RegisterForm extends Form
     #[Computed]
     public function isFormValid(): bool
     {
-        return !$this->getErrorBag()->any()
+        return ! $this->getErrorBag()->any()
             && $this->name !== ''
             && $this->email !== ''
             && $this->dob !== ''

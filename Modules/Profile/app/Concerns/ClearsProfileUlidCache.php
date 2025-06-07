@@ -10,8 +10,8 @@ trait ClearsProfileUlidCache
 {
     public static function bootClearsProfileUlidCache(): void
     {
-        static::created(fn(self $pivot) => $pivot->clearProfile());
-        static::deleted(fn(self $pivot) => $pivot->clearProfile());
+        static::created(fn (self $pivot) => $pivot->clearProfile());
+        static::deleted(fn (self $pivot) => $pivot->clearProfile());
     }
 
     protected function clearProfile(): void

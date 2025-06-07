@@ -28,7 +28,7 @@ final class Init extends Command
         $this->info('▶ Starting initialization.');
 
         // 1) Ensure .env exists
-        if (!File::exists(base_path('.env'))) {
+        if (! File::exists(base_path('.env'))) {
             $this->info('No .env file found. Copying .env.example → .env');
             File::copy(base_path('.env.example'), base_path('.env'));
         }

@@ -20,7 +20,7 @@ trait HasProfile
     public function initializeHasProfile(): void
     {
         static::created(function (Model $model) {
-            if (!$model->profile()->exists()) {
+            if (! $model->profile()->exists()) {
                 $model->profile()->create([
                     'ulid' => $model->ulid,
                 ]);
