@@ -81,5 +81,8 @@ jobs:
       - name: Create meilisearch index
         run: php artisan scout:import "Modules\Profile\Models\Profile"
 
+      - name: Sync configured index settings with search engine (Meilisearch)
+        run: php artisan scout:sync-index-settings
+
       - name: Run Tests
         run: composer test
