@@ -78,7 +78,7 @@ jobs:
         run: php artisan migrate --seed
 
       - name: module seed
-        run: php artisan module:seed
+        run: php artisan module:seed --all
 
       - name: Create meilisearch index
         run: php artisan scout:import "Modules\Profile\Models\Profile"
