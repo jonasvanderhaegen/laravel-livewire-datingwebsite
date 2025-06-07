@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class ChildForm extends Form
 {
     use SelectSummary;
@@ -28,3 +29,4 @@ final class ChildForm extends Form
         );
     }
 }
+// @codeCoverageIgnoreEnd

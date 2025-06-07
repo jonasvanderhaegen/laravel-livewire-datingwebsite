@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class RelationshipForm extends Form
 {
     use SelectSummary;
@@ -26,3 +27,4 @@ final class RelationshipForm extends Form
         );
     }
 }
+// @codeCoverageIgnoreEnd

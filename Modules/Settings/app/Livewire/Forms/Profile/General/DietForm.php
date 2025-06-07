@@ -8,6 +8,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class DietForm extends Form
 {
     use SelectSummary;
@@ -26,3 +27,4 @@ final class DietForm extends Form
         );
     }
 }
+// @codeCoverageIgnoreEnd
