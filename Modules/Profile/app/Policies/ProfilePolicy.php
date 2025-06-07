@@ -14,15 +14,17 @@ final class ProfilePolicy
     /**
      * Create a new policy instance.
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function before(User $user, $ability): ?bool
     {
-        if (! $user->hasCompletedOnboarding()) {
-            return false;   // block everything until onboarding is done
+        if (!$user->hasCompletedOnboarding()) {
+            return false;
         }
 
-        return null;
+        return true;
     }
 
     public function update(User $user): bool

@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Core\Concerns;
+
+use InvalidArgumentException;
+use RuntimeException;
 
 trait ModuleTestHelpers
 {
@@ -12,15 +17,15 @@ trait ModuleTestHelpers
     protected function getRawModuleStatuses(): array
     {
         ray('test');
-        
+
         $contents = file_get_contents(self::$statusesPath);
         if ($contents === false) {
-            throw new \RuntimeException("Could not read ".self::$statusesPath);
+            throw new RuntimeException('Could not read '.self::$statusesPath);
         }
 
         $decoded = json_decode($contents, true);
-        if (!is_array($decoded)) {
-            throw new \RuntimeException("modules_statuses.json is not valid JSON or not an object.");
+        if (! is_array($decoded)) {
+            throw new RuntimeException('modules_statuses.json is not valid JSON or not an object.');
         }
 
         return $decoded;
@@ -34,7 +39,7 @@ trait ModuleTestHelpers
     {
         $json = json_encode($statuses, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         if ($json === false) {
-            throw new \RuntimeException("Failed to re‐encode module statuses to JSON.");
+            throw new RuntimeException('Failed to re‐encode module statuses to JSON.');
         }
 
         file_put_contents(self::$statusesPath, $json.PHP_EOL);
@@ -47,8 +52,8 @@ trait ModuleTestHelpers
     {
         $statuses = $this->getRawModuleStatuses();
 
-        if (!array_key_exists($moduleName, $statuses)) {
-            throw new \InvalidArgumentException("Module '{$moduleName}' not found in modules_statuses.json");
+        if (! array_key_exists($moduleName, $statuses)) {
+            throw new InvalidArgumentException("Module '{$moduleName}' not found in modules_statuses.json");
         }
 
         $statuses[$moduleName] = $enabled;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Profile\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use Modules\Browser\Models\Pass;
 use Modules\Browser\Traits\HasLikes;
 use Modules\Profile\Database\Factories\ProfileFactory;
 use Modules\Profile\Models\Pivots\EthnicityProfile;
@@ -23,6 +25,38 @@ use Modules\Profile\Models\Pivots\LanguageProfile;
 use Modules\Profile\Models\Pivots\OrientationProfile;
 use Modules\Profile\Models\Pivots\PetProfile;
 
+/**
+ * @property-read Collection|Pass[] $likes
+ * @property-read Collection|Profile[] $likedByProfiles
+ * @property string $first_name
+ * @property string $last_name
+ * @mixin HasLikes
+ *
+ * @property bool $public
+ * @property bool $js_location
+ * @property float|null $lat
+ * @property float|null $lng
+ *
+ * @property bool $ethnicity_notsay
+ * @property bool $language_notsay
+ * @property bool $pets_notsay
+ * @property bool $orientations_notsay
+ *
+ * @property bool $children_notsay
+ * @property bool $politics_notsay
+ * @property bool $education_notsay
+ * @property bool $employment_notsay
+ * @property bool $diet_notsay
+ * @property bool $religion_notsay
+ * @property bool $drugs_notsay
+ * @property bool $smoke_notsay
+ * @property bool $drink_notsay
+ * @property bool $zodiac_notsay
+ * @property bool $bodytype_notsay
+ * @property bool $height_notsay
+ * @property bool $pronouns_notsay
+ *
+ */
 final class Profile extends Model
 {
     use HasFactory, HasLikes, Searchable;
@@ -114,7 +148,7 @@ final class Profile extends Model
         $field = $field ?: $this->getRouteKeyName();
         $cacheKey = "profile.route.{$field}.{$value}";
 
-        $data = Cache::rememberForever($cacheKey, fn () => $this->loadForBinding($field, $value)->toArray());
+        $data = Cache::rememberForever($cacheKey, fn() => $this->loadForBinding($field, $value)->toArray());
         $model = new self;
         $model->exists = true;
         $model->setRawAttributes($data, true);
@@ -129,20 +163,20 @@ final class Profile extends Model
 
     /**
      * Resolve the route binding via ULID, with caching.
-    public function resolveRouteBinding($value, $field = null)
-    {
-
-        $field = $field ?: $this->getRouteKeyName();
-
-        // taggable caches require Redis/Memcached—fallback to plain cache if you don't have tags
-        $cache = Cache::tags(['profiles'])
-            ?? Cache::driver();
-
-        return $cache->rememberForever(
-            "profile.route.{$field}.{$value}",
-            fn () => $this->loadForBinding($field, $value)
-        );
-    }
+     * public function resolveRouteBinding($value, $field = null)
+     * {
+     *
+     * $field = $field ?: $this->getRouteKeyName();
+     *
+     * // taggable caches require Redis/Memcached—fallback to plain cache if you don't have tags
+     * $cache = Cache::tags(['profiles'])
+     * ?? Cache::driver();
+     *
+     * return $cache->rememberForever(
+     * "profile.route.{$field}.{$value}",
+     * fn () => $this->loadForBinding($field, $value)
+     * );
+     * }
      */
 
     /**

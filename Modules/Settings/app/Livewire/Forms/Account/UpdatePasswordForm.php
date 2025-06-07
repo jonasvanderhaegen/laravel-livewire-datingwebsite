@@ -20,6 +20,9 @@ final class UpdatePasswordForm extends Form
 
     public string $password = '';
 
+    /**
+     * @return array<string, array<int, Password|string>>
+     */
     public function rules(): array
     {
         return [
@@ -47,7 +50,7 @@ final class UpdatePasswordForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return ! $this->getErrorBag()->any()
+        return !$this->getErrorBag()->any()
             && $this->current_password !== ''
             && $this->password !== ''
             && $this->password !== $this->current_password;

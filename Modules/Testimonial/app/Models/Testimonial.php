@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Modules\Testimonial\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Testimonial\Database\Factories\TestimonialFactory;
 
+//use Modules\Testimonial\Database\Factories\TestimonialFactory;
+
+/**
+ * Tell PHPStan about the custom factory method and the “lastname” property:
+ *
+ * @property string|null $firstname
+ * @property string|null $lastname
+ */
 final class Testimonial extends Model
 {
-    use HasFactory;
+    //use HasFactory;
 
     public $casts = [
         'match' => 'boolean',
@@ -18,9 +25,6 @@ final class Testimonial extends Model
         'time' => 'boolean',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [
         'firstname',
         'lastname',
@@ -31,7 +35,6 @@ final class Testimonial extends Model
         'long',
     ];
 
-    // Append it automatically if you like
     protected $appends = ['last_initial'];
 
     public function getLastInitialAttribute(): string
@@ -39,8 +42,9 @@ final class Testimonial extends Model
         return mb_strtoupper(mb_substr($this->lastname ?? '', 0, 1));
     }
 
-    protected static function newFactory(): TestimonialFactory
-    {
-        return TestimonialFactory::new();
-    }
+
+//    protected static function newFactory(): TestimonialFactory
+//    {
+//        return TestimonialFactory::new();
+//    }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Settings\Livewire\Components\Account;
 
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -16,12 +17,12 @@ final class UpdatePasswordComponent extends Component
 
     public UpdatePasswordForm $form;
 
-    public function updatedFormCurrentPassword()
+    public function updatedFormCurrentPassword(): void
     {
         $this->validateOnly('form.current_password');
     }
 
-    public function submit()
+    public function submit(): void
     {
         try {
             // Validate and attempt the update (may throw TMR or ValidationException)
@@ -47,7 +48,7 @@ final class UpdatePasswordComponent extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('settings::livewire.components.account.update-password');
     }

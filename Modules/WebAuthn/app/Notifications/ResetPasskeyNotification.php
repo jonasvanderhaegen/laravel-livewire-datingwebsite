@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\WebAuthn\Notifications;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -21,25 +23,27 @@ final class ResetPasskeyNotification extends Notification implements ShouldQueue
     public function __construct(protected string $token)
     {
         $this->token = $token;
-
     }
 
     /**
-     * Get the notification's delivery channels.
+     * @param  User  $notifiable
+     * @return array<int, string>
      */
-    public function via($notifiable): array
+    public function via(Authenticatable $notifiable): array
     {
         return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @param  User  $notifiable
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(Authenticatable $notifiable): MailMessage
     {
         $url = URL::temporarySignedRoute(
-            'passkey.reset',               // named route
-            Carbon::now()->addMinutes(60),      // expiration
+            'passkey.reset',                   // named route
+            Carbon::now()->addMinutes(60),     // expiration
             ['token' => $this->token, 'email' => $notifiable->email]
         );
 
@@ -52,8 +56,10 @@ final class ResetPasskeyNotification extends Notification implements ShouldQueue
 
     /**
      * Get the array representation of the notification.
+     *
+     * @return array<string, mixed>
      */
-    public function toArray($notifiable): array
+    public function toArray(Authenticatable $notifiable): array
     {
         return [];
     }

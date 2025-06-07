@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Browser\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Masmerise\Toaster\Toaster;
+use Modules\Profile\Models\Profile;
 
 final class ProfileHasLocation
 {
@@ -18,17 +20,13 @@ final class ProfileHasLocation
      * notification and redirect back.
      *
      * @param  Closure(Request): mixed  $next
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
+        /** @var User $user */
         $user = $request->user();
 
-        // If there’s no authenticated user or no profile, just proceed.
-        if (! $user || ! $user->profile) {
-            return $next($request);
-        }
-
+        /** @var Profile $profile */
         $profile = $user->profile;
 
         $hasJsLocationEnabled = $profile->js_location;

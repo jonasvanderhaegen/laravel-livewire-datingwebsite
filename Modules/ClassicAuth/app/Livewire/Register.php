@@ -6,12 +6,11 @@ namespace Modules\ClassicAuth\Livewire;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\RegisterForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
-
-// use Livewire\Component;
 
 final class Register extends General
 {
@@ -21,7 +20,7 @@ final class Register extends General
 
     public function toggleShowPassword(): void
     {
-        $this->showPassword = ! $this->showPassword;
+        $this->showPassword = !$this->showPassword;
     }
 
     public function mount(): void
@@ -41,54 +40,48 @@ final class Register extends General
             $this->form->attemptRegister();
             $this->form->initRateLimitCountdown('attemptRegister', null, 'register');
 
-            // if we get here, register succeeded
+            // if we get here, registration succeeded
             $this->redirectRoute('protected.discover', navigate: true);
 
             Session::flash('status', 'verification-link-sent');
-
         } catch (TooManyRequestsException $e) {
-
             Toaster::error($e->getMessage());
             $this->form->secondsUntilReset = $e->secondsUntilAvailable;
 
-            $this->addError('form.email', __('auth.throttle', [
-                'seconds' => $e->secondsUntilAvailable,
-                'minutes' => ceil($e->minutesUntilAvailable),
-            ]));
-
-            // throw a ValidationException so Livewire won't swallow the error
-            // throw ValidationException::withMessages([
-            //     'form.email' => $e->getMessage(),
-            // ]);
-
+            $this->addError(
+                'form.email',
+                __('auth.throttle', [
+                    'seconds' => $e->secondsUntilAvailable,
+                    'minutes' => ceil($e->minutesUntilAvailable),
+                ])
+            );
         } catch (ValidationException $e) {
-            // Invalid credentials — the exception already has the right message
-            Toaster::error('auth.failed');
-
-            // re-throw so Livewire picks up the validation error
+            Toaster::error(__('auth.failed'));
             throw $e;
         }
     }
 
-    public function updatedFormEmail()
+    public function updatedFormEmail(): void
     {
         $this->validateOnly('form.email');
     }
 
-    public function updatedFormPassword()
+    public function updatedFormPassword(): void
     {
         $this->validateOnly('form.password');
     }
 
-    public function updatedFormDob()
+    public function updatedFormDob(): void
     {
         $this->validateOnly('form.dob');
     }
 
-    public function render()
+    /**
+     * @return View
+     */
+    public function render(): View
     {
         return view('classicauth::livewire.register')
             ->title(__('Register'));
-
     }
 }

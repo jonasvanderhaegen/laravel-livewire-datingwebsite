@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Forms\Profile\General;
 
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
@@ -12,7 +13,10 @@ final class OrientationForm extends Form
 {
     use SelectSummary;
 
-    public $orientations = [];
+    /**
+     * @var Collection<int, int|string>|null
+     */
+    public ?collection $orientations = null;
 
     public bool $prefer_not_say = false;
 
@@ -25,6 +29,9 @@ final class OrientationForm extends Form
         );
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public function rules(): array
     {
         return [

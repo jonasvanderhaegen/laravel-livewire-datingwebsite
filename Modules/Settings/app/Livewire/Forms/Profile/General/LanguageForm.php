@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Forms\Profile\General;
 
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
@@ -14,7 +15,10 @@ final class LanguageForm extends Form
 
     public bool $prefer_not_say = false;
 
-    public $languages = [];
+    /**
+     * @var Collection<int, int|string>|null
+     */
+    public ?collection $languages = null;
 
     #[Computed('languages')]
     public function selected(): string
@@ -25,6 +29,9 @@ final class LanguageForm extends Form
         );
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public function rules(): array
     {
         return [

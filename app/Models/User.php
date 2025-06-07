@@ -9,10 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Core\Concerns\HasTraitsFromModules;
+use Modules\Profile\Models\Profile;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Spatie\Onboard\Concerns\Onboardable;
 
+/**
+ * @property Profile $profile
+ */
 final class User extends Authenticatable implements HasPasskeys, MustVerifyEmail, Onboardable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

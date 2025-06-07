@@ -8,7 +8,7 @@
     class="absolute bottom-0 -z-1 h-[100vw] min-h-[800px] w-[100vw] min-w-[800px] overflow-hidden"
 >
     <div
-        class="{{ $fromClass }} absolute -bottom-[50vw] h-[100vw] min-h-[800px] w-[100vw] min-w-[800px] rounded-full bg-gradient-to-tl to-[#1C0AC4]/0 to-80%"
+        class="absolute -bottom-[50vw] h-[100vw] min-h-[800px] w-[100vw] min-w-[800px] rounded-full bg-gradient-to-tl from-[#3781FE] to-[#1C0AC4]/0 to-80%"
     ></div>
     <div
         class="bg-noise absolute h-[100vw] min-h-[800px] w-[100vw] min-w-[800px]"

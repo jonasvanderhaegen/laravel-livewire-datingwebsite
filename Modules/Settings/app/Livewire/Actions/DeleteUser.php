@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Actions;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 final class DeleteUser
 {
-    public function __invoke()
+    public function __invoke(): RedirectResponse
     {
-        Auth::user()->delete();
-        Auth::guard('web')->logout();
+        auth()->user()->delete();
+        auth()->guard('web')->logout();
         session()->invalidate();
         session()->regenerateToken();
 
-        return redirect('/')
-            ->success('toasts.delete-user');
+        return to_route('home');
     }
 }

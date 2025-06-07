@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Forms\Profile\General;
 
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
@@ -12,8 +13,14 @@ final class GenderForm extends Form
 {
     use SelectSummary;
 
-    public $genders = [];
+    /**
+     * @var Collection<int, int|string>|null
+     */
+    public ?Collection $genders = null;
 
+    /**
+     * @return array<string, string[]>
+     */
     public function rules(): array
     {
         return [

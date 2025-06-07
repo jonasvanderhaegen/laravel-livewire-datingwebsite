@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\WebAuthn\Listeners;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\WebAuthn\Events\Registered as Event;
@@ -20,6 +21,7 @@ final class Registered implements ShouldQueue
      */
     public function handle(Event $event): void
     {
+        /** @var User $user */
         $user = $event->user;
 
         $profile = $user->profile()->update([
@@ -30,6 +32,5 @@ final class Registered implements ShouldQueue
         ]);
 
         // $profile->preferences()->create();
-
     }
 }

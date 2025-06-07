@@ -33,6 +33,9 @@ final class RegisterForm extends Form
         return "{$this->firstname} {$this->lastname}";
     }
 
+    /**
+     * @return array<string, array<int, StrictDob|StrictEmailDomain|string>>
+     */
     public function rules(): array
     {
         return [

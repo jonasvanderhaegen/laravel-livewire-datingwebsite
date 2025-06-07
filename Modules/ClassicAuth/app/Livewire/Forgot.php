@@ -6,6 +6,7 @@ namespace Modules\ClassicAuth\Livewire;
 
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\ForgotPasswordForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -15,12 +16,12 @@ final class Forgot extends General
 {
     public ForgotPasswordForm $form;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->initRateLimitCountdown('sendResetUrl', null, 'forgotPassword');
     }
 
-    public function submit()
+    public function submit(): void
     {
         try {
             $this->form->sendResetUrl();
@@ -42,7 +43,7 @@ final class Forgot extends General
         $this->validateOnly('form.email');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('auth::livewire.forgot', ['intent' => 'passkey'])
             ->title(__('Reset password'));

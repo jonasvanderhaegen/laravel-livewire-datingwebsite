@@ -18,6 +18,9 @@ final class ForgotPasskeyForm extends Form
 
     public string $email = '';
 
+    /**
+     * @return array<string, array<int, StrictEmailDomain|string>>
+     */
     public function rules(): array
     {
         return [

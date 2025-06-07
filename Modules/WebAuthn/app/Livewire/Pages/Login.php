@@ -67,7 +67,7 @@ final class Login extends General
             return;
         }
 
-        /** @var Authenticatable $authenticatable */
+        /** @var Authenticatable|null $authenticatable */
         $authenticatable = $passkey->authenticatable;
 
         if (! $authenticatable) {

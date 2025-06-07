@@ -21,9 +21,5 @@ final class LoginForm extends Form
     public function rateLimitForm(): void
     {
         $this->rateLimit(5, $this->shortDuration('auth.passwords.passkeys.throttle'));
-
-        $key = empty($this->email) ? session()->getId() : $this->email;
-
-        $this->rateLimitByEmail(15, $this->longDuration(), $key, 'login');
     }
 }

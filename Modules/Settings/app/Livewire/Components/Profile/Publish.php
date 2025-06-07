@@ -11,13 +11,17 @@ use Modules\Profile\Models\Profile;
 
 final class Publish extends Component
 {
-    public $public = false;
+    /** @var bool */
+    public bool $public = false;
 
+    /** @var Profile */
     public Profile $profile;
 
     public function mount(): void
     {
-        $this->profile = auth()->user()->profile;
+        /** @var Profile $p */
+        $p = auth()->user()->profile;
+        $this->profile = $p;
         $this->public = $this->profile->public;
     }
 

@@ -18,4 +18,3 @@ pest()->extend(Tests\TestCase::class)
     ->in('Feature', '../Modules/*/tests/Feature');
 
 pest()->project()->github('jonasvanderhaegen/laravel-livewire-datingwebsite');
-
