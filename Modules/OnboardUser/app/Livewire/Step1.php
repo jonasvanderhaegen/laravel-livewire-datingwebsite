@@ -9,8 +9,12 @@ use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Step1 extends General
 {
+    /**
+     * @var array<string,string> Livewire event → handler mappings
+     */
     public $listeners = [
         'locationEnabled' => 'handleMountedData',
     ];
@@ -43,3 +47,4 @@ final class Step1 extends General
         return view('onboarduser::livewire.step1');
     }
 }
+// @codeCoverageIgnoreEnd

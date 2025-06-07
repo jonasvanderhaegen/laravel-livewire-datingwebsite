@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Components\Account;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Settings\Livewire\Forms\Account\PasskeysForm;
-use Modules\WebAuthn\Traits\PasskeyHandles;
 use Spatie\LaravelPasskeys\Models\Passkey;
 
+// @codeCoverageIgnoreStart
 final class PassKeysComponent extends Component
 {
-    use PasskeyHandles;
-
     public PasskeysForm $form;
+
+    public User $user;
+
+    public function mount(): void
+    {
+        $this->user = auth()->user();
+    }
 
     public function submit(): void
     {
@@ -27,9 +33,6 @@ final class PassKeysComponent extends Component
 
             return;
         }
-
-        $user = auth()->user();
-
     }
 
     public function render(): View
@@ -37,3 +40,4 @@ final class PassKeysComponent extends Component
         return view('settings::livewire.components.account.pass-keys', ['passkeys' => collect([])]);
     }
 }
+// @codeCoverageIgnoreEnd

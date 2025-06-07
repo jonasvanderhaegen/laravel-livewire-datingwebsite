@@ -9,7 +9,6 @@ use RectorLaravel\Set\LaravelSetList;
 
 try {
     return RectorConfig::configure()
-
         ->withPaths([
             __DIR__.'/app',
             __DIR__.'/bootstrap/app.php',
@@ -18,6 +17,7 @@ try {
             __DIR__.'/resources',
             __DIR__.'/routes',
             __DIR__.'/tests',
+            __DIR__.'/Modules',
         ])
 
         // Enable caching for Rector
@@ -36,10 +36,9 @@ try {
             // LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
             // LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL
         ])
-
         ->withRules([])
 
-    // Define PHP version for Rector
+        // Define PHP version for Rector
         ->withPhpSets(php84: true);
 
 } catch (InvalidConfigurationException  $e) {

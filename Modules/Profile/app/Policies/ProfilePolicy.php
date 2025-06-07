@@ -11,18 +11,15 @@ final class ProfilePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     */
     public function __construct() {}
 
-    public function before(User $user, $ability): ?bool
+    /**
+     * Global pre-check: block any abilities until onboarding is complete.
+     */
+    public function before(User $user, string $ability): bool
     {
-        if (! $user->hasCompletedOnboarding()) {
-            return false;   // block everything until onboarding is done
-        }
-
-        return null;
+        // If onboarding isn’t finished, deny everything
+        return $user->hasCompletedOnboarding();
     }
 
     public function update(User $user): bool

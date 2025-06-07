@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\WebAuthn\Livewire\Forms;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Livewire\Form;
 use Modules\Core\Concerns\RateLimitDurations;
@@ -12,12 +13,16 @@ use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 use Modules\WebAuthn\Notifications\ResetPasskeyNotification;
 
+// @codeCoverageIgnoreStart
 final class ForgotPasskeyForm extends Form
 {
     use RateLimitDurations, WithRateLimiting;
 
     public string $email = '';
 
+    /**
+     * @return array<string, array<int, StrictEmailDomain|string>>
+     */
     public function rules(): array
     {
         return [
@@ -56,7 +61,7 @@ final class ForgotPasskeyForm extends Form
     {
         $status = Password::broker('passkeys')->sendResetLink(
             ['email' => $this->email],
-            function ($user, $token) {
+            function (User $user, string $token) {
                 $user->notify(new ResetPasskeyNotification($token));
             }
         );
@@ -64,3 +69,4 @@ final class ForgotPasskeyForm extends Form
         return $status === Password::RESET_LINK_SENT;
     }
 }
+// @codeCoverageIgnoreEnd

@@ -9,7 +9,7 @@ use Spatie\LaravelPasskeys\Support\Config;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $authenticatableClass = Config::getAuthenticatableModel();
 
@@ -30,5 +30,10 @@ return new class extends Migration
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('passkeys');
     }
 };

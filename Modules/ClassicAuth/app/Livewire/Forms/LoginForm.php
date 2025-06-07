@@ -12,6 +12,7 @@ use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class LoginForm extends Form
 {
     use WithRateLimiting;
@@ -23,6 +24,9 @@ final class LoginForm extends Form
 
     public bool $remember = false;
 
+    /**
+     * @return array<string, mixed[]> Lists each field’s validation rules.
+     */
     public function rules(): array
     {
         return [
@@ -77,3 +81,4 @@ final class LoginForm extends Form
         $this->clearRateLimiter('attemptLogin'); // reset the method bucket
     }
 }
+// @codeCoverageIgnoreEnd

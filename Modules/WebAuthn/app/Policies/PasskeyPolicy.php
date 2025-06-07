@@ -6,24 +6,18 @@ namespace Modules\WebAuthn\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Modules\WebAuthn\Models\Passkey;
+use Spatie\LaravelPasskeys\Models\Passkey;
 
 final class PasskeyPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Allow admins to do anything.
-     */
-    public function before(User $user, $ability) {}
-
-    /**
      * Determine whether the user can delete the given passkey.
      */
     public function delete(User $user, Passkey $passkey): bool
     {
-        // only the owner may delete…
-        if ($passkey->user_id !== $user->id) {
+        if ($passkey->authenticatable_id !== $user->id) {
             return false;
         }
 

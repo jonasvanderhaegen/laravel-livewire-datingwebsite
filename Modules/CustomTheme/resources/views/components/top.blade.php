@@ -9,6 +9,6 @@
 >
     <div class="bg-noise absolute top-0 left-0 -z-1 h-full w-full"></div>
     <div
-        class="{{ $fromClass }} absolute top-0 left-0 -z-2 h-full w-full -rotate-[30] transform bg-gradient-to-br to-[#43CBCA]/0 to-75%"
+        class="absolute top-0 left-0 -z-2 h-full w-full -rotate-[30] transform bg-gradient-to-br from-[#57D3D2] to-[#43CBCA]/0 to-75%"
     ></div>
 </div>

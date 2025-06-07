@@ -11,6 +11,6 @@
     </x-slot>
 
     <x-slot name="aside">
-        <x-core::sectionpartials.page.right-sidebar-placeholder />
+        <x-customtheme::page-partials.page-with-image-banner.right-sidebar-placeholder />
     </x-slot>
 </x-customtheme::page-layouts.page-with-image-banner>

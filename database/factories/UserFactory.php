@@ -7,6 +7,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Modules\Profile\Models\Profile;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -32,6 +33,13 @@ final class UserFactory extends Factory
             'password' => self::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function hasProfile()
+    {
+        // THIS MUST MATCH the name of your relationship on User,
+        // which we said is “profile()” above:
+        return $this->has(Profile::factory(), 'profile');
     }
 
     /**

@@ -8,12 +8,12 @@ use Illuminate\Support\ServiceProvider;
 
 final class EventServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         // Only hook up your module’s own events
     }
 
-    public function register()
+    public function register(): void
     {
         //
     }

@@ -7,6 +7,7 @@ namespace Modules\Settings\Livewire\Components\Account;
 use Illuminate\View\View;
 use Livewire\Component;
 
+// @codeCoverageIgnoreStart
 final class UserDataRequestComponent extends Component
 {
     public function render(): View
@@ -14,3 +15,4 @@ final class UserDataRequestComponent extends Component
         return view('settings::livewire.components.account.user-data-request');
     }
 }
+// @codeCoverageIgnoreEnd

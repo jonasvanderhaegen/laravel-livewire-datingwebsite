@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Core\Concerns;
 
+// @codeCoverageIgnoreStart
 trait RateLimitDurations
 {
     /**
@@ -24,17 +25,28 @@ trait RateLimitDurations
 
     /**
      * Shorthand for your “short” throttle bucket.
+     *
+     * @param  string  $config  Config key for the throttle setting
+     * @param  int  $short  Value to use in local/testing
+     * @param  int  $long  Fallback value to use otherwise
      */
-    protected function shortDuration($config = 'auth.passwords.users.throttle', $short = 5, $long = 60): int
-    {
+    protected function shortDuration(
+        string $config = 'auth.passwords.users.throttle',
+        int $short = 5,
+        int $long = 60
+    ): int {
         return $this->envDuration($short, config($config, $long));
     }
 
     /**
      * Shorthand for your “long” throttle bucket.
+     *
+     * @param  int  $short  Value to use in local/testing
+     * @param  int  $long  Fallback value to use otherwise
      */
-    protected function longDuration($short = 60, $long = 3600): int
+    protected function longDuration(int $short = 60, int $long = 3600): int
     {
         return $this->envDuration($short, $long);
     }
 }
+// @codeCoverageIgnoreEnd

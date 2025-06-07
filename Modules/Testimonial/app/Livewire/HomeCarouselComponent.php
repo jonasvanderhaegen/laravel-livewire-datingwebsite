@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Modules\Testimonial\Livewire;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 use Livewire\Component;
 use Modules\Testimonial\Models\Testimonial;
 
 final class HomeCarouselComponent extends Component
 {
-    public function render()
+    public function render(): View
     {
         // TODO: Get data into a CDN or Json file
         $testimonials = Cache::rememberForever('home_testimonials_first_20', fn () => Testimonial::where('show', 1)

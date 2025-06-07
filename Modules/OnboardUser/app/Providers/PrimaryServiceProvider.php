@@ -42,13 +42,10 @@ final class PrimaryServiceProvider extends ServiceProvider
 
     protected function registerMacros(): void
     {
-        Factory::macro('verifiedAndOnboarded', function () {
-            return $this->state(fn (array $attrs) => [
-                'email_verified_at' => now(),
-                'onboarding_complete' => true,
-                'onboarding_steps' => ['location' => true, 'profile' => true, 'final' => true],
-            ]);
-        });
+        Factory::macro('verifiedAndOnboarded', fn () => $this->state(fn (array $attrs) => [
+            'onboarding_complete' => true,
+            'onboarding_steps' => ['location' => true, 'profile' => true, 'final' => true],
+        ]));
     }
 
     protected function registerSteps(): void

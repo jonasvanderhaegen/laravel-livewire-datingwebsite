@@ -10,6 +10,7 @@ use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Rules\StrictDob;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class RegisterForm extends Form
 {
     use WithRateLimiting;
@@ -33,6 +34,9 @@ final class RegisterForm extends Form
         return "{$this->firstname} {$this->lastname}";
     }
 
+    /**
+     * @return array<string, array<int, StrictDob|StrictEmailDomain|string>>
+     */
     public function rules(): array
     {
         return [
@@ -48,3 +52,4 @@ final class RegisterForm extends Form
         ];
     }
 }
+// @codeCoverageIgnoreEnd

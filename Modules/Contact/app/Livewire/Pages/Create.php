@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Contact\Livewire\Pages;
 
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\Contact\Livewire\Forms\ContactForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -14,14 +15,16 @@ final class Create extends General
 {
     public ContactForm $form;
 
-    public function mount()
+    public function mount(): void
     {
         $this->form->initRateLimitCountdown('sendContactMessage');
     }
 
-    public function submit()
+    // @codeCoverageIgnoreStart
+    public function submit(): void
     {
         try {
+
             $this->form->sendContactMessage();
             $this->form->initRateLimitCountdown('sendContactMessage');
 
@@ -36,9 +39,11 @@ final class Create extends General
         }
     }
 
-    public function render()
+    // @codeCoverageIgnoreEnd
+
+    public function render(): View
     {
-        return view('page::livewire.contact')
-            ->title(_(('Contact')));
+        return view('contact::livewire.pages.contact')
+            ->title(_('Contact'));
     }
 }

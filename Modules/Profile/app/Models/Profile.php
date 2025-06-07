@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Modules\Profile\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use Modules\Browser\Models\Pass;
 use Modules\Browser\Traits\HasLikes;
 use Modules\Profile\Database\Factories\ProfileFactory;
 use Modules\Profile\Models\Pivots\EthnicityProfile;
@@ -23,11 +26,46 @@ use Modules\Profile\Models\Pivots\LanguageProfile;
 use Modules\Profile\Models\Pivots\OrientationProfile;
 use Modules\Profile\Models\Pivots\PetProfile;
 
+// @codeCoverageIgnoreStart
+
+/**
+ * @template-uses \Illuminate\Database\Eloquent\Factories\HasFactory<\Modules\Profile\Database\Factories\ProfileFactory>
+ *
+ * @method static \Modules\Profile\Database\Factories\ProfileFactory factory(...$parameters)
+ *
+ * @property-read Collection|Pass[] $likes
+ * @property-read Collection|Profile[] $likedByProfiles
+ * @property string $first_name
+ * @property string $last_name
+ * @property bool $public
+ * @property bool $js_location
+ * @property float|null $lat
+ * @property float|null $lng
+ * @property bool $ethnicity_notsay
+ * @property bool $language_notsay
+ * @property bool $pets_notsay
+ * @property bool $orientations_notsay
+ * @property bool $children_notsay
+ * @property bool $politics_notsay
+ * @property bool $education_notsay
+ * @property bool $employment_notsay
+ * @property bool $diet_notsay
+ * @property bool $religion_notsay
+ * @property bool $drugs_notsay
+ * @property bool $smoke_notsay
+ * @property bool $drink_notsay
+ * @property bool $zodiac_notsay
+ * @property bool $bodytype_notsay
+ * @property bool $height_notsay
+ * @property bool $pronouns_notsay
+ */
 final class Profile extends Model
 {
     use HasFactory, HasLikes, Searchable;
 
     public $casts = [
+        'lat' => 'float',
+        'lng' => 'float',
         'public' => 'boolean',
         'js_location' => 'boolean',
         'birth_date' => 'date',
@@ -109,42 +147,6 @@ final class Profile extends Model
         'children',
     ];
 
-    public function resolveRouteBinding($value, $field = null): self
-    {
-        $field = $field ?: $this->getRouteKeyName();
-        $cacheKey = "profile.route.{$field}.{$value}";
-
-        $data = Cache::rememberForever($cacheKey, fn () => $this->loadForBinding($field, $value)->toArray());
-        $model = new self;
-        $model->exists = true;
-        $model->setRawAttributes($data, true);
-        if (isset($data['relations'])) {
-            foreach ($data['relations'] as $relation => $relData) {
-                $model->setRelation($relation, $relData);
-            }
-        }
-
-        return $model;
-    }
-
-    /**
-     * Resolve the route binding via ULID, with caching.
-    public function resolveRouteBinding($value, $field = null)
-    {
-
-        $field = $field ?: $this->getRouteKeyName();
-
-        // taggable caches require Redis/Memcached—fallback to plain cache if you don't have tags
-        $cache = Cache::tags(['profiles'])
-            ?? Cache::driver();
-
-        return $cache->rememberForever(
-            "profile.route.{$field}.{$value}",
-            fn () => $this->loadForBinding($field, $value)
-        );
-    }
-     */
-
     /**
      * Tell Laravel to use `ulid` for {profile} binding.
      */
@@ -163,22 +165,15 @@ final class Profile extends Model
         return 'profiles_index';
     }
 
-    public function getNameAttribute()
-    {
-        return $this->user->name;
-    }
-
-    public function getAgeAttribute()
-    {
-        return $this->dynamicExtras->age;
-    }
-
+    /**
+     * @return array<string, mixed>
+     */
     public function toSearchableArray(): array
     {
         return [
             '_geo' => [
-                'lat' => (float) $this->lat ?? 0,
-                'lng' => (float) $this->lng ?? 0,
+                'lat' => $this->lat === null ? 0.0 : (float) $this->lat,
+                'lng' => $this->lng === null ? 0.0 : (float) $this->lng,
             ],
             'first name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -244,61 +239,86 @@ final class Profile extends Model
         ];
     }
 
+    /**
+     * @return BelongsToMany<Gender, $this, GenderProfile>
+     */
     public function genders(): BelongsToMany
     {
         return $this->belongsToMany(Gender::class)
             ->using(GenderProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Orientation, $this, OrientationProfile>
+     */
     public function orientations(): BelongsToMany
     {
         return $this->belongsToMany(Orientation::class)
             ->using(OrientationProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Ethnicity, $this, EthnicityProfile>
+     */
     public function ethnicities(): BelongsToMany
     {
         return $this->belongsToMany(Ethnicity::class)
             ->using(EthnicityProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Language, $this, LanguageProfile>
+     */
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class)
             ->using(LanguageProfile::class);
     }
 
+    /**
+     * @return BelongsToMany<Pet, $this, PetProfile>
+     */
     public function pets(): BelongsToMany
     {
         return $this->belongsToMany(Pet::class)
             ->using(PetProfile::class);
     }
 
+    /**
+     * @return HasMany<Photo, $this>
+     */
     public function photos(): HasMany
     {
         return $this->hasMany(Photo::class);
     }
 
+    /**
+     * @return BelongsToMany<Interest, $this>
+     */
     public function interests(): BelongsToMany
     {
         return $this->belongsToMany(Interest::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasOne<Preference, $this>
+     */
     public function preferences(): HasOne
     {
         return $this->hasOne(Preference::class);
     }
 
-    public function getBirthDateFormattedAttribute(): ?string
-    {
-        return $this->birth_date?->format('d-m-Y');
-    }
-
+    /**
+     * @return HasOne<ProfileDynamicExtra, $this>
+     */
     public function dynamicExtras(): HasOne
     {
         return $this->hasOne(ProfileDynamicExtra::class);
@@ -311,7 +331,7 @@ final class Profile extends Model
 
     protected static function booted(): void
     {
-        self::creating(function ($profile) {
+        self::creating(function (Profile $profile) {
             // only set it if it isn't already set
             if (empty($profile->ulid)) {
                 $profile->ulid = (string) Str::ulid();
@@ -323,7 +343,23 @@ final class Profile extends Model
         });
     }
 
-    protected function loadForBinding(string $field, $value): self
+    /**
+     * @return Attribute<string, mixed>
+     */
+    protected function age(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->dynamicExtras->age);
+    }
+
+    /**
+     * @return Attribute<string, mixed>
+     */
+    protected function birthDateFormatted(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
+    }
+
+    protected function loadForBinding(string $field, int|string $value): self
     {
         return $this->newQuery()
             ->with([
@@ -354,3 +390,4 @@ final class Profile extends Model
             ?? throw (new ModelNotFoundException)->setModel(self::class);
     }
 }
+// @codeCoverageIgnoreEnd

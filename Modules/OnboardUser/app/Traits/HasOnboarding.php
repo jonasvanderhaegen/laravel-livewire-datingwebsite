@@ -72,10 +72,15 @@ trait HasOnboarding
     /**
      * Given an array of required steps, mark the
      * overall onboarding_complete flag if all are done.
+     *
+     * @param  string[]  $requiredSteps  List of step‐keys to check
      */
     public function finalizeOnboarding(array $requiredSteps): void
     {
-        $allDone = collect($this->onboarding_steps)
+        /** @var array<string,bool> $stepsMap */
+        $stepsMap = $this->onboarding_steps ?? [];
+
+        $allDone = collect($stepsMap)
             ->only($requiredSteps)
             ->every(fn ($v) => $v === true);
 

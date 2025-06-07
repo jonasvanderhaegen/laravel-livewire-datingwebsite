@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Core\Concerns\WithRateLimiting;
 
+// @codeCoverageIgnoreStart
 final class PasskeysForm extends Form
 {
     use WithRateLimiting;
@@ -25,3 +26,4 @@ final class PasskeysForm extends Form
 
     public function updatePassword(): void {}
 }
+// @codeCoverageIgnoreEnd

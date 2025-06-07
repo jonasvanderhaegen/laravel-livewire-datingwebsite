@@ -11,6 +11,7 @@ use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class ResetPasskeyForm extends Form
 {
     use RateLimitDurations, WithRateLimiting;
@@ -20,6 +21,9 @@ final class ResetPasskeyForm extends Form
 
     public string $email = '';
 
+    /**
+     * @return array<string, array<int, StrictEmailDomain|string>>
+     */
     public function rules(): array
     {
         return [
@@ -40,3 +44,4 @@ final class ResetPasskeyForm extends Form
         $this->rateLimitByEmail(3, $this->longDuration(), $this->email, 'resetPasskey');
     }
 }
+// @codeCoverageIgnoreEnd

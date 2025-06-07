@@ -171,7 +171,7 @@ final class WithRateLimitingTest extends TestCase
         try {
             $this->stub->publicRateLimit($max, $decay, $method, $component);
             $this->assertTrue(true, 'Did not throw after clearing');
-        } catch (TooManyRequestsException $e) {
+        } catch (TooManyRequestsException) {
             $this->fail('Expected no exception after clearing rate limiter');
         }
     }

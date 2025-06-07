@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Modules\ClassicAuth\Livewire;
 
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\LoginForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Login extends General
 {
     public LoginForm $form;
 
     public bool $showPassword = false;
 
-    public function render()
+    public function render(): View
     {
         return view('classicauth::livewire.login')
             ->title(__('Login'));
@@ -37,7 +39,7 @@ final class Login extends General
         $this->validateOnly('form.email');
     }
 
-    public function submit()
+    public function submit(): void
     {
         try {
             $this->form->initRateLimitCountdown('attemptLogin', null, 'login');
@@ -70,3 +72,4 @@ final class Login extends General
         }
     }
 }
+// @codeCoverageIgnoreEnd

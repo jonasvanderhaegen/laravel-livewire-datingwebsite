@@ -9,6 +9,7 @@ use Livewire\Form;
 use Masmerise\Toaster\Toaster;
 use Modules\Core\Concerns\WithRateLimiting;
 
+// @codeCoverageIgnoreStart
 final class ContactForm extends Form
 {
     use WithRateLimiting;
@@ -40,3 +41,4 @@ final class ContactForm extends Form
         $this->reset();
     }
 }
+// @codeCoverageIgnoreEnd

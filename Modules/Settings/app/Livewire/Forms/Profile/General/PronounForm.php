@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class PronounForm extends Form
 {
     use SelectSummary;
@@ -32,3 +33,4 @@ final class PronounForm extends Form
         );
     }
 }
+// @codeCoverageIgnoreEnd

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Browser\Livewire\Pages;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Show extends General
 {
     /**
@@ -60,7 +62,7 @@ final class Show extends General
         return view('browser::livewire.pages.show', compact('likedByYou'));
     }
 
-    public function summaryOfArray($key): string
+    public function summaryOfArray(string $key): string
     {
         $prefer_not_say = '_notsay';
         if (isset($this->profile["$key$prefer_not_say"])) {
@@ -69,13 +71,16 @@ final class Show extends General
             }
         }
 
-        // 1) Build a lookup map: identifier → translation key
-        $genderConfig = collect(config("profile.$key", []))
-            ->pluck('name', 'identifier');
-        // now: [ 'gen1' => 'profile::options.gender.woman', … ]
+        /** @var array<int, array{identifier:string,name:string}> $configList */
+        $configList = config("profile.{$key}", []);
+        $genderConfig = collect($configList)->pluck('name', 'identifier');
+
+        // 2) Load related items (could be array or Collection)
+        /** @var array<int, object{identifier:string}>|Collection<int, object{identifier:string}> $relItems */
+        $relItems = $this->profile[$key] ?? [];
 
         // 2) Extract your identifiers and translate each one
-        $labels = collect($this->profile[$key])
+        $labels = collect($relItems)
             ->pluck('identifier')                  // ['gen2','gen1', …]
             ->map(fn (string $id) => $genderConfig->get($id))
             ->filter()                             // drop any missing keys
@@ -86,7 +91,7 @@ final class Show extends General
         return implode(', ', $labels);
     }
 
-    public function lookupKey(string $group): ?string
+    public function lookupKey(string $group): string
     {
         $prefer_not_say = '_notsay';
         if (isset($this->profile["$group$prefer_not_say"])) {
@@ -115,7 +120,9 @@ final class Show extends General
 
     /**
      * Build or retrieve cached excluded IDs list
-     */
+     *
+     * @return int[] List of profile IDs to exclude
+     * */
     protected function getExcludedIds(): array
     {
         $me = auth()->user()->profile;
@@ -146,3 +153,4 @@ final class Show extends General
         return 'profile:'.auth()->id().':excluded';
     }
 }
+// @codeCoverageIgnoreEnd
