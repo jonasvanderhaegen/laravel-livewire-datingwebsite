@@ -586,7 +586,7 @@ final class General extends Component
             } else {
                 $pets = $pets->reject(fn(int $v): bool => $v === 1);
 
-                if ($pets->count() === 1 && !$pets->contains($valueInt)) {
+                if ($pets->count() === 1 && $pets->doesntContain($valueInt)) {
                     // push an int, not a string, so it matches Collection<int,int>
                     $pets->push($valueInt);
                 }
