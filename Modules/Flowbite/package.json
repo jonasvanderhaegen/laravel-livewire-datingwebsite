@@ -1,8 +1,0 @@
-{
-    "name": "@myapp/flowbite-module",
-    "private": true,
-  "type": "module",
-  "dependencies": {
-      "flowbite": "^3.1.2"
-  }
-}
