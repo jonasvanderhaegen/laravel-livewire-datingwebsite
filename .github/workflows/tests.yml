@@ -10,6 +10,10 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+      SCOUT_DRIVER: meilisearch
+      SCOUT_QUEUE: true
+      MEILISEARCH_HOST: http://127.0.0.1:7700
+      MEILISEARCH_KEY: G6oifHLMJ6skToyN9fwgMZLbvqxxwgaUrw9f8eOVB7s
 
     strategy:
       max-parallel: 3
