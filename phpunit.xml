@@ -4,6 +4,18 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+        <exclude>
+            <directory>./app</directory>
+            <directory>./Modules</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="./tests/Coverage/html"/>
+        </report>
+    </coverage>
     <testsuites>
         <testsuite name="Modules">
             <directory suffix="Test.php">./Modules/*/tests/Feature</directory>
