@@ -1,5 +1,7 @@
 [![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
 
+[Github page](https://jonasvanderhaegen.github.io/laravel-livewire-datingwebsite/)
+
 ## Free online dating platform
 
 A high‐level overview of this project, outlining its goals, core features, and technology choices. This is intended as a
