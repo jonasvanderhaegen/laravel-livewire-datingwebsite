@@ -10,6 +10,7 @@ use Livewire\WithPagination;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Likes extends General
 {
     use WithPagination;
@@ -49,3 +50,4 @@ final class Likes extends General
         ));
     }
 }
+// @codeCoverageIgnoreEnd

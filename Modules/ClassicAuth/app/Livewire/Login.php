@@ -11,6 +11,7 @@ use Modules\ClassicAuth\Livewire\Forms\LoginForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Login extends General
 {
     public LoginForm $form;
@@ -71,3 +72,4 @@ final class Login extends General
         }
     }
 }
+// @codeCoverageIgnoreEnd

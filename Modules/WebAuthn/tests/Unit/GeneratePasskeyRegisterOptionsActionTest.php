@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyRegisterOptionsAction;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
@@ -9,8 +11,12 @@ it('generates valid registration options JSON when given a HasPasskeys user', fu
 
     // Create a dummy authenticatable that implements the HasPasskeys interface
     // and uses the InteractsWithPasskeys trait for the real logic.
-    $stubUser = new class implements HasPasskeys {
+    $stubUser = new class implements HasPasskeys
+    {
         use InteractsWithPasskeys;
+
+        // The InteractsWithPasskeys trait expects these properties on the model:
+        public int $id = 1;
 
         // You must set an identifier and display name for the user:
         public function getPassKeyName(): string
@@ -28,9 +34,6 @@ it('generates valid registration options JSON when given a HasPasskeys user', fu
         {
             return 'Jane Doe';
         }
-
-        // The InteractsWithPasskeys trait expects these properties on the model:
-        public int $id = 1;
     };
 
     // When asJson=true (the default), it should return a JSON string
@@ -40,7 +43,6 @@ it('generates valid registration options JSON when given a HasPasskeys user', fu
     $payload = json_decode($json, true);
     expect($payload)->toBeArray()
         ->and($payload)->toHaveKeys(['challenge', 'rp', 'user', 'authenticatorSelection', 'attestation', 'timeout']);
-
 
     $cleanUrl = Str::of(config('app.url'))
         // drop any leading "http://" or "https://"
@@ -52,5 +54,5 @@ it('generates valid registration options JSON when given a HasPasskeys user', fu
 
     // Now also test that execute(..., asJson: false) returns the raw PublicKeyCredentialCreationOptions object
     $object = $action->execute($stubUser, asJson: false);
-    expect($object)->toBeInstanceOf(\Webauthn\PublicKeyCredentialCreationOptions::class);
+    expect($object)->toBeInstanceOf(Webauthn\PublicKeyCredentialCreationOptions::class);
 });

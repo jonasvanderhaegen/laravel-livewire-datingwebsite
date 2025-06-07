@@ -45,4 +45,3 @@ final class ResetPasskeyForm extends Form
     }
 }
 // @codeCoverageIgnoreEnd
-

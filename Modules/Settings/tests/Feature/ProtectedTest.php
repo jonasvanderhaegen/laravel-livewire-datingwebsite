@@ -33,9 +33,9 @@ dataset('settings pages', [
     ],
     'profile preview' => [
         'routeName' => 'settings.profile-preview',
-        'componentClass' => \Modules\Settings\Livewire\Pages\ProfilePreview::class,
+        'componentClass' => Modules\Settings\Livewire\Pages\ProfilePreview::class,
         'limit' => 30,
-    ]
+    ],
 
 ]);
 

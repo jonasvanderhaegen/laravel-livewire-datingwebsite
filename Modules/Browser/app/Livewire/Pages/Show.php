@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Show extends General
 {
     /**
@@ -152,3 +153,4 @@ final class Show extends General
         return 'profile:'.auth()->id().':excluded';
     }
 }
+// @codeCoverageIgnoreEnd

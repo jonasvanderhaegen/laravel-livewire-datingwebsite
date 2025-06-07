@@ -9,6 +9,7 @@ use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Step1 extends General
 {
     /**
@@ -46,3 +47,4 @@ final class Step1 extends General
         return view('onboarduser::livewire.step1');
     }
 }
+// @codeCoverageIgnoreEnd

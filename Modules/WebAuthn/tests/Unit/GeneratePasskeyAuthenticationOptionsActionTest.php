@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyAuthenticationOptionsAction;
-
 
 beforeEach(function () {
     $cleanUrl = Str::of(config('app.url'))
@@ -19,7 +20,6 @@ beforeEach(function () {
     // Clear any existing session data
     Session::flush();
 });
-
 
 it('returns a JSON string and stores it in session under the expected key', function () {
     $action = new GeneratePasskeyAuthenticationOptionsAction();

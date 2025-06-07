@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Profile\Models\Gender;
 use Modules\Profile\Models\Profile;

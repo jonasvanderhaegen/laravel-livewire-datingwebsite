@@ -56,7 +56,6 @@ final class Register extends General
         ]);
     }
 
-
     public function updatedFormEmail(): void
     {
         $this->validateOnly('form.email');
@@ -122,6 +121,5 @@ final class Register extends General
     {
         return session()->pull('passkey-registration-options');
     }
-
 }
 // @codeCoverageIgnoreEnd

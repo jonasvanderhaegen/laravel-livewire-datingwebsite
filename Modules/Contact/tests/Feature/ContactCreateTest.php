@@ -3,30 +3,14 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\RateLimiter;
-use Modules\Page\Livewire\Pages\Home;
-use Modules\Page\Livewire\Pages\TermsConditions;
+use Modules\Contact\Livewire\Pages\Create;
 
 // name it whatever makes sense—you can even scope by directory
-dataset('web pages', [
-    'home' => [
-        'routeName' => 'home',
-        'componentClass' => Home::class,
-        'limit' => 60,
-    ],
-    'terms and conditions' => [
-        'routeName' => 'terms-and-conditions',
-        'componentClass' => TermsConditions::class,
-        'limit' => 60,
-    ],
-    'safety' => [
-        'routeName' => 'safety',
-        'componentClass' => Modules\Page\Livewire\Pages\Safety::class,
-        'limit' => 60,
-    ],
-    'support' => [
-        'routeName' => 'support',
-        'componentClass' => Modules\Page\Livewire\Pages\Support::class,
-        'limit' => 60,
+dataset('contact pages', [
+    'Contact' => [
+        'routeName' => 'contact.create',
+        'componentClass' => Create::class,
+        'limit' => 5,
     ],
 ]);
 
@@ -42,7 +26,7 @@ it('renders the Livewire component', function (
 ) {
     Livewire::test($componentClass)
         ->assertStatus(200);
-})->with('web pages');
+})->with('contact pages');
 
 it('responds OK over HTTP', function (
     string $routeName,
@@ -51,7 +35,7 @@ it('responds OK over HTTP', function (
 ) {
     $this->get(route($routeName))
         ->assertOk();
-})->with('web pages');
+})->with('contact pages');
 
 it('throttles after the configured limit', function (
     string $routeName,
@@ -65,4 +49,17 @@ it('throttles after the configured limit', function (
     }
 
     $this->get($url)->assertStatus(429);
-})->with('web pages');
+})->with('contact pages');
+
+test('contactform submit', function () {
+
+    $response = Livewire::test(Create::class)
+        ->set('form.name', 'test')
+        ->set('form.email', fake()->email)
+        ->set('form.message', 'test')
+        ->call('submit')
+        ->assertOk();
+
+    ray($response);
+
+});

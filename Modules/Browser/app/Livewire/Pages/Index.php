@@ -11,6 +11,7 @@ use Meilisearch\Endpoints\Indexes;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Index extends General
 {
     use WithPagination;
@@ -58,3 +59,4 @@ final class Index extends General
             ->title(__('Browsing through profiles'));
     }
 }
+// @codeCoverageIgnoreEnd

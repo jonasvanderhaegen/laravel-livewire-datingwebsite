@@ -51,7 +51,7 @@ final class UpdatePasswordForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return !$this->getErrorBag()->any()
+        return ! $this->getErrorBag()->any()
             && $this->current_password !== ''
             && $this->password !== ''
             && $this->password !== $this->current_password;

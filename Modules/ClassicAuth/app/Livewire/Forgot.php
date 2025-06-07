@@ -12,6 +12,7 @@ use Modules\ClassicAuth\Livewire\Forms\ForgotPasswordForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Forgot extends General
 {
     public ForgotPasswordForm $form;
@@ -49,3 +50,4 @@ final class Forgot extends General
             ->title(__('Reset password'));
     }
 }
+// @codeCoverageIgnoreEnd

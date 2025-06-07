@@ -16,6 +16,14 @@ final class Photo extends Model
 
     protected $fillable = [];
 
+    /**
+     * @return BelongsTo<Profile, $this>
+     */
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
     protected static function booted(): void
     {
         self::creating(function (Photo $photo) {
@@ -28,13 +36,5 @@ final class Photo extends Model
     protected static function newFactory(): PhotoFactory
     {
         return PhotoFactory::new();
-    }
-
-    /**
-     * @return BelongsTo<Profile, $this>
-     */
-    public function profile(): BelongsTo
-    {
-        return $this->belongsTo(Profile::class);
     }
 }

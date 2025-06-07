@@ -6,7 +6,6 @@ namespace Modules\Profile\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
-use Modules\Profile\Observers\UserObserver;
 
 final class PrimaryServiceProvider extends ServiceProvider
 {

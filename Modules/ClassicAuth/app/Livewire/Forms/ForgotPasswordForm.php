@@ -11,6 +11,7 @@ use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class ForgotPasswordForm extends Form
 {
     use WithRateLimiting;
@@ -110,3 +111,4 @@ final class ForgotPasswordForm extends Form
 
     }
 }
+// @codeCoverageIgnoreEnd

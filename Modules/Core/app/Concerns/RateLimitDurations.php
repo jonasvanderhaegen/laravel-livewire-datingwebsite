@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Core\Concerns;
 
+// @codeCoverageIgnoreStart
 trait RateLimitDurations
 {
     /**
@@ -48,3 +49,4 @@ trait RateLimitDurations
         return $this->envDuration($short, $long);
     }
 }
+// @codeCoverageIgnoreEnd

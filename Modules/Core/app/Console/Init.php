@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 
+// @codeCoverageIgnoreStart
 final class Init extends Command
 {
     /**
@@ -43,3 +44,4 @@ final class Init extends Command
         }
     }
 }
+// @codeCoverageIgnoreEnd

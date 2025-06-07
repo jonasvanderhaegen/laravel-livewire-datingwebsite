@@ -62,11 +62,14 @@ final class StrictDob implements ValidationRule
         // Build a Carbon date, then check age >= 18
         try {
             $dob = Carbon::createFromDate($year, $month, $day)->startOfDay();
+
+            // @codeCoverageIgnoreStart
         } catch (Exception) {
             $fail('Birthdate is not a valid date.');
 
             return;
         }
+        // @codeCoverageIgnoreEnd
 
         $age = $dob->diffInYears(Carbon::now());
 

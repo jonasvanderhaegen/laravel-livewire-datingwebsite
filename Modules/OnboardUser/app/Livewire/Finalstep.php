@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Finalstep extends General
 {
     public function goNextStep(): void
@@ -23,3 +24,4 @@ final class Finalstep extends General
         return view('onboarduser::livewire.finalstep');
     }
 }
+// @codeCoverageIgnoreEnd

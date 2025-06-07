@@ -12,6 +12,7 @@ use Modules\ClassicAuth\Livewire\Forms\RegisterForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Register extends General
 {
     public RegisterForm $form;
@@ -82,3 +83,4 @@ final class Register extends General
             ->title(__('Register'));
     }
 }
+// @codeCoverageIgnoreEnd

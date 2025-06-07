@@ -31,7 +31,7 @@ final class ProfileFactory extends Factory
 
         // Helper to pick a nullable config value
 
-        $pickNullable = fn(string $configKey, bool $notSay) => $notSay
+        $pickNullable = fn (string $configKey, bool $notSay) => $notSay
             ? null
             : $faker->randomElement(range(1, count(config("profile.{$configKey}"))));
 

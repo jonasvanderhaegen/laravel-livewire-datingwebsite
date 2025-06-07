@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,8 +10,7 @@ use Spatie\LaravelPasskeys\Models\Passkey;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
-});
+beforeEach(function () {});
 
 it('forbids deleting another user’s passkey', function () {
     $user1 = User::factory()->create();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Modules\Testimonial\Models\Testimonial;
 
 it('returns the uppercase first letter of lastname as last_initial', function () {
@@ -19,7 +21,7 @@ it('returns empty string when lastname is null', function () {
 it('appends last_initial when converting to array', function () {
     $testimonial = new Testimonial([
         'firstname' => 'Jane',
-        'lastname'  => 'smith',
+        'lastname' => 'smith',
     ]);
 
     $array = $testimonial->toArray();

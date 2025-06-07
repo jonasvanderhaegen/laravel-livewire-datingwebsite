@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Route;
 use Modules\WebAuthn\Notifications\ResetPasskeyNotification;
-use function Pest\Laravel\route;
 
+use function Pest\Laravel\route;
 
 beforeEach(function () {
     // Freeze time so our temporarySignedRoute expiration is predictable
-    //Carbon::setTestNow('2025-06-07 12:00:00');
+    // Carbon::setTestNow('2025-06-07 12:00:00');
 
     // Define the named route so URL::temporarySignedRoute() can resolve it
-    Route::get('/reset-passkey', fn() => '')->name('passkey.reset');
+    Route::get('/reset-passkey', fn () => '')->name('passkey.reset');
 });
 
 it('builds a mail message with a valid signed reset-passkey URL', function () {

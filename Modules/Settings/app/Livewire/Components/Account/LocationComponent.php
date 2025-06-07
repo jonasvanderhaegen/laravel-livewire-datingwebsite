@@ -75,10 +75,10 @@ final class LocationComponent extends Component
         /** @var bool $locationEnabled */
         $locationEnabled = cache()->rememberForever(
             'settings:account:location:'.auth()->id(),
-            fn(): bool => (bool) $this->profile->js_location
+            fn (): bool => (bool) $this->profile->js_location
         );
 
-        if (!auth()->user()->hasCompletedOnboarding()) {
+        if (! auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('locationEnabled', $locationEnabled);
         }
 

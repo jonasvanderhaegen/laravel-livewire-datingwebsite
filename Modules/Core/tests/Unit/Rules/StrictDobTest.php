@@ -86,7 +86,7 @@ it('fails if under 18 years old', function () {
         ['dob' => '02-01-2015'],
         ['dob' => [new StrictDob]]
     );
-    
+
     expect($validator->fails())->toBeTrue()
         ->and($validator->errors()->first('dob'))
         ->toBe('You must be at least 18 years old.');
@@ -109,4 +109,22 @@ it('passes for older than 18', function () {
     );
 
     expect($validator->passes())->toBeTrue();
+});
+
+it('fails when the person is younger than 18', function () {
+    // Fix “now” so the age calculation is deterministic
+    Carbon::setTestNow(Carbon::create(2023, 1, 1));
+
+    /*
+     * Someone born on 2 Jan 2006 is
+     *   16 y 364 d old on 1 Jan 2023 → **under 18**
+     */
+    $validator = Validator::make(
+        ['dob' => '02-01-2006'],
+        ['dob' => [new StrictDob]]
+    );
+
+    expect($validator->fails())->toBeTrue()
+        ->and($validator->errors()->first('dob'))
+        ->toBe('You must be at least 18 years old.');
 });

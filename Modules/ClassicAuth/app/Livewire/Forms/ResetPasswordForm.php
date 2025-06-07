@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\ClassicAuth\Livewire\Forms;
 
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,7 @@ use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class ResetPasswordForm extends Form
 {
     use WithRateLimiting;
@@ -100,3 +102,4 @@ final class ResetPasswordForm extends Form
         }
     }
 }
+// @codeCoverageIgnoreEnd

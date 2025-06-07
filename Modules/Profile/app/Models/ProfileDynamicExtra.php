@@ -12,7 +12,7 @@ final class ProfileDynamicExtra extends Model
     public $incrementing = false;
 
     public $timestamps = false;
-    
+
     protected $table = 'profile_dynamic_extras';
 
     /**

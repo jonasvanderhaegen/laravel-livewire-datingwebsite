@@ -20,12 +20,10 @@ final class PasskeysForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return !$this->getErrorBag()->any()
+        return ! $this->getErrorBag()->any()
             && $this->name !== '';
     }
 
-    public function updatePassword(): void
-    {
-    }
+    public function updatePassword(): void {}
 }
 // @codeCoverageIgnoreEnd

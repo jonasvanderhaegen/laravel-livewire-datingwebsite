@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Modules\Profile\Policies\ProfilePolicy;
-
 
 it('denies every ability if onboarding is not complete', function () {
     /** @var User $user */

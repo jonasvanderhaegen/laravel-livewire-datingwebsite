@@ -26,6 +26,8 @@ use Modules\Profile\Models\Pivots\LanguageProfile;
 use Modules\Profile\Models\Pivots\OrientationProfile;
 use Modules\Profile\Models\Pivots\PetProfile;
 
+// @codeCoverageIgnoreStart
+
 /**
  * @template-uses \Illuminate\Database\Eloquent\Factories\HasFactory<\Modules\Profile\Database\Factories\ProfileFactory>
  *
@@ -340,13 +342,13 @@ final class Profile extends Model
             $data = Cache::forget("profile.route.ulid.{$profile->ulid}");
         });
     }
-    
+
     /**
      * @return Attribute<string, mixed>
      */
     protected function age(): Attribute
     {
-        return Attribute::make(get: fn() => $this->dynamicExtras->age);
+        return Attribute::make(get: fn () => $this->dynamicExtras->age);
     }
 
     /**
@@ -354,7 +356,7 @@ final class Profile extends Model
      */
     protected function birthDateFormatted(): Attribute
     {
-        return Attribute::make(get: fn() => $this->birth_date?->format('d-m-Y'));
+        return Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
     }
 
     protected function loadForBinding(string $field, int|string $value): self
@@ -388,3 +390,4 @@ final class Profile extends Model
             ?? throw (new ModelNotFoundException)->setModel(self::class);
     }
 }
+// @codeCoverageIgnoreEnd

@@ -14,9 +14,6 @@ final class RedirectToUnfinishedOnboardingStep
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if (! $user) {
-            return $next($request);
-        }
 
         $onboarding = $user->onboarding();
 

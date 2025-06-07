@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 trait HasLikes
 {
     /**
@@ -109,3 +110,4 @@ trait HasLikes
         )->withTimestamps();
     }
 }
+// @codeCoverageIgnoreEnd

@@ -16,9 +16,7 @@ final class DeleteUserComponent extends Component
      */
     public bool $confirmingUserDeletion = false;
 
-    public function mount(): void
-    {
-    }
+    public function mount(): void {}
 
     public function confirmUserDeletion(): void
     {

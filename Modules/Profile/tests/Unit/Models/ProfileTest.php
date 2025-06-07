@@ -47,7 +47,6 @@ it('shouldBeSearchable true only when public and onboarding_complete', function 
     expect($profile->shouldBeSearchable())->toBeTrue();
 });
 
-
 it('casts attributes to their proper types', function () {
     expect($this->profile->public)->toBeTrue()
         ->and($this->profile->js_location)->toBeFalse()

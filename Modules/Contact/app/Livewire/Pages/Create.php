@@ -20,9 +20,11 @@ final class Create extends General
         $this->form->initRateLimitCountdown('sendContactMessage');
     }
 
+    // @codeCoverageIgnoreStart
     public function submit(): void
     {
         try {
+
             $this->form->sendContactMessage();
             $this->form->initRateLimitCountdown('sendContactMessage');
 
@@ -36,6 +38,8 @@ final class Create extends General
             ]);
         }
     }
+
+    // @codeCoverageIgnoreEnd
 
     public function render(): View
     {

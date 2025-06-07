@@ -16,8 +16,6 @@ final class Registered
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public RegisterForm $form)
-    {
-    }
+    public function __construct(public User $user, public RegisterForm $form) {}
 }
 // @codeCoverageIgnoreEnd

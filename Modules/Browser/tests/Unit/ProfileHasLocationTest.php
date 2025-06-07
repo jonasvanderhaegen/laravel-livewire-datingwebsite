@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -7,7 +9,7 @@ use Modules\Browser\Http\Middleware\ProfileHasLocation;
 
 beforeEach(function () {
     // Define the route so route('settings.account') resolves
-    Route::get('/settings/account', fn() => '')->name('settings.account');
+    Route::get('/settings/account', fn () => '')->name('settings.account');
 });
 
 it('passes the request through when profile has js_location and lat/lng', function () {
@@ -23,12 +25,12 @@ it('passes the request through when profile has js_location and lat/lng', functi
     ];
     // 3) Build a Request and tell it to return our fake user
     $request = Request::create('/any-url', 'GET');
-    $request->setUserResolver(fn() => $user);
+    $request->setUserResolver(fn () => $user);
 
     $middleware = new ProfileHasLocation();
 
     // 4) If everything is set, the “$next” closure should be called
-    $result = $middleware->handle($request, fn($req) => 'NEXT OK');
+    $result = $middleware->handle($request, fn (Request $req) => 'NEXT OK');
 
     expect($result)->toBe('NEXT OK');
 });
@@ -43,12 +45,12 @@ it('redirects to settings.account when profile is missing location', function ()
         'profile' => $profile,
     ];
     $request = Request::create('/any-url', 'GET');
-    $request->setUserResolver(fn() => $user);
+    $request->setUserResolver(fn () => $user);
 
     $middleware = new ProfileHasLocation();
 
     /** @var RedirectResponse $response */
-    $response = $middleware->handle($request, fn($req) => 'SHOULD NOT GET HERE');
+    $response = $middleware->handle($request, fn (Request $req) => 'SHOULD NOT GET HERE');
 
     expect($response)
         ->toBeInstanceOf(RedirectResponse::class)

@@ -16,20 +16,21 @@ it('forgets the profile.ulid cache when profile_id is truthy', function () {
     Cache::put($cacheKey, 'dummy', 60);
 
     // stub that exposes clearProfile via a public method
-    $pivot = new class {
+    $pivot = new class
+    {
         use ClearsProfileUlidCache;
 
         public int $profile_id = 123;
-
-        protected function getProfileUlid(): string
-        {
-            return '01ARZ3NDEKTSV4RRFFQ69G5FAV';
-        }
 
         // public wrapper so we can call the protected clearProfile()
         public function runClear(): void
         {
             $this->clearProfile();
+        }
+
+        protected function getProfileUlid(): string
+        {
+            return '01ARZ3NDEKTSV4RRFFQ69G5FAV';
         }
     };
 
@@ -47,19 +48,20 @@ it('does nothing when profile_id is falsy', function () {
     $otherKey = 'profile.route.ulid.SOMETHING_ELSE';
     Cache::put($otherKey, 'keep-me', 60);
 
-    $pivot = new class {
+    $pivot = new class
+    {
         use ClearsProfileUlidCache;
 
         public ?int $profile_id = null;
 
-        protected function getProfileUlid(): string
-        {
-            return 'SOMETHING_ELSE';
-        }
-
         public function runClear(): void
         {
             $this->clearProfile();
+        }
+
+        protected function getProfileUlid(): string
+        {
+            return 'SOMETHING_ELSE';
         }
     };
 

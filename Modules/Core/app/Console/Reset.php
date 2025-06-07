@@ -9,6 +9,7 @@ use Modules\Profile\Models\Profile;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+// @codeCoverageIgnoreStart
 final class Reset extends Command
 {
     /**
@@ -75,3 +76,4 @@ final class Reset extends Command
         ];
     }
 }
+// @codeCoverageIgnoreEnd

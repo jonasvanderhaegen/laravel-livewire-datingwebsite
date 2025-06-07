@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Profile\Models\Ethnicity;
 use Modules\Profile\Models\Profile;

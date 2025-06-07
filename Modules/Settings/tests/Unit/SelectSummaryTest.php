@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Collection;
 use Modules\Settings\Traits\SelectSummary;
 
 beforeEach(function () {
     // create an anonymous class just to host the trait
-    $this->service = new class {
+    $this->service = new class
+    {
         use SelectSummary;
     };
 

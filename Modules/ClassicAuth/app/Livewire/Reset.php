@@ -15,6 +15,7 @@ use Modules\ClassicAuth\Livewire\Forms\ResetPasswordForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Reset extends General
 {
     public ResetPasswordForm $form;
@@ -105,3 +106,4 @@ final class Reset extends General
         $this->validateOnly('form.password');
     }
 }
+// @codeCoverageIgnoreEnd

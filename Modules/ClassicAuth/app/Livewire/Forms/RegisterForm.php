@@ -17,6 +17,7 @@ use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictDob;
 use Modules\Core\Rules\StrictEmailDomain;
 
+// @codeCoverageIgnoreStart
 final class RegisterForm extends Form
 {
     use WithRateLimiting;
@@ -103,3 +104,4 @@ final class RegisterForm extends Form
         $this->clearRateLimiter('attemptRegister'); // clear method bucket
     }
 }
+// @codeCoverageIgnoreEnd

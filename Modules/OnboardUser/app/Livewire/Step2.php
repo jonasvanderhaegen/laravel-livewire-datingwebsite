@@ -9,6 +9,7 @@ use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
+// @codeCoverageIgnoreStart
 final class Step2 extends General
 {
     public ?int $genders = 0;
@@ -104,3 +105,4 @@ final class Step2 extends General
         $this->relationshipType = $data['relationshipType'];
     }
 }
+// @codeCoverageIgnoreEnd

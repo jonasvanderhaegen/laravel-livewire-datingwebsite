@@ -1,4 +1,5 @@
 <?php
+
 // Modules/OnboardUser/tests/Unit/HasOnboardingTest.php
 declare(strict_types=1);
 
@@ -15,7 +16,8 @@ beforeEach(function () {
 });
 
 it('merges the correct casts on instantiation', function () {
-    $model = new class extends Model {
+    $model = new class extends Model
+    {
         use HasOnboarding;
 
         protected $guarded = [];
@@ -36,7 +38,8 @@ it('merges the correct casts on instantiation', function () {
 });
 
 it('can mark a step and report it as completed', function () {
-    $model = new class extends Model {
+    $model = new class extends Model
+    {
         use HasOnboarding;
 
         protected $guarded = [];
@@ -56,7 +59,8 @@ it('can mark a step and report it as completed', function () {
 });
 
 it('reports hasCompletedOnboarding only when flagged true', function () {
-    $model = new class extends Model {
+    $model = new class extends Model
+    {
         use HasOnboarding;
 
         protected $guarded = [];
@@ -69,7 +73,8 @@ it('reports hasCompletedOnboarding only when flagged true', function () {
 });
 
 it('finalizeOnboarding flips the complete flag only when all required steps are done', function () {
-    $model = new class extends Model {
+    $model = new class extends Model
+    {
         use HasOnboarding;
 
         protected $guarded = [];

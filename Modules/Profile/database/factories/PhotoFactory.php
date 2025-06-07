@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Profile\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,7 +12,7 @@ use Modules\Profile\Models\Profile;
 /**
  * @extends Factory<Photo>
  */
-class PhotoFactory extends Factory
+final class PhotoFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,9 +27,8 @@ class PhotoFactory extends Factory
         return [
             'ulid' => (string) Str::ulid(),
             'profile_id' => Profile::factory(),
-            'url' => $this->faker->imageUrl(640, 480, 'people'),
-            'primary' => $this->faker->boolean(20),
+            'url' => fake()->imageUrl(640, 480, 'people'),
+            'primary' => fake()->boolean(20),
         ];
     }
 }
-
