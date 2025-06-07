@@ -74,9 +74,10 @@ jobs:
         run: php artisan module:seed --all
 
       - name: Create meilisearch index
+        env:
+          SCOUT_DRIVER: meilisearch
+          MEILISEARCH_KEY: G6oifHLMJ6skToyN9fwgMZLbvqxxwgaUrw9f8eOVB7s
         run: php artisan scout:import "Modules\Profile\Models\Profile"
 
       - name: Run Tests
-        env:
-          MEILISEARCH_KEY: G6oifHLMJ6skToyN9fwgMZLbvqxxwgaUrw9f8eOVB7s
         run: composer test
