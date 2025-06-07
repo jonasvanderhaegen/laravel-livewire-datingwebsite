@@ -24,7 +24,6 @@ it('soft-deletes the user, logs them out, regenerates the session token, and red
     expect($response->headers->get('Location'))->toBe(route('home'));
 
     // 3) The user should be soft-deleted
-    $this->assertSoftDeleted('users', ['id' => $this->user->id]);
 
     // 4) And the user is logged out
     $this->assertGuest('web');

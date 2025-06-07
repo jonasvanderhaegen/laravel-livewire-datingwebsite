@@ -74,6 +74,9 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Create meilisearch index
+        run: php artisan scout:index profiles_index
+
       - name: Run Tests
         env:
           APP_ENV: testing
