@@ -16,7 +16,7 @@ final class OrientationForm extends Form
     /**
      * @var Collection<int, int|string>|null
      */
-    public ?collection $orientations = null;
+    public ?Collection $orientations = null;
 
     public bool $prefer_not_say = false;
 

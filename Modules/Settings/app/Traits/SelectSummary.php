@@ -12,12 +12,10 @@ trait SelectSummary
      * Given a single “select” value (string identifier or numeric index),
      * look it up in a config array, translate the corresponding label, and return it.
      *
-     * @param  string|int|null  $value
      * @param  string  $configKey  The key passed to Laravel’s config() helper
      * @param  string  $labelKey  Which subarray key to translate (default: 'name')
      * @param  string|null  $custom  If $value === 'custom' and $custom is non-empty, return $custom
-     *
-     * @return string  Always returns a string (empty string if nothing found)
+     * @return string Always returns a string (empty string if nothing found)
      */
     public function getTranslateKeyFromSelectFromConfig(
         string|int|null $value,
@@ -85,8 +83,7 @@ trait SelectSummary
      * @param  (int|string)[]|Collection<int, int|string>  $values  A list of selected “indices” (1-based)
      * @param  string  $configKey  The key passed to config()
      * @param  string  $labelKey  Which subarray key to translate
-     *
-     * @return string  Always returns a string
+     * @return string Always returns a string
      */
     public function summarizeSelect(
         array|Collection $values,
@@ -103,10 +100,10 @@ trait SelectSummary
 
         $names = Collection::wrap($values)
             ->map(
-            /**
-             * @param  int|string  $rawIndex
-             * @return string|null
-             */
+                /**
+                 * @param  int|string  $rawIndex
+                 * @return string|null
+                 */
                 function ($rawIndex) use ($configArray, $labelKey): ?string {
                     $zeroBasedIndex = (int) $rawIndex - 1;
 
@@ -135,6 +132,7 @@ trait SelectSummary
 
         // More than one: show “FirstTranslatedLabel, +N more”
         $firstName = $names->first(); // guaranteed string after filter()
+
         return sprintf('%s, +%d more', __($firstName), $count - 1);
     }
 }

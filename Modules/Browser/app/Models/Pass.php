@@ -6,10 +6,7 @@ namespace Modules\Browser\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 final class Pass extends Model
 {
-
     protected $fillable = [];
-
 }

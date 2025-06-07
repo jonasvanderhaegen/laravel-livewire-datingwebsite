@@ -51,7 +51,7 @@ final class Register extends General
         ]);
 
         $this->dispatch('passkeyPropertiesValidated', [
-            'passkeyOptions' => json_decode($this->generatePasskeyOptions()),
+            'passkeyOptions' => json_decode((string) $this->generatePasskeyOptions()),
         ]);
     }
 

@@ -21,9 +21,12 @@ final class UserDensity extends Model
 
     protected $table = 'user_density';
 
-    protected $casts = [
-        'lat_bucket' => 'float',
-        'lng_bucket' => 'float',
-        'user_count' => 'integer',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'lat_bucket' => 'float',
+            'lng_bucket' => 'float',
+            'user_count' => 'integer',
+        ];
+    }
 }

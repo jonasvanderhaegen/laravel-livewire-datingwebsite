@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Modules\Profile\Models\Profile;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Profile\Models\Profile>
+ */
 final class ProfileFactory extends Factory
 {
     /**

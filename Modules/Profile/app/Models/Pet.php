@@ -7,12 +7,10 @@ namespace Modules\Profile\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-
 final class Pet extends Model
 {
-
     public $timestamps = false;
-    
+
     protected $fillable = [];
 
     public function profile(): BelongsToMany

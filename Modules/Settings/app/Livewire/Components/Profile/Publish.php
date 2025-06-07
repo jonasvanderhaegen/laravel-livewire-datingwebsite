@@ -11,10 +11,8 @@ use Modules\Profile\Models\Profile;
 
 final class Publish extends Component
 {
-    /** @var bool */
     public bool $public = false;
 
-    /** @var Profile */
     public Profile $profile;
 
     public function mount(): void

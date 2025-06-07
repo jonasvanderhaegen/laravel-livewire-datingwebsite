@@ -18,7 +18,7 @@ final class StrictDob implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $parts = explode('-', $value);
+        $parts = explode('-', (string) $value);
         if (count($parts) !== 3) {
             $fail('Birthday must be in the format DD-MM-YYYY.');
 
@@ -62,7 +62,7 @@ final class StrictDob implements ValidationRule
         // Build a Carbon date, then check age >= 18
         try {
             $dob = Carbon::createFromDate($year, $month, $day)->startOfDay();
-        } catch (Exception $e) {
+        } catch (Exception) {
             $fail('Birthdate is not a valid date.');
 
             return;

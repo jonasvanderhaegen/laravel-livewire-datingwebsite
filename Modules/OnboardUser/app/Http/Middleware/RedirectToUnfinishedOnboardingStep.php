@@ -28,7 +28,7 @@ final class RedirectToUnfinishedOnboardingStep
 
             if ($nextStep) {
 
-                $pattern = mb_ltrim(parse_url($nextStep->link, PHP_URL_PATH), '/');
+                $pattern = mb_ltrim(parse_url((string) $nextStep->link, PHP_URL_PATH), '/');
                 if (! $request->is($pattern)) {
                     return redirect($nextStep->link)
                         ->warning('In order to start looking for people we first must have some information about you');

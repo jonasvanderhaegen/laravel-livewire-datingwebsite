@@ -38,7 +38,7 @@ test('email can be verified', function () {
     $verificationUrl = URL::temporarySignedRoute(
         'verification.verify',
         now()->addMinutes(60),
-        ['id' => $this->user->id, 'hash' => sha1($this->user->email)]
+        ['id' => $this->user->id, 'hash' => sha1((string) $this->user->email)]
     );
 
     $response = $this->actingAs($this->user)->get($verificationUrl);

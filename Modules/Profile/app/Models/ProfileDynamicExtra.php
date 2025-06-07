@@ -7,10 +7,8 @@ namespace Modules\Profile\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 final class ProfileDynamicExtra extends Model
 {
-
     public $incrementing = false;
 
     public $timestamps = false;
@@ -19,12 +17,15 @@ final class ProfileDynamicExtra extends Model
 
     protected $table = 'profile_dynamic_extras';
 
-    protected $casts = [
-        'age' => 'integer',
-    ];
-
     public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'age' => 'integer',
+        ];
     }
 }

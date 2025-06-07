@@ -18,13 +18,11 @@ final class Densitymap extends Component
         $cells = UserDensity::all();
 
         return $cells
-            ->map(function (UserDensity $c): array {
-                return [
-                    'lat' => (float) $c->lat_bucket,
-                    'lng' => (float) $c->lng_bucket,
-                    'count' => (int) $c->user_count,
-                ];
-            })
+            ->map(fn (UserDensity $c): array => [
+                'lat' => (float) $c->lat_bucket,
+                'lng' => (float) $c->lng_bucket,
+                'count' => (int) $c->user_count,
+            ])
             ->all();
     }
 

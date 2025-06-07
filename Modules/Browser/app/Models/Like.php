@@ -9,5 +9,4 @@ use Illuminate\Database\Eloquent\Model;
 final class Like extends Model
 {
     protected $fillable = [];
-
 }

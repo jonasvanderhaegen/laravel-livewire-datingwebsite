@@ -20,7 +20,7 @@ final class Register extends General
 
     public function toggleShowPassword(): void
     {
-        $this->showPassword = !$this->showPassword;
+        $this->showPassword = ! $this->showPassword;
     }
 
     public function mount(): void
@@ -76,9 +76,6 @@ final class Register extends General
         $this->validateOnly('form.dob');
     }
 
-    /**
-     * @return View
-     */
     public function render(): View
     {
         return view('classicauth::livewire.register')

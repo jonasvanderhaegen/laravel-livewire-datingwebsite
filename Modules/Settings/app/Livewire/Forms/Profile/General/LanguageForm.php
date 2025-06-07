@@ -18,7 +18,7 @@ final class LanguageForm extends Form
     /**
      * @var Collection<int, int|string>|null
      */
-    public ?collection $languages = null;
+    public ?Collection $languages = null;
 
     #[Computed('languages')]
     public function selected(): string

@@ -7,7 +7,6 @@ namespace Modules\Profile\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-
 final class Gender extends Model
 {
     public $timestamps = false;

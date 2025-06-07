@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Components\Account;
 
-use App\Contracts\DeletesUsers;
 use Illuminate\View\View;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -25,7 +24,7 @@ final class DeleteUserComponent extends Component
 
     public function toggleShowPassword(): void
     {
-        $this->showPassword = !$this->showPassword;
+        $this->showPassword = ! $this->showPassword;
     }
 
     public function mount(): void
@@ -35,8 +34,6 @@ final class DeleteUserComponent extends Component
 
     /**
      * Confirm that the user would like to delete their account.
-     *
-     * @return void
      */
     public function confirmUserDeletion(): void
     {
@@ -61,7 +58,6 @@ final class DeleteUserComponent extends Component
             navigate: false
         );
     }
-
 
     public function render(): View
     {

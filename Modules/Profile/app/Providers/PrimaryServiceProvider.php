@@ -31,7 +31,6 @@ final class PrimaryServiceProvider extends ServiceProvider
 
     }
 
-
     /**
      * Register the service provider.
      */

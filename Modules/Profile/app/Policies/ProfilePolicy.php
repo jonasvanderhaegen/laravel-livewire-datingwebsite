@@ -14,13 +14,11 @@ final class ProfilePolicy
     /**
      * Create a new policy instance.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function before(User $user, $ability): ?bool
     {
-        if (!$user->hasCompletedOnboarding()) {
+        if (! $user->hasCompletedOnboarding()) {
             return false;
         }
 

@@ -35,7 +35,6 @@ final class General extends Component
 {
     public string $activeTab = 'gender';
 
-    /** @var int */
     public int $userId;
 
     // Form properties
@@ -101,7 +100,7 @@ final class General extends Component
                 'pronouns' => $this->pronounForm->value,
                 'custom_pronouns' => $this->pronounForm->custom_pronouns,
             ]);
-            if (!auth()->user()->hasCompletedOnboarding()) {
+            if (! auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'pronouns', true);
             }
             $this->dispatch('saved');
@@ -151,7 +150,7 @@ final class General extends Component
         $this->orientationForm->orientations = $profile->orientations->pluck('id');
         $this->orientationForm->prefer_not_say = $profile->orientations_notsay;
 
-        if (!auth()->user()->hasCompletedOnboarding()) {
+        if (! auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('sendMountedData', [
                 'genders' => $this->genderForm->genders->count(),
                 'orientations' => $this->orientationForm->orientations->count(),
@@ -163,15 +162,12 @@ final class General extends Component
         }
     }
 
-    /**
-     * @return Profile
-     */
     #[Computed('profile')]
     public function profile(): Profile
     {
         return cache()->rememberForever(
             $this->getProfileCacheKey(),
-            fn() => auth()->user()->profile()
+            fn () => auth()->user()->profile()
                 ->with([
                     'languages:id,identifier',
                     'ethnicities:id,identifier',
@@ -214,10 +210,6 @@ final class General extends Component
         );
     }
 
-    /**
-     * @param  string  $field
-     * @param  mixed  $value
-     */
     public function updated(string $field, mixed $value): void
     {
         // Skip tabs field
@@ -228,7 +220,7 @@ final class General extends Component
         // Handle the gender form
         if (Str::contains($field, 'genderForm')) {
 
-            if (!auth()->user()->hasCompletedOnboarding()) {
+            if (! auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
             }
 
@@ -287,7 +279,7 @@ final class General extends Component
         $viewData = [];
 
         foreach ($configItems as $viewKey => $configKey) {
-            $viewData[$viewKey] = collect(config("profile.{$configKey}"))->map(fn($item) => (object) $item);
+            $viewData[$viewKey] = collect(config("profile.{$configKey}"))->map(fn ($item) => (object) $item);
         }
 
         return view('settings::livewire.components.profile.general', $viewData);
@@ -310,7 +302,6 @@ final class General extends Component
     }
 
     /**
-     * @param  Profile  $profile
      * @param  array<string, array<string,string>>  $mappings
      */
     private function initializeFormValues(Profile $profile, array $mappings): void
@@ -442,10 +433,6 @@ final class General extends Component
         }
     }
 
-    /**
-     * @param  string  $field
-     * @param  mixed  $value
-     */
     private function handleFormValueUpdate(string $field, mixed $value): void
     {
         $formName = Str::before($field, 'Form.value');
@@ -461,11 +448,11 @@ final class General extends Component
                     $profile = auth()->user()->profile;
                     $profile->update(['custom_pronouns' => null]);
                     $this->pronounForm->custom_pronouns = null;
-                    if (!auth()->user()->hasCompletedOnboarding()) {
+                    if (! auth()->user()->hasCompletedOnboarding()) {
                         $this->dispatch('profileChanged', 'pronouns', true);
                     }
                 } : function () {
-                    if (!auth()->user()->hasCompletedOnboarding()) {
+                    if (! auth()->user()->hasCompletedOnboarding()) {
                         $this->dispatch('profileChanged', 'pronouns', null);
                     }
                 },
@@ -522,7 +509,7 @@ final class General extends Component
                 $mapping['extraAction']();
             }
 
-            if (!auth()->user()->hasCompletedOnboarding()) {
+            if (! auth()->user()->hasCompletedOnboarding()) {
                 if (array_key_first($mapping['update']) === 'relationship_type') {
                     $this->dispatch('profileChanged', 'relationshipType', true);
                 }
@@ -532,16 +519,12 @@ final class General extends Component
         }
     }
 
-    /**
-     * @param  string  $field
-     * @param  mixed  $value
-     */
     private function handleMultiSelectFormUpdate(string $field, mixed $value): void
     {
         // Handle orientation form updates
-        if (Str::contains($field, 'orientationForm') && !$this->orientationForm->prefer_not_say) {
+        if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
 
-            if (!auth()->user()->hasCompletedOnboarding()) {
+            if (! auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'orientations', $this->orientationForm->orientations->count());
             }
 
@@ -556,7 +539,7 @@ final class General extends Component
         }
 
         // Handle ethnicity form updates
-        if (Str::contains($field, 'ethnicityForm') && !$this->ethnicityForm->prefer_not_say) {
+        if (Str::contains($field, 'ethnicityForm') && ! $this->ethnicityForm->prefer_not_say) {
             $this->ethnicityForm->validate();
             $this->clearProfileCache();
             $profile = auth()->user()->profile;
@@ -566,7 +549,7 @@ final class General extends Component
         }
 
         // Handle language form updates
-        if (Str::contains($field, 'languageForm') && !$this->languageForm->prefer_not_say) {
+        if (Str::contains($field, 'languageForm') && ! $this->languageForm->prefer_not_say) {
             $this->languageForm->validate();
             $this->clearProfileCache();
             $profile = auth()->user()->profile;
@@ -576,16 +559,16 @@ final class General extends Component
         }
 
         // Handle pet form updates
-        if (Str::contains($field, 'petForm') && !$this->petForm->prefer_not_say) {
+        if (Str::contains($field, 'petForm') && ! $this->petForm->prefer_not_say) {
             $this->clearProfileCache();
 
             if ($value === 1) {
                 $this->petForm->pets = collect([1]);
             } else {
                 $pets = collect($this->petForm->pets);
-                $pets = $pets->reject(fn($v) => $v === 1);
+                $pets = $pets->reject(fn ($v) => $v === 1);
 
-                if ($pets->count() === 1 && !$pets->contains($value)) {
+                if ($pets->count() === 1 && $pets->doesntContain($value)) {
                     $pets->push($value);
                 }
 

@@ -65,7 +65,6 @@ final class GeneralComponent extends Component
     /**
      * Computed user property with cache across requests
      */
-
     public function render(): View
     {
         return view('settings::livewire.components.account.general');

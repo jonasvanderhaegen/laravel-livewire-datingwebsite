@@ -29,9 +29,6 @@ final class Reset extends General
 
     public bool $showPassword = false;
 
-    /**
-     * @return View
-     */
     public function render(): View
     {
         /** @var view-string $viewName */
@@ -59,9 +56,6 @@ final class Reset extends General
         $this->form->email = $this->email;
     }
 
-    /**
-     * @return void
-     */
     public function submit(): void
     {
         try {
@@ -96,25 +90,16 @@ final class Reset extends General
         }
     }
 
-    /**
-     * @return void
-     */
     public function toggleShowPassword(): void
     {
-        $this->showPassword = !$this->showPassword;
+        $this->showPassword = ! $this->showPassword;
     }
 
-    /**
-     * @return void
-     */
     public function updatedFormEmail(): void
     {
         $this->validateOnly('form.email');
     }
 
-    /**
-     * @return void
-     */
     public function updatedFormPassword(): void
     {
         $this->validateOnly('form.password');

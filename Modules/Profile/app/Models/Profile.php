@@ -30,18 +30,17 @@ use Modules\Profile\Models\Pivots\PetProfile;
  * @property-read Collection|Profile[] $likedByProfiles
  * @property string $first_name
  * @property string $last_name
+ *
  * @mixin HasLikes
  *
  * @property bool $public
  * @property bool $js_location
  * @property float|null $lat
  * @property float|null $lng
- *
  * @property bool $ethnicity_notsay
  * @property bool $language_notsay
  * @property bool $pets_notsay
  * @property bool $orientations_notsay
- *
  * @property bool $children_notsay
  * @property bool $politics_notsay
  * @property bool $education_notsay
@@ -55,7 +54,6 @@ use Modules\Profile\Models\Pivots\PetProfile;
  * @property bool $bodytype_notsay
  * @property bool $height_notsay
  * @property bool $pronouns_notsay
- *
  */
 final class Profile extends Model
 {
@@ -148,7 +146,7 @@ final class Profile extends Model
         $field = $field ?: $this->getRouteKeyName();
         $cacheKey = "profile.route.{$field}.{$value}";
 
-        $data = Cache::rememberForever($cacheKey, fn() => $this->loadForBinding($field, $value)->toArray());
+        $data = Cache::rememberForever($cacheKey, fn () => $this->loadForBinding($field, $value)->toArray());
         $model = new self;
         $model->exists = true;
         $model->setRawAttributes($data, true);
@@ -195,16 +193,6 @@ final class Profile extends Model
     public function searchableAs(): string
     {
         return 'profiles_index';
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->user->name;
-    }
-
-    public function getAgeAttribute()
-    {
-        return $this->dynamicExtras->age;
     }
 
     public function toSearchableArray(): array
@@ -328,11 +316,6 @@ final class Profile extends Model
         return $this->hasOne(Preference::class);
     }
 
-    public function getBirthDateFormattedAttribute(): ?string
-    {
-        return $this->birth_date?->format('d-m-Y');
-    }
-
     public function dynamicExtras(): HasOne
     {
         return $this->hasOne(ProfileDynamicExtra::class);
@@ -355,6 +338,21 @@ final class Profile extends Model
         self::saved(function (self $profile) {
             $data = Cache::forget("profile.route.ulid.{$profile->ulid}");
         });
+    }
+
+    protected function name(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->user->name);
+    }
+
+    protected function age(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->dynamicExtras->age);
+    }
+
+    protected function birthDateFormatted(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
     }
 
     protected function loadForBinding(string $field, $value): self
