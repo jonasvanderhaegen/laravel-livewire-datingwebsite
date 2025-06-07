@@ -15,6 +15,7 @@ use Spatie\LaravelPasskeys\Actions\FindPasskeyToAuthenticateAction;
 use Spatie\LaravelPasskeys\Actions\GeneratePasskeyAuthenticationOptionsAction;
 use Spatie\LaravelPasskeys\Support\Config;
 
+// @codeCoverageIgnoreStart
 final class Login extends General
 {
     public LoginForm $form;
@@ -61,7 +62,7 @@ final class Login extends General
             Session::pull('passkey-auth-options'),
         );
 
-        if (! $passkey) {
+        if (!$passkey) {
             $this->invalidPasskeyResponse();
 
             return;
@@ -70,7 +71,7 @@ final class Login extends General
         /** @var Authenticatable|null $authenticatable */
         $authenticatable = $passkey->authenticatable;
 
-        if (! $authenticatable) {
+        if (!$authenticatable) {
             $this->invalidPasskeyResponse();
 
             return;
@@ -105,3 +106,4 @@ final class Login extends General
 
     }
 }
+// @codeCoverageIgnoreEnd

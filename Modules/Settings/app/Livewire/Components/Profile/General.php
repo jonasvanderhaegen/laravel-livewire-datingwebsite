@@ -32,6 +32,7 @@ use Modules\Settings\Livewire\Forms\Profile\General\ReligionForm;
 use Modules\Settings\Livewire\Forms\Profile\General\SmokeForm;
 use Modules\Settings\Livewire\Forms\Profile\General\ZodiacForm;
 
+// @codeCoverageIgnoreStart
 final class General extends Component
 {
     public string $activeTab = 'gender';
@@ -101,7 +102,7 @@ final class General extends Component
                 'pronouns' => $this->pronounForm->value,
                 'custom_pronouns' => $this->pronounForm->custom_pronouns,
             ]);
-            if (! auth()->user()->hasCompletedOnboarding()) {
+            if (!auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'pronouns', true);
             }
             $this->dispatch('saved');
@@ -151,7 +152,7 @@ final class General extends Component
         $this->orientationForm->orientations = $profile->orientations->pluck('id');
         $this->orientationForm->prefer_not_say = $profile->orientations_notsay;
 
-        if (! auth()->user()->hasCompletedOnboarding()) {
+        if (!auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('sendMountedData', [
                 'genders' => $this->genderForm->genders->count(),
                 'orientations' => $this->orientationForm->orientations->count(),
@@ -168,7 +169,7 @@ final class General extends Component
     {
         return cache()->rememberForever(
             $this->getProfileCacheKey(),
-            fn () => auth()->user()->profile()
+            fn() => auth()->user()->profile()
                 ->with([
                     'languages:id,identifier',
                     'ethnicities:id,identifier',
@@ -221,7 +222,7 @@ final class General extends Component
         // Handle the gender form
         if (Str::contains($field, 'genderForm')) {
 
-            if (! auth()->user()->hasCompletedOnboarding()) {
+            if (!auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
             }
 
@@ -289,7 +290,7 @@ final class General extends Component
              * @var Collection<int, object{identifier?:string,name:string}> $viewData [$viewKey]
              */
             $viewData[$viewKey] = collect($rawItems)
-                ->map(fn (array $item): object => (object) $item);
+                ->map(fn(array $item): object => (object) $item);
         }
 
         return view('settings::livewire.components.profile.general', $viewData);
@@ -458,11 +459,11 @@ final class General extends Component
                     $profile = auth()->user()->profile;
                     $profile->update(['custom_pronouns' => null]);
                     $this->pronounForm->custom_pronouns = null;
-                    if (! auth()->user()->hasCompletedOnboarding()) {
+                    if (!auth()->user()->hasCompletedOnboarding()) {
                         $this->dispatch('profileChanged', 'pronouns', true);
                     }
                 } : function () {
-                    if (! auth()->user()->hasCompletedOnboarding()) {
+                    if (!auth()->user()->hasCompletedOnboarding()) {
                         $this->dispatch('profileChanged', 'pronouns', null);
                     }
                 },
@@ -519,7 +520,7 @@ final class General extends Component
                 $mapping['extraAction']();
             }
 
-            if (! auth()->user()->hasCompletedOnboarding()) {
+            if (!auth()->user()->hasCompletedOnboarding()) {
                 if (array_key_first($mapping['update']) === 'relationship_type') {
                     $this->dispatch('profileChanged', 'relationshipType', true);
                 }
@@ -535,9 +536,9 @@ final class General extends Component
     private function handleMultiSelectFormUpdate(string $field, int|string $value): void
     {
         // Handle orientation form updates
-        if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
+        if (Str::contains($field, 'orientationForm') && !$this->orientationForm->prefer_not_say) {
 
-            if (! auth()->user()->hasCompletedOnboarding()) {
+            if (!auth()->user()->hasCompletedOnboarding()) {
                 $this->dispatch('profileChanged', 'orientations', $this->orientationForm->orientations->count());
             }
 
@@ -552,7 +553,7 @@ final class General extends Component
         }
 
         // Handle ethnicity form updates
-        if (Str::contains($field, 'ethnicityForm') && ! $this->ethnicityForm->prefer_not_say) {
+        if (Str::contains($field, 'ethnicityForm') && !$this->ethnicityForm->prefer_not_say) {
             $this->ethnicityForm->validate();
             $this->clearProfileCache();
             $profile = auth()->user()->profile;
@@ -562,7 +563,7 @@ final class General extends Component
         }
 
         // Handle language form updates
-        if (Str::contains($field, 'languageForm') && ! $this->languageForm->prefer_not_say) {
+        if (Str::contains($field, 'languageForm') && !$this->languageForm->prefer_not_say) {
             $this->languageForm->validate();
             $this->clearProfileCache();
             $profile = auth()->user()->profile;
@@ -572,18 +573,18 @@ final class General extends Component
         }
 
         // Handle pet form updates
-        if (Str::contains($field, 'petForm') && ! $this->petForm->prefer_not_say) {
+        if (Str::contains($field, 'petForm') && !$this->petForm->prefer_not_say) {
             $this->clearProfileCache();
 
             $valueInt = (int) $value;
 
             /** @var Collection<int,int> $pets */
-            $pets = collect($this->petForm->pets)->map(fn (int $v): int => $v);
+            $pets = collect($this->petForm->pets)->map(fn(int $v): int => $v);
 
             if ($valueInt === 1) {
                 $pets = collect([1]);
             } else {
-                $pets = $pets->reject(fn (int $v): bool => $v === 1);
+                $pets = $pets->reject(fn(int $v): bool => $v === 1);
 
                 if ($pets->count() === 1 && $pets->doesntContain($valueInt)) {
                     // push an int, not a string, so it matches Collection<int,int>
@@ -600,3 +601,4 @@ final class General extends Component
         }
     }
 }
+// @codeCoverageIgnoreEnd

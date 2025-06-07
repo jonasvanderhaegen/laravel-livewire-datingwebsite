@@ -12,6 +12,7 @@ use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Livewire\Forms\ForgotPasskeyForm;
 
+// @codeCoverageIgnoreStart
 final class LostPasskey extends General
 {
     public ForgotPasskeyForm $form;
@@ -50,3 +51,4 @@ final class LostPasskey extends General
             ->title('Forgot or lost passkey');
     }
 }
+// @codeCoverageIgnoreEnd

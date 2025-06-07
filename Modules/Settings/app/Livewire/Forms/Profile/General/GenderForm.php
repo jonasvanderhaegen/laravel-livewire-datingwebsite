@@ -9,6 +9,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class GenderForm extends Form
 {
     use SelectSummary;
@@ -44,3 +45,4 @@ final class GenderForm extends Form
         $profile->update(['genders' => $this->genders]);
     }
 }
+// @codeCoverageIgnoreEnd

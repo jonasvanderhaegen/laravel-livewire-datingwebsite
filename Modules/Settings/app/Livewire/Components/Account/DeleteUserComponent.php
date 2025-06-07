@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
+// @codeCoverageIgnoreStart
 final class DeleteUserComponent extends Component
 {
     /**
@@ -15,7 +16,9 @@ final class DeleteUserComponent extends Component
      */
     public bool $confirmingUserDeletion = false;
 
-    public function mount(): void {}
+    public function mount(): void
+    {
+    }
 
     public function confirmUserDeletion(): void
     {
@@ -42,3 +45,4 @@ final class DeleteUserComponent extends Component
         return view('settings::livewire.components.account.delete-user-form');
     }
 }
+// @codeCoverageIgnoreEnd

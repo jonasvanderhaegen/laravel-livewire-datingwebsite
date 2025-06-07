@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Profile\Providers;
 
-use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
 use Modules\Profile\Observers\UserObserver;
@@ -26,8 +25,6 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-
-        User::observe(UserObserver::class);
 
     }
 

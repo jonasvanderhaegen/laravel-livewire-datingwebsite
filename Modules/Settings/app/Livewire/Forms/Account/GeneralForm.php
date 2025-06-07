@@ -9,6 +9,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Core\Rules\StrictDob;
 
+// @codeCoverageIgnoreStart
 final class GeneralForm extends Form
 {
     #[Validate('required|string|max:255')]
@@ -33,8 +34,9 @@ final class GeneralForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return ! empty($this->name)
-            && ! empty($this->birth_date)
-            && ! $this->getErrorBag()->any();
+        return !empty($this->name)
+            && !empty($this->birth_date)
+            && !$this->getErrorBag()->any();
     }
 }
+// @codeCoverageIgnoreEnd

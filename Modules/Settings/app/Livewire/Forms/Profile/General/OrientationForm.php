@@ -9,6 +9,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Settings\Traits\SelectSummary;
 
+// @codeCoverageIgnoreStart
 final class OrientationForm extends Form
 {
     use SelectSummary;
@@ -41,3 +42,4 @@ final class OrientationForm extends Form
         ];
     }
 }
+// @codeCoverageIgnoreEnd

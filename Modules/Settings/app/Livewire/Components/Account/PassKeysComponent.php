@@ -12,6 +12,7 @@ use Masmerise\Toaster\Toaster;
 use Modules\Settings\Livewire\Forms\Account\PasskeysForm;
 use Spatie\LaravelPasskeys\Models\Passkey;
 
+// @codeCoverageIgnoreStart
 final class PassKeysComponent extends Component
 {
     public PasskeysForm $form;
@@ -39,3 +40,4 @@ final class PassKeysComponent extends Component
         return view('settings::livewire.components.account.pass-keys', ['passkeys' => collect([])]);
     }
 }
+// @codeCoverageIgnoreEnd

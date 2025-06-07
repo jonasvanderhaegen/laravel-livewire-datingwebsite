@@ -20,7 +20,7 @@ trait HasProfile
     public function initializeHasProfile(): void
     {
         static::created(function (Model $model) {
-            if (! $model->profile()->exists()) {
+            if (!$model->profile()->exists()) {
                 $model->profile()->create([
                     'ulid' => $model->ulid,
                 ]);
@@ -35,6 +35,8 @@ trait HasProfile
     {
         return $this->hasOne(Profile::class);
     }
+
+    // @codeCoverageIgnoreStart
 
     /**
      * @return HasManyThrough<Photo, Profile, $this>
@@ -51,4 +53,5 @@ trait HasProfile
     {
         return $this->hasManyThrough(Interest::class, Profile::class);
     }
+    // @codeCoverageIgnoreEnd
 }

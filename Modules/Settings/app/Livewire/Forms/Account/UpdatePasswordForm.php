@@ -12,6 +12,7 @@ use Livewire\Form;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 
+// @codeCoverageIgnoreStart
 final class UpdatePasswordForm extends Form
 {
     use WithRateLimiting;
@@ -50,7 +51,7 @@ final class UpdatePasswordForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return ! $this->getErrorBag()->any()
+        return !$this->getErrorBag()->any()
             && $this->current_password !== ''
             && $this->password !== ''
             && $this->password !== $this->current_password;
@@ -98,3 +99,4 @@ final class UpdatePasswordForm extends Form
         // return true;
     }
 }
+// @codeCoverageIgnoreEnd

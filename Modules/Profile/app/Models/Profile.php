@@ -62,6 +62,8 @@ final class Profile extends Model
     use HasFactory, HasLikes, Searchable;
 
     public $casts = [
+        'lat' => 'float',
+        'lng' => 'float',
         'public' => 'boolean',
         'js_location' => 'boolean',
         'birth_date' => 'date',
@@ -338,21 +340,13 @@ final class Profile extends Model
             $data = Cache::forget("profile.route.ulid.{$profile->ulid}");
         });
     }
-
-    /**
-     * @return Attribute<string, mixed>
-     */
-    protected function name(): Attribute
-    {
-        return Attribute::make(get: fn () => $this->user->name);
-    }
-
+    
     /**
      * @return Attribute<string, mixed>
      */
     protected function age(): Attribute
     {
-        return Attribute::make(get: fn () => $this->dynamicExtras->age);
+        return Attribute::make(get: fn() => $this->dynamicExtras->age);
     }
 
     /**
@@ -360,7 +354,7 @@ final class Profile extends Model
      */
     protected function birthDateFormatted(): Attribute
     {
-        return Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
+        return Attribute::make(get: fn() => $this->birth_date?->format('d-m-Y'));
     }
 
     protected function loadForBinding(string $field, int|string $value): self

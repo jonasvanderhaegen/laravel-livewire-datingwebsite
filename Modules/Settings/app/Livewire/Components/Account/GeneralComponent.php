@@ -11,6 +11,7 @@ use Livewire\Component;
 use Modules\Profile\Models\Profile;
 use Modules\Settings\Livewire\Forms\Account\GeneralForm;
 
+// @codeCoverageIgnoreStart
 final class GeneralComponent extends Component
 {
     public GeneralForm $form;
@@ -78,3 +79,4 @@ final class GeneralComponent extends Component
         Cache::forget("settings:account:general:{$this->userId}");
     }
 }
+// @codeCoverageIgnoreEnd

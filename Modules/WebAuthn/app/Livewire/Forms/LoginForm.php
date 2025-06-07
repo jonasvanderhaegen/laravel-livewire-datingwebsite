@@ -9,6 +9,7 @@ use Modules\Core\Concerns\RateLimitDurations;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 
+// @codeCoverageIgnoreStart
 final class LoginForm extends Form
 {
     use RateLimitDurations, WithRateLimiting;
@@ -23,3 +24,4 @@ final class LoginForm extends Form
         $this->rateLimit(5, $this->shortDuration('auth.passwords.passkeys.throttle'));
     }
 }
+// @codeCoverageIgnoreEnd

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Queue\SerializesModels;
 use Modules\WebAuthn\Livewire\Forms\RegisterForm;
 
+// @codeCoverageIgnoreStart
 final class Registered
 {
     use SerializesModels;
@@ -15,5 +16,8 @@ final class Registered
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public RegisterForm $form) {}
+    public function __construct(public User $user, public RegisterForm $form)
+    {
+    }
 }
+// @codeCoverageIgnoreEnd

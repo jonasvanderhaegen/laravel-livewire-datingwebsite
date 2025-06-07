@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Modules\Profile\Models\Profile;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Profile\Models\Profile>
+ * @extends Factory<Profile>
  */
 final class ProfileFactory extends Factory
 {
@@ -31,7 +31,7 @@ final class ProfileFactory extends Factory
 
         // Helper to pick a nullable config value
 
-        $pickNullable = fn (string $configKey, bool $notSay) => $notSay
+        $pickNullable = fn(string $configKey, bool $notSay) => $notSay
             ? null
             : $faker->randomElement(range(1, count(config("profile.{$configKey}"))));
 

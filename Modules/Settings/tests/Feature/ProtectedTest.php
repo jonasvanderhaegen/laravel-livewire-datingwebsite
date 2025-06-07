@@ -16,7 +16,6 @@ dataset('settings pages', [
         'componentClass' => Account::class,
         'limit' => 30,
     ],
-
     'profile' => [
         'routeName' => 'settings.profile',
         'componentClass' => Profile::class,
@@ -32,6 +31,11 @@ dataset('settings pages', [
         'componentClass' => Images::class,
         'limit' => 30,
     ],
+    'profile preview' => [
+        'routeName' => 'settings.profile-preview',
+        'componentClass' => \Modules\Settings\Livewire\Pages\ProfilePreview::class,
+        'limit' => 30,
+    ]
 
 ]);
 

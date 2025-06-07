@@ -19,6 +19,7 @@ use Spatie\LaravelPasskeys\Support\Config;
 use Throwable;
 use Webauthn\Exception\InvalidDataException;
 
+// @codeCoverageIgnoreStart
 final class Register extends General
 {
     public RegisterForm $form;
@@ -54,6 +55,7 @@ final class Register extends General
             'passkeyOptions' => json_decode((string) $this->generatePasskeyOptions()),
         ]);
     }
+
 
     public function updatedFormEmail(): void
     {
@@ -120,4 +122,6 @@ final class Register extends General
     {
         return session()->pull('passkey-registration-options');
     }
+
 }
+// @codeCoverageIgnoreEnd

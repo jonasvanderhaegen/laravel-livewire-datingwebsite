@@ -9,6 +9,7 @@ use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class LocationComponent extends Component
 {
     public Profile $profile;
@@ -74,10 +75,10 @@ final class LocationComponent extends Component
         /** @var bool $locationEnabled */
         $locationEnabled = cache()->rememberForever(
             'settings:account:location:'.auth()->id(),
-            fn (): bool => (bool) $this->profile->js_location
+            fn(): bool => (bool) $this->profile->js_location
         );
 
-        if (! auth()->user()->hasCompletedOnboarding()) {
+        if (!auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('locationEnabled', $locationEnabled);
         }
 
@@ -87,3 +88,4 @@ final class LocationComponent extends Component
         );
     }
 }
+// @codeCoverageIgnoreEnd

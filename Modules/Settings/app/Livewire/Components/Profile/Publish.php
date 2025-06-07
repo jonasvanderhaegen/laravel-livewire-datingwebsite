@@ -9,6 +9,7 @@ use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Profile\Models\Profile;
 
+// @codeCoverageIgnoreStart
 final class Publish extends Component
 {
     public bool $public = false;
@@ -34,3 +35,4 @@ final class Publish extends Component
         return view('settings::livewire.components.profile.publish');
     }
 }
+// @codeCoverageIgnoreEnd

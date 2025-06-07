@@ -11,6 +11,6 @@ final class ProfilePreview extends General
 {
     public function render(): View
     {
-        return view('page::livewire.profile-preview');
+        return view('settings::livewire.profile-preview');
     }
 }

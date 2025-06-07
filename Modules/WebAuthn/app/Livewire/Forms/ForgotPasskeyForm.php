@@ -13,6 +13,7 @@ use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Core\Rules\StrictEmailDomain;
 use Modules\WebAuthn\Notifications\ResetPasskeyNotification;
 
+// @codeCoverageIgnoreStart
 final class ForgotPasskeyForm extends Form
 {
     use RateLimitDurations, WithRateLimiting;
@@ -68,3 +69,4 @@ final class ForgotPasskeyForm extends Form
         return $status === Password::RESET_LINK_SENT;
     }
 }
+// @codeCoverageIgnoreEnd

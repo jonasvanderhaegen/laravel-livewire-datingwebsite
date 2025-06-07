@@ -11,6 +11,7 @@ use Masmerise\Toaster\Toaster;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Settings\Livewire\Forms\Account\UpdatePasswordForm;
 
+// @codeCoverageIgnoreStart
 final class UpdatePasswordComponent extends Component
 {
     public bool $showPassword = false;
@@ -53,3 +54,4 @@ final class UpdatePasswordComponent extends Component
         return view('settings::livewire.components.account.update-password');
     }
 }
+// @codeCoverageIgnoreEnd

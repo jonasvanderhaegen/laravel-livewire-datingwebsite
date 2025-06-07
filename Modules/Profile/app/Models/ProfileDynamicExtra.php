@@ -12,9 +12,7 @@ final class ProfileDynamicExtra extends Model
     public $incrementing = false;
 
     public $timestamps = false;
-
-    protected $fillable = [];
-
+    
     protected $table = 'profile_dynamic_extras';
 
     /**
@@ -29,6 +27,7 @@ final class ProfileDynamicExtra extends Model
     {
         return [
             'age' => 'integer',
+            'zodiac' => 'string',
         ];
     }
 }

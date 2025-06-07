@@ -18,6 +18,16 @@ dataset('web pages', [
         'componentClass' => TermsConditions::class,
         'limit' => 60,
     ],
+    'safety' => [
+        'routeName' => 'safety',
+        'componentClass' => \Modules\Page\Livewire\Pages\Safety::class,
+        'limit' => 60,
+    ],
+    'support' => [
+        'routeName' => 'support',
+        'componentClass' => \Modules\Page\Livewire\Pages\Support::class,
+        'limit' => 60,
+    ]
 ]);
 
 // 2) Shared setup (if needed)

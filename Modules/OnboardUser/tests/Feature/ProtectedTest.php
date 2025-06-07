@@ -23,6 +23,11 @@ dataset('onboarding pages', [
         'componentClass' => Modules\OnboardUser\Livewire\Step3::class,
         'limit' => 30,
     ],
+    'step4' => [
+        'routeName' => 'onboard.step4',
+        'componentClass' => Modules\OnboardUser\Livewire\Step4::class,
+        'limit' => 30,
+    ],
     'finalstep' => [
         'routeName' => 'onboard.finalstep',
         'componentClass' => Modules\OnboardUser\Livewire\Finalstep::class,

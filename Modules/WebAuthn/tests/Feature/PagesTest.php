@@ -32,7 +32,11 @@ dataset('auth pages', [
         'componentClass' => Register::class,
         'limit' => 10,
     ],
-
+    'instructions' => [
+        'routeName' => 'passkeys.instructions',
+        'componentClass' => \Modules\WebAuthn\Livewire\Pages\Instructions::class,
+        'limit' => 60,
+    ]
 ]);
 
 // 2) Shared setup (if needed)
