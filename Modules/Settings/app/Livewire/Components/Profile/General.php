@@ -584,7 +584,7 @@ final class General extends Component
                 $this->petForm->pets = collect([1]);
                 $profile->pets()->sync([1]);
             } else {
-                $this->petForm->pets = $this->petForm->pets->reject(fn ($value) => $value === 1)
+                $this->petForm->pets = $this->petForm->pets->reject(fn (int $value) => $value === 1)
                     ->values();
                 $profile->pets()->sync($this->petForm->pets->toArray());
             }
