@@ -21,7 +21,7 @@ final class Register extends General
 
     public function toggleShowPassword(): void
     {
-        $this->showPassword = ! $this->showPassword;
+        $this->showPassword = !$this->showPassword;
     }
 
     public function mount(): void
@@ -79,6 +79,7 @@ final class Register extends General
 
     public function render(): View
     {
+        // @phpstan-ignore-next-line
         return view('classicauth::livewire.register')
             ->title(__('Register'));
     }
