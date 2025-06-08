@@ -154,12 +154,12 @@ final class General extends Component
 
         if (! auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('sendMountedData', [
-                'genders' => $this->genderForm->genders->count(),
-                'orientations' => $this->orientationForm->orientations->count(),
+                'genders' => (bool) $this->genderForm->genders->count(),
+                'orientations' => (bool) $this->orientationForm->orientations->count(),
                 'orientations_notsay' => $this->orientationForm->prefer_not_say,
-                'pronouns' => ($this->pronounForm->value === 'custom') ? $this->pronounForm->custom_pronouns : $this->pronounForm->value,
+                'pronouns' => ($this->pronounForm->value === 'custom') ? (bool) $this->pronounForm->custom_pronouns : (bool) $this->pronounForm->value,
                 'pronouns_notsay' => $this->pronounForm->prefer_not_say,
-                'relationshipType' => $this->relationshipForm->value,
+                'relationshipType' => (bool) $this->relationshipForm->value,
             ]);
         }
     }
