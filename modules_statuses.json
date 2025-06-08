@@ -6,7 +6,7 @@
     "WebAuthn": true,
     "Auth": true,
     "Profile": true,
-    "ClassicAuth": true,
+    "ClassicAuth": false,
     "Testimonial": true,
     "Contact": true,
     "Settings": true,
