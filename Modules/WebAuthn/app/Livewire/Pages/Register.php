@@ -11,8 +11,8 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Modules\CustomTheme\Livewire\Layouts\General;
+use Modules\WebAuthn\Concerns\HandlesPasskeys;
 use Modules\WebAuthn\Events\Registered as WebAuthnRegistered;
-use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyRegisterOptionsAction;
 use Modules\WebAuthn\Livewire\Forms\RegisterForm;
 use Spatie\LaravelPasskeys\Actions\StorePasskeyAction;
 use Spatie\LaravelPasskeys\Support\Config;
@@ -22,6 +22,8 @@ use Webauthn\Exception\InvalidDataException;
 // @codeCoverageIgnoreStart
 final class Register extends General
 {
+    use HandlesPasskeys;
+
     public RegisterForm $form;
 
     public ?string $ulid = null;
@@ -95,31 +97,6 @@ final class Register extends General
     {
         return view('webauthn::livewire.pages.register')
             ->title('Register');
-    }
-
-    /**
-     * @throws InvalidDataException
-     */
-    protected function generatePasskeyOptions(): mixed
-    {
-        /*
-        $action = Config::getAction('generate_passkey_register_options',
-            GeneratePasskeyRegisterOptionsAction::class);
-
-        $options = $action->execute($this->user);
-        */
-
-        $action = app(GeneratePasskeyRegisterOptionsAction::class);
-        $options = $action->execute($this->user);
-
-        session()->put('passkey-registration-options', $options);
-
-        return $options;
-    }
-
-    protected function previouslyGeneratedPasskeyOptions(): ?string
-    {
-        return session()->pull('passkey-registration-options');
     }
 }
 // @codeCoverageIgnoreEnd

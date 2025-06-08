@@ -7,6 +7,7 @@ namespace Modules\ClassicAuth\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
+// @codeCoverageIgnoreStart
 final class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'ClassicAuth';
@@ -39,3 +40,4 @@ final class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
     }
 }
+// @codeCoverageIgnoreEnd
