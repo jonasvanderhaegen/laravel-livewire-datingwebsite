@@ -7,6 +7,7 @@ namespace Modules\ClassicAuth\Providers;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
 
+// @codeCoverageIgnoreStart
 final class PrimaryServiceProvider extends ServiceProvider
 {
     use HasSamePrimaryServiceProviderFunctions;
@@ -34,3 +35,4 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
     }
 }
+// @codeCoverageIgnoreEnd

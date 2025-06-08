@@ -6,6 +6,7 @@ namespace Modules\ClassicAuth\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+// @codeCoverageIgnoreStart
 final class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -27,3 +28,4 @@ final class EventServiceProvider extends ServiceProvider
      */
     protected function configureEmailVerification(): void {}
 }
+// @codeCoverageIgnoreEnd
