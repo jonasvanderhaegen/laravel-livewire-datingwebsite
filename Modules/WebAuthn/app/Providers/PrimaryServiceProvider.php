@@ -23,8 +23,19 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->registercommands();
         $this->registerTranslations();
         $this->registerConfig();
+        $this->mergeConfigForPasswordBroker();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+    }
+
+    public function mergeConfigForPasswordBroker(): void
+    {
+        config([
+            'auth.passwords' => array_merge(
+                config('auth.passwords', []),
+                config('webauthn.auth.passwords', [])
+            ),
+        ]);
     }
 
     public function registerCommands(): void
