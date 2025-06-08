@@ -219,22 +219,6 @@ final class General extends Component
             return;
         }
 
-        // Handle the gender form
-        if (Str::contains($field, 'genderForm')) {
-
-            if (! auth()->user()->hasCompletedOnboarding()) {
-                $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
-            }
-
-            $this->genderForm->validate();
-            $this->clearProfileCache();
-            $profile = auth()->user()->profile;
-            $profile->genders()->sync($this->genderForm->genders->toArray());
-            $this->dispatch('saved');
-
-            return;
-        }
-
         // Handle prefer_not_say updates
         if (Str::endsWith($field, 'prefer_not_say')) {
             $this->handlePreferNotSay($field, $value);
@@ -535,6 +519,22 @@ final class General extends Component
      */
     private function handleMultiSelectFormUpdate(string $field, int|string $value): void
     {
+
+        $profile = auth()->user()->profile;
+
+        // Handle the gender form
+        if (Str::contains($field, 'genderForm')) {
+
+            if (! auth()->user()->hasCompletedOnboarding()) {
+                $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
+            }
+
+            $this->genderForm->validate();
+            $this->clearProfileCache();
+            $profile->genders()->sync($this->genderForm->genders->toArray());
+            $this->dispatch('saved');
+        }
+
         // Handle orientation form updates
         if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
 
@@ -544,7 +544,6 @@ final class General extends Component
 
             $this->orientationForm->validate();
             $this->clearProfileCache();
-            $profile = auth()->user()->profile;
             $profile->update(['orientations_notsay' => false]);
             // clears cache also because of notsay
             $profile->orientations()->sync($this->orientationForm->orientations->toArray());
@@ -556,7 +555,6 @@ final class General extends Component
         if (Str::contains($field, 'ethnicityForm') && ! $this->ethnicityForm->prefer_not_say) {
             $this->ethnicityForm->validate();
             $this->clearProfileCache();
-            $profile = auth()->user()->profile;
             $profile->update(['ethnicity_notsay' => false]);
             $profile->ethnicities()->sync($this->ethnicityForm->ethnicities->toArray());
             $this->dispatch('saved');
@@ -566,7 +564,6 @@ final class General extends Component
         if (Str::contains($field, 'languageForm') && ! $this->languageForm->prefer_not_say) {
             $this->languageForm->validate();
             $this->clearProfileCache();
-            $profile = auth()->user()->profile;
             $profile->update(['language_notsay' => false]);
             $profile->languages()->sync($this->languageForm->languages->toArray());
             $this->dispatch('saved');
@@ -577,35 +574,20 @@ final class General extends Component
             $this->clearProfileCache();
 
             $valueInt = (int) $value;
-
-            /**
-             * After mapping we have a Collection where every element is int.
-             *
-             * @var Collection<int,int> $pets
-             */
-            $pets = collect($this->petForm->pets)->map(
-                /**
-                 * @param  bool|int|string|array<int|string>  $value
-                 */
-                static fn (array|bool|int|string $value, string $key): int => (int) $value
-            );
-
-            if ($valueInt === 1) {
-                $pets = collect([1]);
-            } else {
-                $pets = $pets->reject(fn (int $v): bool => $v === 1);
-
-                if ($pets->count() === 1 && $pets->doesntContain($valueInt)) {
-                    // push an int, not a string, so it matches Collection<int,int>
-                    $pets->push($valueInt);
-                }
+            if ($valueInt === 0) {
+                return;
             }
 
-            $this->petForm->pets = $pets->values();
-
-            $profile = auth()->user()->profile;
             $profile->update(['pets_notsay' => false]);
-            $profile->pets()->sync($this->petForm->pets->toArray());
+
+            if ($valueInt === 1) {
+                $this->petForm->pets = collect([1]);
+                $profile->pets()->sync([1]);
+            } else {
+                $this->petForm->pets = $this->petForm->pets->filter(fn (int $id) => $id !== 1)->values();
+                $profile->pets()->sync($this->petForm->pets->toArray());
+            }
+
             $this->dispatch('saved');
         }
     }
