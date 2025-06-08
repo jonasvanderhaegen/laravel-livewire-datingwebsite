@@ -390,7 +390,7 @@ final class General extends Component
 
             if ($value === false) {
                 $this->dispatch('profileChanged', array_key_first($mapping['update']), false);
-                $this->dispatch('profileChanged', $formName.'s', null);
+                $this->dispatch('profileChanged', $formName.'s', false);
 
                 return;
             }
@@ -448,7 +448,7 @@ final class General extends Component
                     }
                 } : function () {
                     if (! auth()->user()->hasCompletedOnboarding()) {
-                        $this->dispatch('profileChanged', 'pronouns', null);
+                        $this->dispatch('profileChanged', 'pronouns', false);
                     }
                 },
             ],
@@ -525,11 +525,12 @@ final class General extends Component
         // Handle the gender form
         if (Str::contains($field, 'genderForm')) {
 
+            $this->genderForm->validate();
+
             if (! auth()->user()->hasCompletedOnboarding()) {
-                $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
+                $this->dispatch('profileChanged', 'genders', true);
             }
 
-            $this->genderForm->validate();
             $this->clearProfileCache();
             $profile->genders()->sync($this->genderForm->genders->toArray());
             $this->dispatch('saved');
@@ -538,11 +539,12 @@ final class General extends Component
         // Handle orientation form updates
         if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
 
+            $this->orientationForm->validate();
+
             if (! auth()->user()->hasCompletedOnboarding()) {
-                $this->dispatch('profileChanged', 'orientations', $this->orientationForm->orientations->count());
+                $this->dispatch('profileChanged', 'orientations', true);
             }
 
-            $this->orientationForm->validate();
             $this->clearProfileCache();
             $profile->update(['orientations_notsay' => false]);
             // clears cache also because of notsay

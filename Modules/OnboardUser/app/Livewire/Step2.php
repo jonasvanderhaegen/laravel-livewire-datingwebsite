@@ -85,7 +85,7 @@ final class Step2 extends General
     }
 
     /**
-     * @param  array{genders:int,orientations:int,orientations_notsay:bool,pronouns_notsay:bool,pronouns:string|null,relationshipType:int|null}  $data
+     * @param  array{genders:bool,orientations:bool,orientations_notsay:bool,pronouns_notsay:bool,pronouns:bool,relationshipType:bool}  $data
      */
     public function handleMountedData(array $data): void
     {
