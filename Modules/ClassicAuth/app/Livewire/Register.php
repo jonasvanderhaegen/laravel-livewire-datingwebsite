@@ -21,7 +21,7 @@ final class Register extends General
 
     public function toggleShowPassword(): void
     {
-        $this->showPassword = !$this->showPassword;
+        $this->showPassword = ! $this->showPassword;
     }
 
     public function mount(): void
