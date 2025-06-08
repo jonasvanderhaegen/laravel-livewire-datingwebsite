@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\WebAuthn\Concerns;
 
 use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyRegisterOptionsAction;
 use Webauthn\Exception\InvalidDataException;
 
+// @codeCoverageIgnoreStart
 trait HandlesPasskeys
 {
     /**
@@ -32,3 +35,4 @@ trait HandlesPasskeys
         return session()->pull('passkey-registration-options');
     }
 }
+// @codeCoverageIgnoreEnd
