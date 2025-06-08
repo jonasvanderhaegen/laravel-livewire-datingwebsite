@@ -154,12 +154,12 @@ final class General extends Component
 
         if (! auth()->user()->hasCompletedOnboarding()) {
             $this->dispatch('sendMountedData', [
-                'genders' => $this->genderForm->genders->count(),
-                'orientations' => $this->orientationForm->orientations->count(),
+                'genders' => (bool) $this->genderForm->genders->count(),
+                'orientations' => (bool) $this->orientationForm->orientations->count(),
                 'orientations_notsay' => $this->orientationForm->prefer_not_say,
-                'pronouns' => ($this->pronounForm->value === 'custom') ? $this->pronounForm->custom_pronouns : $this->pronounForm->value,
+                'pronouns' => ($this->pronounForm->value === 'custom') ? (bool) $this->pronounForm->custom_pronouns : (bool) $this->pronounForm->value,
                 'pronouns_notsay' => $this->pronounForm->prefer_not_say,
-                'relationshipType' => $this->relationshipForm->value,
+                'relationshipType' => (bool) $this->relationshipForm->value,
             ]);
         }
     }
@@ -390,7 +390,7 @@ final class General extends Component
 
             if ($value === false) {
                 $this->dispatch('profileChanged', array_key_first($mapping['update']), false);
-                $this->dispatch('profileChanged', $formName.'s', null);
+                $this->dispatch('profileChanged', $formName.'s', false);
 
                 return;
             }
@@ -448,7 +448,7 @@ final class General extends Component
                     }
                 } : function () {
                     if (! auth()->user()->hasCompletedOnboarding()) {
-                        $this->dispatch('profileChanged', 'pronouns', null);
+                        $this->dispatch('profileChanged', 'pronouns', false);
                     }
                 },
             ],
@@ -525,11 +525,12 @@ final class General extends Component
         // Handle the gender form
         if (Str::contains($field, 'genderForm')) {
 
+            $this->genderForm->validate();
+
             if (! auth()->user()->hasCompletedOnboarding()) {
-                $this->dispatch('profileChanged', 'genders', $this->genderForm->genders->count());
+                $this->dispatch('profileChanged', 'genders', true);
             }
 
-            $this->genderForm->validate();
             $this->clearProfileCache();
             $profile->genders()->sync($this->genderForm->genders->toArray());
             $this->dispatch('saved');
@@ -538,11 +539,12 @@ final class General extends Component
         // Handle orientation form updates
         if (Str::contains($field, 'orientationForm') && ! $this->orientationForm->prefer_not_say) {
 
+            $this->orientationForm->validate();
+
             if (! auth()->user()->hasCompletedOnboarding()) {
-                $this->dispatch('profileChanged', 'orientations', $this->orientationForm->orientations->count());
+                $this->dispatch('profileChanged', 'orientations', true);
             }
 
-            $this->orientationForm->validate();
             $this->clearProfileCache();
             $profile->update(['orientations_notsay' => false]);
             // clears cache also because of notsay
@@ -584,7 +586,7 @@ final class General extends Component
                 $this->petForm->pets = collect([1]);
                 $profile->pets()->sync([1]);
             } else {
-                $this->petForm->pets = $this->petForm->pets->reject(fn ($value) => $value === 1)
+                $this->petForm->pets = $this->petForm->pets->reject(fn (int $value) => $value === 1)
                     ->values();
                 $profile->pets()->sync($this->petForm->pets->toArray());
             }

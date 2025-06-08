@@ -12,17 +12,17 @@ use Modules\CustomTheme\Livewire\Layouts\General;
 // @codeCoverageIgnoreStart
 final class Step2 extends General
 {
-    public ?int $genders = 0;
+    public bool $genders = false;
 
-    public ?int $orientations = 0;
+    public bool $orientations = false;
 
-    public ?bool $orientations_notsay = null;
+    public bool $orientations_notsay = false;
 
-    public ?bool $pronouns_notsay = null;
+    public bool $pronouns_notsay = false;
 
-    public string|bool|null $pronouns = false;
+    public bool $pronouns = false;
 
-    public int|bool|null $relationshipType = false;
+    public bool $relationshipType = false;
 
     /**
      * @var array<string,string> Livewire event → handler mappings
@@ -49,35 +49,27 @@ final class Step2 extends General
     #[Computed]
     public function nextStepAvailable(): bool
     {
-        return ! is_null($this->relationshipType) && $this->pronounsValid() && $this->orientationValid() && $this->genders > 0;
+        return $this->pronounsValid() && $this->orientationValid() && $this->relationshipType && $this->genders;
     }
 
     #[Computed]
     public function pronounsValid(): bool
     {
-        if ($this->pronouns_notsay !== null) {
-            if ($this->pronouns_notsay === true) {
-                return true;
-            }
-
-            return ! is_null($this->pronouns);
+        if ($this->pronouns_notsay === true) {
+            return true;
         }
 
-        return false;
+        return $this->pronouns;
     }
 
     #[Computed]
     public function orientationValid(): bool
     {
-        if ($this->orientations_notsay !== null) {
-            if ($this->orientations_notsay === true) {
-                return true;
-            }
-
-            return $this->orientations > 0;
+        if ($this->orientations_notsay === true) {
+            return true;
         }
 
-        return false;
+        return $this->orientations;
     }
 
     public function render(): View
@@ -88,12 +80,12 @@ final class Step2 extends General
     public function updateProperty(string $prop, mixed $value): void
     {
         if (property_exists($this, $prop)) {
-            $this->$prop = $value;
+            $this->$prop = (bool) $value;
         }
     }
 
     /**
-     * @param  array{genders:int,orientations:int,orientations_notsay:bool,pronouns_notsay:bool,pronouns:string|null,relationshipType:int|null}  $data
+     * @param  array{genders:bool,orientations:bool,orientations_notsay:bool,pronouns_notsay:bool,pronouns:bool,relationshipType:bool}  $data
      */
     public function handleMountedData(array $data): void
     {
