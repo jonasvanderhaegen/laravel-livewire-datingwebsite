@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\RateLimiter;
 use Modules\WebAuthn\Livewire\Pages\Login;
 use Modules\WebAuthn\Livewire\Pages\LostPasskey;
 use Modules\WebAuthn\Livewire\Pages\Register;
-use Modules\WebAuthn\Livewire\Pages\ResetPasskey;
 
 // use Nwidart\Modules\Facades\Module;
 
@@ -15,11 +14,6 @@ dataset('auth pages', [
     'lost passkey' => [
         'routeName' => 'passkey.request',
         'componentClass' => LostPasskey::class,
-        'limit' => 10,
-    ],
-    'reset passkey' => [
-        'routeName' => 'passkey.reset',
-        'componentClass' => ResetPasskey::class,
         'limit' => 10,
     ],
     'login' => [
