@@ -904,7 +904,7 @@
                         >
                             0
                         </dt>
-                        <dd class="font-light text-gray-500 dark:text-gray-400">
+                        <dd class="font-light text-slate-50">
                             {{ __("page::home.transparency.stats.{$stat}") }}
                         </dd>
                     </div>

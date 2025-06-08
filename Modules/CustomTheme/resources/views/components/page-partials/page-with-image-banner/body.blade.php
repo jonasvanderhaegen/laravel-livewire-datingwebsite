@@ -1,10 +1,7 @@
 <div class="">
     <x-flowbite::boxed-width
         @class([
-            'rounded-4xl flex relative z-20 justify-between py-12 px-10 2xl:max-w-[93rem]
-                                                                                                                    bg-gradient-to-b border-white border-2 dark:border-gray-800
-                                                                                                                    xl:mx-auto w-full ',
-
+            'rounded-4xl flex relative z-20 justify-between py-12 px-10 2xl:max-w-[93rem] bg-gradient-to-b border-white border-2 dark:border-gray-800 xl:mx-auto w-full ',
             '-m-36 xl:-m-32' => $image,
             '-mb-36 xl:-mb-32' => ! $image,
             isset($underbody) ? 'bg-white dark:bg-gray-800' : 'from-white via-white to-slate-100 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 ',

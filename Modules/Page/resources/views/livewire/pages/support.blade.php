@@ -90,7 +90,9 @@
                 <div class="flex items-center gap-5 text-sm">
                     <div class="flex flex-col items-center gap-2">
                         {{-- Icon --}}
-                        <x-customtheme::icons.email-document class="size-7 shrink-0" />
+                        <x-customtheme::icons.email-document
+                            class="size-7 shrink-0"
+                        />
 
                         {{-- Title --}}
                         <h2
