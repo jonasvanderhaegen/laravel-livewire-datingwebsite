@@ -18,6 +18,8 @@ use Spatie\LaravelPasskeys\Support\Config;
 // @codeCoverageIgnoreStart
 final class Login extends General
 {
+    public string $activeTab = 'ios';
+
     public LoginForm $form;
 
     public function mount(): void

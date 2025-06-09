@@ -1,5 +1,5 @@
-<x-customtheme::page-layouts.horizontal-split-left-page>
-    <x-slot name="left">
+<x-customtheme::page-layouts.auth>
+    <x-slot name="topLeft">
         <form
             x-data="{
                 remaining: @entangle('form.secondsUntilReset'),
@@ -21,7 +21,7 @@
             }"
             x-init="startTimer()"
             x-effect="startTimer()"
-            class="w-full max-w-md space-y-4 md:space-y-6 xl:max-w-xl"
+            class="rounded-4xl bg-white p-8 shadow-md md:space-y-6 dark:bg-gray-800"
             action="#"
             wire:submit.prevent="submit"
         >
@@ -92,16 +92,6 @@
                     @else
                         {{ __('We’ll email you instructions to reset your passkey.') }}
                     @endif
-
-                    If you can't access your email, you can
-                    <a
-                        href="{{ route('register') }}"
-                        wire:navigate.hover
-                        class="font-medium text-blue-500 hover:underline"
-                    >
-                        create new account
-                    </a>
-                    .
                 </p>
 
                 <x-flowbite::input.text-field
@@ -136,6 +126,35 @@
                     </template>
                 </button>
             </fieldset>
+            <a
+                href="{{ route('register') }}"
+                wire:navigate.hover
+                class="flex cursor-pointer items-center justify-between text-sm font-medium text-blue-600 dark:text-blue-500"
+            >
+                <span>
+                    <span class="text-xs text-gray-400">
+                        If you can't access your email
+                    </span>
+                    <br />
+                    create new account
+                </span>
+
+                <svg
+                    class="ms-2 h-4 w-4 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                </svg>
+            </a>
         </form>
     </x-slot>
-</x-customtheme::page-layouts.horizontal-split-left-page>
+</x-customtheme::page-layouts.auth>

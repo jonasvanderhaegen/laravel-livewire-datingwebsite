@@ -26,6 +26,8 @@ final class Register extends General
 
     public RegisterForm $form;
 
+    public string $activeTab = 'ios';
+
     public ?string $ulid = null;
 
     protected User $user;

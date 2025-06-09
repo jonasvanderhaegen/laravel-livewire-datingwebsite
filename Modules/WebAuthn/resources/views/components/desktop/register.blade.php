@@ -1,43 +1,13 @@
-<x-customtheme::page-layouts.horizontal-split-left-page>
-    <x-slot name="left">
+<x-customtheme::page-layouts.auth :activeTab="$this->activeTab">
+    <x-slot name="topLeft">
         <form
-            class="w-full max-w-md space-y-4 md:space-y-6 xl:max-w-xl"
+            class="rounded-4xl bg-white p-8 shadow-md md:space-y-6 dark:bg-gray-800"
             action="#"
             wire:submit.prevent="submit"
         >
             <h1 class="text-xl font-bold text-gray-900 dark:text-white">
                 {{ __('Registration') }}
             </h1>
-
-            <a
-                href="{{ route('passkeys.instructions') }}"
-                wire:navigate.hover
-                class="mb-8 flex cursor-pointer items-center justify-start text-sm font-medium text-blue-600 dark:text-blue-500"
-            >
-                <span>
-                    Read how to save passkey with registration
-                    <br />
-                    <span class="text-xs text-gray-400">
-                        Highly recommended for first-timers
-                    </span>
-                </span>
-
-                <svg
-                    class="ms-2 h-4 w-4 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 10"
-                >
-                    <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9"
-                    />
-                </svg>
-            </a>
 
             <fieldset class="space-y-4 md:space-y-6">
                 <div class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
@@ -105,18 +75,69 @@
                 </button>
             </fieldset>
 
-            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account?
-                <a
-                    href="{{ route('login') }}"
-                    wire:navigate.hover
-                    class="font-medium text-blue-500 hover:underline dark:text-blue-500"
+            <a
+                href="{{ route('login') }}"
+                wire:navigate.hover
+                class="flex cursor-pointer items-center justify-between text-sm font-medium text-blue-600 dark:text-blue-500"
+            >
+                <span>
+                    <span class="text-xs text-gray-400">
+                        Already have an account?
+                    </span>
+                    <br />
+                    Log in here
+                </span>
+
+                <svg
+                    class="ms-2 h-4 w-4 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
                 >
-                    Sign In
-                </a>
-            </p>
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                </svg>
+            </a>
+
+            <a
+                href="{{ route('passkeys.instructions') }}"
+                wire:navigate.hover
+                class="flex cursor-pointer items-center justify-between text-sm font-medium text-blue-600 dark:text-blue-500"
+            >
+                <span>
+                    <span class="text-xs text-gray-400">
+                        Highly recommended for first-timers
+                    </span>
+                    <br />
+                    Read how to save passkey with registration
+                </span>
+
+                <svg
+                    class="ms-2 h-4 w-4 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                </svg>
+            </a>
         </form>
     </x-slot>
-</x-customtheme::page-layouts.horizontal-split-left-page>
 
-<x-webauthn::info-webauthn />
+    <x-slot name="topRight">
+        <x-customtheme::page-partials.auth.registration-onboarding-steps />
+    </x-slot>
+</x-customtheme::page-layouts.auth>

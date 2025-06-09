@@ -2,7 +2,7 @@
     @class([
         'w-full',
         'absolute top-20 left-1/2 -translate-x-1/2 px-4 text-white xl:top-1/2 xl:-translate-y-1/2' => $image,
-        'relative text-slate-900 dark:text-white' => ! $image,
+        'relative text-white' => ! $image,
     ])
 >
     <x-slot name="body">

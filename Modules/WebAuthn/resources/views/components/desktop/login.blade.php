@@ -1,5 +1,5 @@
-<x-customtheme::page-layouts.horizontal-split-left-page>
-    <x-slot name="left">
+<x-customtheme::page-layouts.auth :activeTab="$this->activeTab">
+    <x-slot name="topLeft">
         <form
             x-data="{
                 remaining: @entangle('form.secondsUntilReset'),
@@ -21,7 +21,7 @@
             }"
             x-init="startTimer()"
             x-effect="startTimer()"
-            class="w-full max-w-md space-y-4 py-20 md:space-y-6 lg:py-0 xl:max-w-xl"
+            class="w-full space-y-4 py-20 md:space-y-6 lg:py-0"
             action="#"
             wire:submit.prevent="submit"
         >
@@ -36,23 +36,20 @@
                     ></div>
 
                     <x-webauthn::svg.lock-password
-                        class="z-1 mx-auto w-[250px] dark:hidden"
-                    />
-                    <x-webauthn::svg.lock-password-dark
-                        class="z-1 mx-auto hidden w-[250px] dark:flex"
+                        class="z-1 mx-auto w-[350px]"
                     />
                 </button>
 
                 <h1
-                    class="mb-5 text-center text-xl font-bold text-gray-400 md:mb-20 dark:text-white"
+                    class="mb-5 text-center text-xl font-bold text-white md:mb-20"
                 >
-                    Click lock to start prompt
+                    Click lock to start log in
                 </h1>
 
                 <a
                     href="{{ route('passkeys.instructions') }}"
                     wire:navigate.hover
-                    class="mb-4 flex cursor-pointer items-center justify-center text-center text-sm font-medium text-blue-600 dark:text-blue-500"
+                    class="mb-4 flex cursor-pointer items-center justify-center text-center text-sm font-medium text-blue-400"
                 >
                     Read instructions for first time
                     <svg
@@ -75,7 +72,7 @@
                 <a
                     href="{{ route('passkey.request') }}"
                     wire:navigate.hover
-                    class="flex cursor-pointer items-center justify-center text-center text-sm font-medium text-orange-600 dark:text-orange-500"
+                    class="flex cursor-pointer items-center justify-center text-center text-sm font-medium text-orange-400"
                 >
                     Passkey is invalid or no passkey was found?
                     <svg
@@ -97,5 +94,4 @@
             </fieldset>
         </form>
     </x-slot>
-</x-customtheme::page-layouts.horizontal-split-left-page>
-<x-webauthn::info-webauthn />
+</x-customtheme::page-layouts.auth>

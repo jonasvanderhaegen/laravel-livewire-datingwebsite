@@ -179,7 +179,7 @@
                         )
                     }
                 "
-                            class="mb-4 hidden w-auto w-full text-gray-800 opacity-0 lg:mb-0 dark:text-white"
+                            class="mb-4 w-auto w-full text-gray-800 opacity-0 lg:mb-0 dark:text-white"
                         />
 
                         <div
