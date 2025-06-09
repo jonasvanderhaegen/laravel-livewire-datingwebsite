@@ -1,6 +1,6 @@
 <div>
     <x-settings::form-section class="mb-5" submit="submit">
-        <x-slot name="title"></x-slot>
+        <x-slot name="title">{{ __('Security') }}</x-slot>
 
         <x-slot name="description">
             Minimum 1 and maximum 6 passkeys.
@@ -44,16 +44,17 @@
                     >
                         {{-- TODO: CDN for options --}}
                         <option selected>Choose an option</option>
-                        <option
-                            value="passkey in Apple wachtwoorden, iCloud sleutelhanger"
-                        >
+
+                        <option value="Apple passwords">
                             passkey in Apple wachtwoorden, iCloud sleutelhanger
                         </option>
-                        <option value="Chrome profile">
-                            Google Chrome profile
-                        </option>
+
                         <option value="Google password manager">
                             Google password manager
+                        </option>
+
+                        <option value="Chrome profile">
+                            Google Chrome profile
                         </option>
                         <option value="Bitwarden">
                             Bitwarden, password manager
@@ -109,9 +110,7 @@
     </x-settings::form-section>
 
     <x-settings::action-section>
-        <x-slot name="title">
-            {{ __('Security') }}
-        </x-slot>
+        <x-slot name="title"></x-slot>
 
         <x-slot name="description">
             {{ __('Passkey management. In case you delete passkey(s) from the website please also delete the relevant passkey(s) on your device(s). "registration" and "reset" passkeys are relevant to your past user actions.') }}
@@ -138,23 +137,16 @@
                             </div>
 
                             @can('delete', $passkey)
-                                <form
-                                    method="post"
-                                    action="{{ route('settings.passkeys.destroy', $passkey) }}"
+                                <x-settings::danger-button
+                                    type="button"
+                                    class="cursor-pointer rounded-full"
+                                    wire:click="deletePasskey({{ $passkey->id }})"
                                 >
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <x-settings::danger-button
-                                        type="submit"
-                                        class="rounded-full"
-                                    >
-                                        <span class="hidden md:block">
-                                            Delete passkey
-                                        </span>
-                                        <span class="md:hidden">Delete</span>
-                                    </x-settings::danger-button>
-                                </form>
+                                    <span class="hidden md:block">
+                                        Delete passkey
+                                    </span>
+                                    <span class="md:hidden">Delete</span>
+                                </x-settings::danger-button>
                             @endcan
                         </li>
                     @endforeach

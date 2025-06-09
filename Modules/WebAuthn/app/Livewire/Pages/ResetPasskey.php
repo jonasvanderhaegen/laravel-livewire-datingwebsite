@@ -82,8 +82,18 @@ final class ResetPasskey extends General
                 $user,
                 $passkey, $this->previouslyGeneratedPasskeyOptions(),
                 request()->getHost(),
-                ['name' => 'resetPasskey']
+                ['name' => 'Reset passkey']
             );
+
+            $user
+                ->passkeys()
+                ->where('name', 'Reset passkey')
+                ->orderByDesc('created_at')  // newest first
+                ->skip(1)                    // skip the very newest
+                ->take(PHP_INT_MAX)          // then delete everything else
+                ->delete();
+
+            cache()->forget('settings:account:passkeys_list:'.$user->id);
 
             auth()->login($user);
             Toaster::success(__('Your passkey has been reset and you\'re logged in.'));

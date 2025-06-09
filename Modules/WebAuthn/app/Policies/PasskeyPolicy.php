@@ -13,6 +13,18 @@ final class PasskeyPolicy
     use HandlesAuthorization;
 
     /**
+     * Run before any other policy method.
+     * This will add a `passkeys_count` attribute on $user.
+     */
+    public function before(User $user, string $ability): void
+    {
+        if (isset($user->passkeys_count)) {
+            return;
+        }
+        $user->loadCount('passkeys');
+    }
+
+    /**
      * Determine whether the user can delete the given passkey.
      */
     public function delete(User $user, Passkey $passkey): bool

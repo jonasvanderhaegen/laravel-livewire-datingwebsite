@@ -76,7 +76,8 @@ final class GeneralComponent extends Component
      */
     protected function invalidateUserCache(): void
     {
-        Cache::forget("settings:account:general:{$this->userId}");
+        $id = auth()->id();
+        Cache::forget("settings:account:general:$id");
     }
 }
 // @codeCoverageIgnoreEnd

@@ -34,7 +34,8 @@ final class GeneralForm extends Form
     #[Computed]
     public function isValid(): bool
     {
-        return ! empty($this->name)
+        return ! empty($this->first_name)
+            && ! empty($this->last_name)
             && ! empty($this->birth_date)
             && ! $this->getErrorBag()->any();
     }
