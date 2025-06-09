@@ -553,7 +553,7 @@
         </linearGradient>
     </defs>
 </svg>
-@if ($isMobile ?? falsee)
+@if ($isMobile ?? false)
     <svg
         {{ $attributes->merge(['class' => 'hidden dark:flex']) }}
         aria-hidden="true"

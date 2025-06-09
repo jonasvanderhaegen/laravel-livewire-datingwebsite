@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\RateLimiter;
 use Modules\ClassicAuth\Livewire\Forgot;
 use Modules\ClassicAuth\Livewire\Login;
-use Modules\ClassicAuth\Livewire\Register;
 
 // use Nwidart\Modules\Facades\Module;
 
@@ -21,11 +20,13 @@ dataset('auth pages', [
         'componentClass' => Login::class,
         'limit' => 10,
     ],
+    /*
     'register' => [
         'routeName' => 'register',
         'componentClass' => Register::class,
         'limit' => 10,
     ],
+    */
 ]);
 
 // 2) Shared setup (if needed)
