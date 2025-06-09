@@ -44,7 +44,7 @@ final class Reset extends General
      */
     public function mount(): void
     {
-        if (empty($this->token) && empty($this->email)) {
+        if (empty($this->token) || empty($this->email)) {
             Toaster::error(__('There was no token and/or e-mail provided'));
 
             $this->redirectIntended(

@@ -1,10 +1,10 @@
-<main
-    @class([
-        'rounded-4xl px-4 lg:px-6',
-        $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : ' backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-white/50',
-    ])
->
-    <x-flowbite::boxed-width>
+<main>
+    <x-flowbite::boxed-width
+        @class([
+            'px-4 lg:px-6 rounded-4xl ',
+            $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : ' backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-slate-50 2xl:max-w-[93rem] !px-9 py-4',
+        ])
+    >
         <x-slot name="body">
             <div class="flex flex-wrap items-center justify-between">
                 <div class="pt-4">

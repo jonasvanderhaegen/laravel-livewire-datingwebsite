@@ -17,6 +17,8 @@ final class LostPasskey extends General
 {
     public ForgotPasskeyForm $form;
 
+    public string $activeTab = 'ios';
+
     public function mount(): void
     {
         $this->form->initRateLimitCountdown('sendResetUrl', null, 'forgotPasskey');

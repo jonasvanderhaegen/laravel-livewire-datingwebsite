@@ -79,7 +79,6 @@ final class Register extends General
 
     public function render(): View
     {
-        // @phpstan-ignore-next-line
         return view('classicauth::livewire.register')
             ->title(__('Register'));
     }

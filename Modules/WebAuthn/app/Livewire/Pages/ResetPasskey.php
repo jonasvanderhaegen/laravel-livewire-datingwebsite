@@ -26,6 +26,8 @@ final class ResetPasskey extends General
 {
     use HandlesPasskeys;
 
+    public string $activeTab = 'ios';
+
     public ResetPasskeyForm $form;
 
     #[Url]
@@ -97,6 +99,8 @@ final class ResetPasskey extends General
         try {
             $this->form->rateLimitForm();
 
+            $this->user = User::whereEmail($this->email)->firstOrFail();
+
             $broker = Password::broker('passkeys');
 
             if (! $broker->tokenExists($this->user, $this->token)) {
@@ -109,8 +113,6 @@ final class ResetPasskey extends General
 
                 return;
             }
-
-            $this->user = User::whereEmail($this->email)->firstOrFail();
 
             $this->dispatch('passkeyPropertiesValidated', [
                 'passkeyOptions' => json_decode((string) $this->generatePasskeyOptions()),

@@ -20,7 +20,6 @@ final class Login extends General
 
     public function render(): View
     {
-        // @phpstan-ignore-next-line
         return view('classicauth::livewire.login')
             ->title(__('Login'));
     }
