@@ -1,8 +1,7 @@
 [![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
 ![Version - alpha](https://img.shields.io/badge/Version-alpha-blue)
 
-
-[HTML coverage report](https://jonasvanderhaegen.github.io/laravel-livewire-datingwebsite/)
+[HTML coverage report](https://jonasvanderhaegen.github.io/laravel-livewire-datingwebsite/) | [Screenshots of desktop layout](docs/art.md)
 
 ## Free online dating platform
 
@@ -381,4 +380,4 @@ browsing, chatting) to a dedicated frontend framework like Next.js or Nuxt.js, b
 
 #### Current homepage
 
-<img src="docs/img/homepage.jpg" width="100%" alt="homepage">
+<img src="art/homepage.jpg" width="100%" alt="homepage">
