@@ -1,5 +1,8 @@
 [![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
 
+> [!WARNING]
+> This readme is a work in progress, not final yet
+
 # For developers
 
 ---
@@ -27,6 +30,6 @@ composer install
 
 ## Tests
 
-I'll be honest I'll let AI write the pest tests for more complex things. I review them later on.
+I'll be honest I'll let AI write the pest tests for majority. I review them to check if they make sense and are well and pragmatic written.
 
 <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*8xraf6eyaXh-myNXOXkqLA.jpeg" width="300"  alt="ain't nobody got time for that"/>
