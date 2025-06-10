@@ -16,6 +16,7 @@
     },
     "require": {
         "php": "^8.2",
+        "predis/predis": "^3.0",
         "spatie/laravel-responsecache": "^7.7",
         "nunomaduro/essentials": "^0.1",
         "jenssegers/agent": "^2.6",
