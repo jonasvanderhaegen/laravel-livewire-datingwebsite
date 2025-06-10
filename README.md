@@ -1,6 +1,8 @@
 [![Tests](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml/badge.svg)](https://github.com/jonasvanderhaegen/laravel-livewire-datingwebsite/actions/workflows/tests.yml)
+![Version - alpha](https://img.shields.io/badge/Version-alpha-blue)
 
-[Github page](https://jonasvanderhaegen.github.io/laravel-livewire-datingwebsite/)
+
+[HTML coverage report](https://jonasvanderhaegen.github.io/laravel-livewire-datingwebsite/)
 
 ## Free online dating platform
 
