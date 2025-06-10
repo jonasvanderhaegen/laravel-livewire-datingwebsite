@@ -57,10 +57,10 @@
                 </h3>
             </div>
 
-            <form class="z-1 mx-auto lg:mb-8" action="#">
+            <form class="z-1 mx-auto lg:mb-8 flex justify-center" action="#">
                 <button
                     type="submit"
-                    class="group isolate flex cursor-pointer px-10 transition duration-500 ease-out will-change-transform hover:scale-110"
+                    class="group isolate flex cursor-pointer transition duration-500 ease-out will-change-transform hover:scale-110"
                 >
                     <div
                         class="absolute top-8 left-20 z-0 size-55 self-center justify-self-center bg-blue-400/70 blur-3xl transition duration-500 ease-out group-hover:bg-blue-600/70 dark:bg-slate-950 dark:group-hover:bg-blue-500/70"

@@ -5,7 +5,7 @@
                 class="mb-8 flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4 lg:mb-16"
             >
                 <div
-                    class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0 dark:border dark:border-gray-700 dark:bg-gray-800"
+                    class="w-full rounded-4xl bg-white shadow sm:max-w-md md:mt-0 xl:p-0 dark:border dark:border-gray-700 dark:bg-gray-800"
                 >
                     <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
                         <form
@@ -19,35 +19,6 @@
                                 {{ __('Registration') }}
                             </h1>
 
-                            <a
-                                href="{{ route('home') }}"
-                                wire:navigate.hover
-                                class="mb-8 flex cursor-pointer items-center justify-start text-sm font-medium text-blue-500"
-                            >
-                                <span>
-                                    Read how to save passkey with registration
-                                    <br />
-                                    <span class="text-xs text-gray-400">
-                                        Highly recommended for first-timers
-                                    </span>
-                                </span>
-
-                                <svg
-                                    class="ms-6 h-4 w-4 rtl:rotate-180"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 14 10"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M1 5h12m0 0L9 1m4 4L9 9"
-                                    />
-                                </svg>
-                            </a>
 
                             <fieldset class="space-y-4 md:space-y-6">
                                 <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -116,18 +87,65 @@
                                 </button>
                             </fieldset>
 
-                            <p
-                                class="text-sm font-light text-gray-500 dark:text-gray-400"
+                            <a
+                                href="{{ route('login') }}"
+                                wire:navigate.hover
+                                class="flex cursor-pointer items-center justify-between text-sm font-medium text-blue-600 dark:text-blue-500"
                             >
-                                Already have an account?
-                                <a
-                                    href="{{ route('login') }}"
-                                    wire:navigate.hover
-                                    class="font-medium text-blue-500 hover:underline dark:text-blue-500"
+                <span>
+                    <span class="text-xs text-gray-400">
+                        Already have an account?
+                    </span>
+                    <br />
+                    Log in here
+                </span>
+
+                                <svg
+                                    class="ms-2 h-4 w-4 rtl:rotate-180"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 14 10"
                                 >
-                                    Sign In
-                                </a>
-                            </p>
+                                    <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                                    />
+                                </svg>
+                            </a>
+
+                            <a
+                                href="{{ route('passkeys.instructions') }}"
+                                wire:navigate.hover
+                                class="flex cursor-pointer items-center justify-between text-sm font-medium text-blue-600 dark:text-blue-500"
+                            >
+                <span>
+                    <span class="text-xs text-gray-400">
+                        Highly recommended for first-timers
+                    </span>
+                    <br />
+                    Read how to save passkey with registration
+                </span>
+
+                                <svg
+                                    class="ms-2 h-4 w-4 rtl:rotate-180"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 14 10"
+                                >
+                                    <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                                    />
+                                </svg>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -161,4 +179,3 @@
     </div>
 </section>
 
-<x-webauthn::info-webauthn />

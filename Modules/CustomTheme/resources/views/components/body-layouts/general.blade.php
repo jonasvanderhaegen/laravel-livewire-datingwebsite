@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <style>
+            html, body {
+                overscroll-behavior-y: none;
+            }
+        </style>
         <script>
             (() => {
+
                 let dark = localStorage.getItem('darkMode');
                 if (dark === null) {
                     // first-time visitor: use OS preference
@@ -25,7 +31,7 @@
             content="upgrade-insecure-requests"
         />
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -45,6 +51,7 @@
     </head>
 
     <body
+        @unless($isMobile ?? false)
         x-cloak
         x-data="{
             showDocsNavigation: false,
@@ -70,9 +77,10 @@
                 document.body.style.overflow = ''
             }
         "
+        @endunless
         @class([
-            'overflow-x-clip font-sans text-slate-900 antialiased dark:text-slate-50',
-            $isMobile ?? false ? 'min-h-screen bg-white pb-27 dark:bg-slate-950' : 'relative max-w-screen bg-blue-950',
+            ' font-sans text-slate-900 antialiased dark:text-slate-50',
+            $isMobile ?? false ? 'min-h-screen bg-white pb-27 dark:bg-slate-950' : 'overflow-x-clip relative max-w-screen bg-blue-950',
         ])
     >
         @php

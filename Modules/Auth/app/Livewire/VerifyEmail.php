@@ -17,6 +17,8 @@ final class VerifyEmail extends General
 {
     use WithRateLimiting;
 
+    public string $activeTab = 'ios';
+
     // @codeCoverageIgnoreStart
     public function mount(): void
     {
