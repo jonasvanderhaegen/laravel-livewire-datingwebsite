@@ -32,7 +32,6 @@ reference for developers joining the team or exploring the codebase.
     * [Search & Discovery](#search--discovery)
     * [Real-Time & Notifications](#real-time--notifications)
     * [Optional & Future Integrations](#optional--future-integrations)
-5. [Data Models & Matching Logic](#data-models--matching-logic)
 6. [Additional Pages & Documentation](#additional-pages--documentation)
 7. [Handling Abuse & Moderation](#handling-abuse--moderation)
 8. [Scalability & Performance Notes](#scalability--performance-notes)
@@ -99,7 +98,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
 * **Email Verification & Password Fallback**
 
-    * Classic email/password registration as a backup.
+    * Classic email/password reset and login as a backup.
     * Email verification flow (optional for passkey-only users).
 
 * **(Future) Third-Party Verification**
@@ -117,7 +116,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
 * **Active‐Only Visibility**
 
-    * Users who haven’t liked, chatted, or browsed in the last 48 hours are temporarily hidden.
+    * Users who whom don't pay attention to the platform become hidden for other users until they're paying attention again.
     * Encourages continual engagement and reduces ghost-user clutter.
 
 ---
@@ -126,7 +125,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
 * **No Black-Box Algorithms**
 
-    * Browse all available, active, and location-proximate profiles in a simple grid or list.
+    * Browse all available, active, and location-proximate profiles in a simple grid and/or list. Up to the user's preference.
     * No “smart sort,” “ranking,” or “Elo” behind the scenes.
 
 * **Meilisearch (or TypeSense) via Laravel Scout**
@@ -170,6 +169,9 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
     * Dynamic, server-driven components minimize JavaScript complexity.
     * Blade views focus on layout and design only.
+
+* **Desktop and mobile UI**
+    * Detection of smartphones/tablets will make use of a different blade layout, better optimized for smartphones and tablets
 
 * **Transparent “Break Up” Flow**
 
@@ -243,6 +245,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 * **Event Broadcasting**
 
     * Laravel’s native broadcasting (Pusher protocol) to notify the front end.
+    * Update statistics on homepage, top menu and statistics page
 
 ---
 
@@ -250,7 +253,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
 * **WebAuthn (FIDO2)**
 
-    * Leverage the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package for full passkey flows.
+    * Leverage the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package for full passkey flows. -> completed
 
 * **WebRTC**
 
@@ -261,42 +264,6 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
     * For commercial identity verification (e.g., Belgian Itsme).
     * Evaluate pricing and API reliability before full integration.
-
----
-
-## Data Models & Matching Logic
-
-1. **Users** (`users` table)
-
-    * Standard Laravel authentication fields (`email`, `password`, etc.)
-    * Passkey columns (`webauthn_credentials`, etc.) if using WebAuthn.
-    * Profile completeness flags, location data (`latitude`, `longitude`, `last_active_at`).
-
-2. **Profiles** (`profiles` table; one-to-one)
-
-    * Extended bio, interests, age, gender, preferences, photos (JSON or related table).
-    * Indexable fields for Meilisearch (e.g., `bio`, `tags`, `city`, `state`).
-
-3. **Likes** (`likes` table)
-
-    * `liker_id` → `likee_id`; timestamp for when the “like” occurred.
-    * Unique constraint on `(liker_id, likee_id)`.
-
-4. **Matches** (`matches` table)
-
-    * Created when User A and B mutually like each other.
-    * Fields: `user_a_id`, `user_b_id`, `created_at`, `status` (active/ended).
-    * Enforce rule: once matched, neither party can initiate another “like” until they unmatch.
-
-5. **Messages** (`messages` table)
-
-    * `match_id` foreign key, `sender_id`, `body`, `created_at`.
-    * On “unmatch,” cascade delete all messages for that `match_id`.
-
-6. **Icebreakers** (`icebreakers` table; optional)
-
-    * Predefined prompts to help start a conversation.
-    * Each message is inserted when a new match is created.
 
 ---
 
@@ -352,8 +319,8 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 
 * **WebSockets**
 
-    * Use a dedicated server (Soketi/laravel-websockets) behind a load balancer.
-    * Horizontal scaling: ensure sticky sessions or Redis as the WebSocket broadcaster.
+    * Use a dedicated server (Laravel reverb) behind a load balancer.
+    * Horizontal scaling: ensure sticky sessions or Valkey as the WebSocket broadcaster.
 
 * **Geohashing / Proximity Queries**
 
@@ -379,7 +346,7 @@ insufficient at scale, we may later migrate to a frontend framework like Next.js
 2. **Deploy Search & Real-Time**
 
     * Meilisearch integration with Laravel Scout.
-    * WebSocket server (Soketi / Reverb) for instant notifications.
+    * WebSocket server (Reverb) for instant notifications.
 
 3. **User Reporting & Moderation**
 
