@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 return [
     'hero' => [
-        'title' => 'Completely free',
-        'subtitle' => 'Elsewhere with free tier, you’d normally face strict limits or more desirable features are unavailable. Here those barriers are removed so you can pursue love and friendship without restrictions. And rest assured: your personal data is never sold.',
-        'subtitle2' => 'All features are free to use.',
+        'title' => 'Offering a completely free online dating experience',
+        'subtitle' => 'Built for everyone including LGTBQ+, elderly, disabled, and people with disabilities.',
+        'subtitle2' => 'Following features are 100% free to use after onboarding:',
         'feature_list' => [
             'see_everyone' => 'See everyone who likes you and like as much as you want',
             'keep_discovering' => 'Keep discovering. No cap on who you can see',
@@ -21,15 +21,15 @@ return [
     ],
 
     'what_is_asked' => [
-        'heading' => 'What is asked of you?',
-        'description' => 'Online dating can still be frustrating, even without barriers, thanks to fake or inactive profiles, scammers. That’s why we take bold steps to root out impostors and swiftly remove inactive accounts, keeping your matches real and up-to-date.',
+        'heading' => 'Sponsors',
+        'description' => 'Special thanks to our Sponsors and supporters!',
         'list' => [
-            'daily_checkin' => 'One-tap daily check-in to show your profile visibility',
-            'passkey' => 'Passkey-protected sign-up and login, effortless and ultra-secure',
-            'flag_accounts' => 'Report or flag suspicious accounts with a single click',
-            'be_honest' => 'Be honest with your own persona, respect everyone',
+            'daily_checkin' => 'Sponsor 1',
+            'passkey' => 'Sponsor 2',
+            'flag_accounts' => 'Sponsor 3',
+            'be_honest' => 'Sponsor 4',
         ],
-        'more_info' => 'Click here for more information',
+        'more_info' => 'How to support',
     ],
 
     'hero_component_notice' => 'The Home livewire component is loaded from the Page module.',

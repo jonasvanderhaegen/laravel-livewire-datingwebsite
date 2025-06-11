@@ -1,12 +1,12 @@
 <div>
     <x-customtheme::page-layouts.page-with-image-banner
-        :title="$profile['first_name'].' '.$profile['last_name'][0].', '.$profile['dynamic_extras']['age']"
+        :title="$profile->first_name.' '.$profile->last_name.', '.$profile->dynamicExtras->age"
         :description="__('Looking for people | Long-term dating')"
         :image="false"
     >
         <x-slot name="body">
             <div class="justify-between lg:flex">
-                <div class="px-4">
+                <div class="">
                     <div
                         class="mx-auto mb-4 flex max-w-md flex-col justify-center lg:max-w-none lg:flex-row"
                     >
@@ -279,7 +279,7 @@
                                         <br />
                                         {{ $this->lookupKey('religion') }}
                                         <br />
-                                        {{ __("profile::options.zodiac.{$profile['dynamic_extras']['zodiac']}") }}
+                                        {{ __("profile::options.zodiac.{$profile->dynamicExtras->zodiac}") }}
                                     </dd>
                                 </dl>
 

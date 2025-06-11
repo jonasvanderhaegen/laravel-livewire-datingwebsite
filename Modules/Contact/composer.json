@@ -1,5 +1,5 @@
 {
-    "name": "skylence/contact",
+    "name": "Skylence/contact",
     "description": "",
     "authors": [
         {
@@ -11,6 +11,7 @@
         "laravel": {
             "providers": [],
             "aliases": {
+
             }
         }
     },

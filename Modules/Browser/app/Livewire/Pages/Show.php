@@ -20,7 +20,7 @@ final class Show extends General
 
     public function mount(Profile $profile): void
     {
-        $this->profile = $profile;
+        $this->profile = $profile->load('dynamicExtras');
 
         // Redirect if already liked or passed
         if ($this->isExcluded($profile->id)) {

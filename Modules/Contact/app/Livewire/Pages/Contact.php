@@ -11,7 +11,7 @@ use Modules\Contact\Livewire\Forms\ContactForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
-final class Create extends General
+final class Contact extends General
 {
     public ContactForm $form;
 
@@ -43,7 +43,6 @@ final class Create extends General
 
     public function render(): View
     {
-        return view('contact::livewire.pages.contact')
-            ->title(_('Contact'));
+        return view('contact::livewire.pages.contact');
     }
 }

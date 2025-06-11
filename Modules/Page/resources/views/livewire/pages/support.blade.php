@@ -3,6 +3,23 @@
     :description="__(':company is wholly dependent on the dedication of its maintainers and contributors, <br> who volunteer their free time to ensure its continued development and improvement.', ['company' => config('app.name')])"
 >
     <x-slot name="body">
+
+        <h2 class="text-2xl font-bold">Introduction and motivation</h2>
+
+        <p>Hello, my name is Jonas Vanderhaegen, {{ floor(Carbon\Carbon::createFromFormat('Y-m-d','1991-04-23')->diffInYears()) }} years old, live by myself. I'm a web developer with 10+ years of experience. My parents are my age + 30 years. My grandmother lives in a elderly home. My sister lives with her boyfriend and they have 2 children.</p>
+
+        <p>Some day my parents will want to live in a nice elderly home or God forbid, something happens to their mental and/or physical health at a later age. Unfortunately this can get quite expensive in Belgium. With your financial support as a token of gratitude I'll be able to support my family better when that time comes, gift them nice things and experiences.</p>
+
+        <h2 class="text-2xl font-bold">Dating experience</h2>
+
+        <p>I've experience with using multiple dating apps. I've watched many Youtubers draw the same negative conclusions which also brought me interesting perspectives I didn't think of.</p>
+
+        <p>I truly hope by taking a different approach people will appreciate the changes, find their person, leave a positive testimonial and recommend this dating platform to friends and family.</p>
+
+        <p>If anyone has critical feedback on my dating platform <a class="text-blue-500 dark:text-blue-400" href="{{route('contact.create')}}" wire:navigate.hover>feel free to use the contact form</a>
+
+        <h2 class="text-2xl font-bold">Improvement an dedication on this project</h2>
+
         <p>
             As we prioritize our paid client work to sustain ourselves, your
             support through donations and sponsorships helps us devote more time

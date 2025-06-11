@@ -2,10 +2,10 @@
     <section class="text-slate-50">
         <div class="grid lg:grid-cols-2">
             <div
-                class="flex items-center justify-center px-4 py-6 sm:px-0 lg:py-0"
+                class="flex items-center justify-center px-4 py-6 lg:py-0 ps-4 md:ps-4 lg:ps-6 2xl:ps-12"
             >
                 <div
-                    class="mx-auto max-w-screen-xl space-y-12 px-4 py-8 sm:py-16 lg:space-y-20 lg:px-6"
+                    class="mx-auto max-w-screen-xl space-y-12 py-8 sm:py-16 lg:space-y-20"
                 >
                     <!-- Row -->
                     <div
@@ -224,12 +224,54 @@
                                 "
                                 class="opacity-0"
                             >
+                                {{--
                                 <p
                                     class="mb-8 font-light text-slate-50 lg:text-xl"
                                 >
                                     {{ __('page::home.what_is_asked.description') }}
                                 </p>
+                                --}}
+
+                                <div x-init="
+                () =&gt; {
+                    motion.inView(
+                        $el,
+                        (element) =&gt; {
+                            motion.animate(
+                                $el,
+                                {
+                                    opacity: [0, 1],
+                                    x: [-50, 0],
+                                },
+                                {
+                                    duration: 0.7,
+                                    ease: motion.circOut,
+                                },
+                            )
+                        },
+                        {
+                            amount: 0.5,
+                        },
+                    )
+                }
+            " class="opacity-0 will-change-transform" style="transform: none; opacity: 1;">
+                                    <a href="{{route('support')}}" wire:navigate.hover class="text-white group  border-1 border-white/50 hover:border-white/80  flex flex-wrap items-center justify-center gap-x-5 gap-y-3 rounded-4xl  mb-4 px-8 py-8 transition duration-200 ease-in-out  md:justify-between md:px-12 md:py-10" aria-label="Learn about sponsoring this project">
+                                        <div class="inline-flex shrink-0 flex-col-reverse items-center gap-x-5 gap-y-3 md:flex-row">
+                                            <div class="space-y-2 text-2xl font-medium">
+                                                <span>Want  </span>
+                                                <span>your logo</span>
+                                                <span>here?</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="text-center font-light opacity-50 md:max-w-xs md:text-left md:text-lg">
+                                            Become a sponsor and display your logo on the website with a link to your site on majority of pages.
+                                        </div>
+                                    </a>
+                                </div>
+
                                 <!-- List -->
+                                {{--
                                 <ul
                                     role="list"
                                     class="my-7 space-y-5 border-t border-gray-200 pt-8"
@@ -249,7 +291,9 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                --}}
 
+                                {{--
                                 <a
                                     class="inline-flex items-center rounded-full bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                                 >
@@ -270,6 +314,7 @@
                                         />
                                     </svg>
                                 </a>
+                                --}}
                                 <!-- <p class="font-light lg:text-xl">If this is your first time trying online dating, you came to the right spot.</p> -->
                             </div>
                         </div>
@@ -455,6 +500,8 @@
                             </button>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -531,7 +578,7 @@
                     })
                 }
             "
-            class="mx-auto mt-8 grid max-w-screen-xl grid-cols-2 gap-8 text-white sm:grid-cols-3 lg:mt-14 xl:grid-cols-6"
+            class="mx-auto mt-8 grid max-w-screen-xl grid-cols-2 gap-8 text-white sm:grid-cols-3 lg:mt-14 xl:grid-cols-5"
         >
             @foreach ([
                           'unique_users',
@@ -539,7 +586,6 @@
                           'inactive_removed',
                           'matches_total',
                           'matches_today',
-                          'organizations',
                       ] as $stat)
                 <div
                     class="flex flex-col items-center justify-center opacity-0"
@@ -548,7 +594,7 @@
                         class="mb-2 text-3xl font-extrabold md:text-4xl"
                         id="{{ Str::camel($stat) }}"
                     >
-                        0
+                        {{ fake()->numberBetween(100, 800)  }}
                     </dt>
                     <dd class="font-light text-slate-50">
                         {{ __("page::home.transparency.stats.{$stat}") }}

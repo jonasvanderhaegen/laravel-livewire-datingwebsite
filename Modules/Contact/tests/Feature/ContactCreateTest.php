@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\RateLimiter;
-use Modules\Contact\Livewire\Pages\Create;
+use Modules\Contact\Livewire\Pages\Contact;
 
 // name it whatever makes sense—you can even scope by directory
 dataset('contact pages', [
     'Contact' => [
         'routeName' => 'contact.create',
-        'componentClass' => Create::class,
+        'componentClass' => Contact::class,
         'limit' => 5,
     ],
 ]);
@@ -53,7 +53,7 @@ it('throttles after the configured limit', function (
 
 test('contactform submit', function () {
 
-    $response = Livewire::test(Create::class)
+    $response = Livewire::test(Contact::class)
         ->set('form.name', 'test')
         ->set('form.email', fake()->email)
         ->set('form.message', 'test')
