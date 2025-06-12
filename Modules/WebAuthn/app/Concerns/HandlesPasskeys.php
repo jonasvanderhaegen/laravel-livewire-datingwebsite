@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\WebAuthn\Concerns;
 
-use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyRegisterOptionsAction;
+use Modules\WebAuthn\Actions\GeneratePasskeyRegisterOptionsAction;
+use Spatie\LaravelPasskeys\Support\Config;
 use Webauthn\Exception\InvalidDataException;
 
 // @codeCoverageIgnoreStart
@@ -15,14 +16,9 @@ trait HandlesPasskeys
      */
     protected function generatePasskeyOptions(): mixed
     {
-        /*
         $action = Config::getAction('generate_passkey_register_options',
             GeneratePasskeyRegisterOptionsAction::class);
 
-        $options = $action->execute($this->user);
-        */
-
-        $action = app(GeneratePasskeyRegisterOptionsAction::class);
         $options = $action->execute($this->user);
 
         session()->put('passkey-registration-options', $options);
