@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\WebAuthn\Livewire\Pages;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -37,7 +36,7 @@ final class Login extends General
                 GeneratePasskeyAuthenticationOptionsAction::class);
 
             $optionsJSON = $action->execute();
-            Session::put('passkey-auth-options', $optionsJSON);
+            session()->put('passkey-auth-options', $optionsJSON);
 
             $this->dispatch('passkeyProperties', compact(['optionsJSON']));
 
@@ -61,7 +60,7 @@ final class Login extends General
 
         $passkey = $findAuthenticatableUsingPasskey->execute(
             $answer,
-            Session::pull('passkey-auth-options'),
+            session()->pull('passkey-auth-options'),
         );
 
         if (! $passkey) {
@@ -96,7 +95,7 @@ final class Login extends General
     {
         auth()->login($authenticatable);
 
-        Session::regenerate();
+        session()->regenerate();
 
         return $this;
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\WebAuthn\Livewire\Pages;
 
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -30,7 +29,7 @@ final class LostPasskey extends General
             $this->form->initRateLimitCountdown('sendResetUrl', null, 'forgotPasskey');
             $this->form->sendResetUrl();
 
-            Session::flash('status', 'password-request-sent');
+            session()->flash('status', 'password-request-sent');
             Toaster::success(__('A link will be sent if the account exists.'));
 
         } catch (TooManyRequestsException $e) {
