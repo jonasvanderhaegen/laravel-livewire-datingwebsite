@@ -6,7 +6,6 @@ namespace Modules\WebAuthn\Livewire\Pages;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -82,7 +81,7 @@ final class Register extends General
             event(new Registered($user));
             event(new WebAuthnRegistered($user, $this->form));
 
-            Auth::login($user);
+            auth()->login($user);
             $this->redirectRoute('protected.discover', navigate: true);
 
         } catch (Throwable $e) {

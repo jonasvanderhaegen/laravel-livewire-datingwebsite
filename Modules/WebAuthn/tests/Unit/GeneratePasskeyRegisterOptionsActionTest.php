@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Modules\WebAuthn\Livewire\Actions\GeneratePasskeyRegisterOptionsAction;
+use Modules\WebAuthn\Actions\GeneratePasskeyRegisterOptionsAction;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 
@@ -42,7 +42,7 @@ it('generates valid registration options JSON when given a HasPasskeys user', fu
     // It should be valid JSON, and decode into the standard Webauthn registration options
     $payload = json_decode($json, true);
     expect($payload)->toBeArray()
-        ->and($payload)->toHaveKeys(['challenge', 'rp', 'user', 'authenticatorSelection', 'attestation', 'timeout']);
+        ->and($payload)->toHaveKeys(['challenge', 'rp', 'user', 'authenticatorSelection', 'attestation']);
 
     $cleanUrl = Str::of(config('app.url'))
         // drop any leading "http://" or "https://"

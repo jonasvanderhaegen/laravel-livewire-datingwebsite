@@ -24,6 +24,7 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->mergeConfigForPasswordBroker();
+        $this->overrideSpatieActions();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
     }
@@ -34,6 +35,16 @@ final class PrimaryServiceProvider extends ServiceProvider
             'auth.passwords' => array_merge(
                 config('auth.passwords', []),
                 config('webauthn.auth.passwords', [])
+            ),
+        ]);
+    }
+
+    public function overrideSpatieActions(): void
+    {
+        config([
+            'passkeys.actions' => array_merge(
+                config('passkeys.actions', []),
+                config('webauthn.passkeys.actions', [])
             ),
         ]);
     }
