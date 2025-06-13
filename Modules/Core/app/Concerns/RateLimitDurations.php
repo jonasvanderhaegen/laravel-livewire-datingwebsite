@@ -44,7 +44,7 @@ trait RateLimitDurations
      * @param  int  $short  Value to use in local/testing
      * @param  int  $long  Fallback value to use otherwise
      */
-    protected function longDuration(int $short = 60, int $long = 3600): int
+    protected function longDuration(int $short = 60, int $long = 900): int
     {
         return $this->envDuration($short, $long);
     }

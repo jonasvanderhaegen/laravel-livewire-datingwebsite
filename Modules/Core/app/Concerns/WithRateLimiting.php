@@ -45,10 +45,6 @@ trait WithRateLimiting
         string $email,
         string|bool $auth
     ): void {
-        if (app()->environment(['local'])) {
-            return;
-        }
-
         $key = "{$auth}_email:$email";
 
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {

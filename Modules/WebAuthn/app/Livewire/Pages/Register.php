@@ -9,6 +9,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
+use Masmerise\Toaster\Toaster;
+use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Concerns\HandlesPasskeys;
 use Modules\WebAuthn\Events\Registered as WebAuthnRegistered;
@@ -33,11 +36,14 @@ final class Register extends General
 
     public function mount(): void
     {
+        $this->form->initRateLimitCountdown('registerLimit', null, 'register');
+
         $this->form->firstname = fake('nl_BE')->firstName();
         $this->form->lastname = fake('nl_BE')->lastName();
         $this->form->email = fake('nl_BE')->email();
         $this->form->dob = '23-04-1991';
         $this->form->terms = true;
+
     }
 
     /**
@@ -45,7 +51,27 @@ final class Register extends General
      */
     public function submit(): void
     {
-        $this->form->validate();
+
+        try {
+            $this->form->initRateLimitCountdown('registerLimit', null, 'register');
+            $this->form->registerLimit();
+
+        } catch (TooManyRequestsException $exception) {
+
+            $this->addError('form.email', __('auth.throttle', [
+                'seconds' => $exception->secondsUntilAvailable,
+                'minutes' => ceil($exception->minutesUntilAvailable),
+            ]));
+
+            Toaster::error($exception->getMessage());
+
+            return;
+        } catch (ValidationException $exception) {
+            $this->addError('form.email', $exception->getMessage());
+            Toaster::error('auth.failed');
+
+            return;
+        }
 
         $this->ulid = (string) Str::ulid();
 
@@ -59,9 +85,9 @@ final class Register extends General
         ]);
     }
 
-    public function updatedFormEmail(): void
+    public function updated(string $field, string|bool $value): void
     {
-        $this->validateOnly('form.email');
+        $this->validateOnly($field);
     }
 
     public function storePasskey(string $passkey): void
@@ -92,6 +118,17 @@ final class Register extends General
                 'name' => __('passkeys::passkeys.error_something_went_wrong_generating_the_passkey'),
             ])->errorBag('passkeyForm');
         }
+    }
+
+    #[Computed]
+    public function isFormValid(): bool
+    {
+        return ! $this->getErrorBag()->any()
+            && $this->form->firstname !== ''
+            && $this->form->lastname !== ''
+            && $this->form->email !== ''
+            && $this->form->dob !== ''
+            && $this->form->terms;
     }
 
     public function render(): View
