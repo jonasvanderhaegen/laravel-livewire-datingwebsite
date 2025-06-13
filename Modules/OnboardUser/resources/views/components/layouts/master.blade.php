@@ -72,15 +72,9 @@
                 @endforeach
             </ol>
         @endif
+            <section class="py-8 antialiased md:py-8 border-t border-slate-300 dark:border-slate-700">
+                    {{ $slot }}
+            </section>
     </x-slot>
 
-    <x-slot name="underbody">
-        <section class="mt-36 py-8 antialiased md:py-8 xl:mt-32">
-            <div
-                class="mx-auto w-full max-w-5xl px-4 xl:max-w-7xl 2xl:max-w-[90rem] 2xl:px-0"
-            >
-                {{ $slot }}
-            </div>
-        </section>
-    </x-slot>
 </x-customtheme::page-layouts.page-with-image-banner>
