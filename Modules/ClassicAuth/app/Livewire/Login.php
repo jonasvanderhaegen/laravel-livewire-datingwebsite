@@ -6,6 +6,7 @@ namespace Modules\ClassicAuth\Livewire;
 
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\LoginForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -29,14 +30,17 @@ final class Login extends General
         $this->form->initRateLimitCountdown('attemptLogin', null, 'login');
     }
 
-    public function toggleShowPassword(): void
+    #[Computed]
+    public function isFormValid(): bool
     {
-        $this->showPassword = ! $this->showPassword;
+        return ! $this->getErrorBag()->any()
+        && $this->form->email !== ''
+        && $this->form->password !== '';
     }
 
-    public function updatedFormEmail(): void
+    public function updated(string $field): void
     {
-        $this->validateOnly('form.email');
+        $this->validateOnly($field);
     }
 
     public function submit(): void

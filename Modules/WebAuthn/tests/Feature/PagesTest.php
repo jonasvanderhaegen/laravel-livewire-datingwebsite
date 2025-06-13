@@ -31,6 +31,11 @@ dataset('auth pages', [
         'componentClass' => Modules\WebAuthn\Livewire\Pages\Instructions::class,
         'limit' => 60,
     ],
+    'one time password' => [
+        'routeName' => 'one-time-password',
+        'componentClass' => Modules\WebAuthn\Livewire\Pages\OneTimePasswordLogin::class,
+        'limit' => 10,
+    ],
 ]);
 
 // 2) Shared setup (if needed)

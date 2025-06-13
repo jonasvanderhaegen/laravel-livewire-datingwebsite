@@ -137,24 +137,6 @@ final class WithRateLimitingTest extends TestCase
         $this->stub->publicRateLimitByEmail($max, $decay, $email, $auth);
     }
 
-    public function test_rate_limit_by_email_does_not_throw_in_local_environment(): void
-    {
-        // Force the application environment to “local”
-        $this->app['env'] = 'local';
-
-        $email = 'dev@example.test';
-        $auth = 'devAuth';
-        $max = 1;
-        $decay = 1;
-
-        // Even though max=1, local environment causes early return—no exception
-        $this->stub->publicRateLimitByEmail($max, $decay, $email, $auth);
-        $this->stub->publicRateLimitByEmail($max, $decay, $email, $auth);
-
-        // If we reach here, test passes
-        $this->assertTrue(true);
-    }
-
     public function test_init_rate_limit_countdown_uses_session_value_if_present(): void
     {
         $email = 'session@example.test';

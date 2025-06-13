@@ -14,7 +14,7 @@ use Modules\Core\Rules\StrictEmailDomain;
 use Modules\WebAuthn\Notifications\ResetPasskeyNotification;
 
 // @codeCoverageIgnoreStart
-final class ForgotPasskeyForm extends Form
+final class LostPasskeyForm extends Form
 {
     use RateLimitDurations, WithRateLimiting;
 
@@ -39,25 +39,22 @@ final class ForgotPasskeyForm extends Form
     /**
      * @throws TooManyRequestsException
      */
-    public function sendResetUrl(): void
+    public function validateAndThrottle(): void
     {
 
-        // 1) IP‐burst guard: max 5/min
-        $this->rateLimit(5, $this->shortDuration('auth.passwords.passkeys.throttle'));
+        // 1) IP‐burst guard: max 2/min
+        $this->rateLimit(2, $this->shortDuration('auth.passwords.passkeys.throttle'));
 
-        // 2) Account guard: max 2/15min per email
-        $this->rateLimitByEmail(2, $this->longDuration(), $this->email, 'forgotPasskey');
+        // 2) Account guard: max 4/15min per email
+        $this->rateLimitByEmail(5, $this->longDuration(), $this->email, 'lost-passkey');
 
         // 3) Now send the link (the broker itself may still throttle internally,
         //    but since we’ve already applied our own throttle, you can ignore its status)
-        $status = $this->sendResetLink();
 
-        // 5) Clear the input
-        $this->reset('email');
-
+        $this->validate();
     }
 
-    private function sendResetLink(): bool
+    public function sendResetLink(): bool
     {
         $status = Password::broker('passkeys')->sendResetLink(
             ['email' => $this->email],
@@ -65,6 +62,8 @@ final class ForgotPasskeyForm extends Form
                 $user->notify(new ResetPasskeyNotification($token));
             }
         );
+
+        $this->reset('email');
 
         return $status === Password::RESET_LINK_SENT;
     }

@@ -4,7 +4,8 @@
     'underForm' => null,
     'buttonTextRetry' => __('You can retry in'),
     'buttonText' => __('Submit'),
-    'title' => null
+    'title' => null,
+    'status' => null
 ])
 
 <div>
@@ -36,9 +37,18 @@
     <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{$title}}</h1>
     @endisset
 
+    @session('status')
+        @isset($status)
+            {{$status}}
+        @endisset
+    @endsession
+
+
     <fieldset :disabled="remaining > 0" wire:loading.delay.long.attr="disabled" class="space-y-6">
 
+        @isset($fields)
         {{$fields}}
+        @endisset
 
         <button
             type="submit"

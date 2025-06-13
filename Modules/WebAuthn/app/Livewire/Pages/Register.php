@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
-use Masmerise\Toaster\Toaster;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Concerns\HandlesPasskeys;
@@ -36,7 +35,7 @@ final class Register extends General
 
     public function mount(): void
     {
-        $this->form->initRateLimitCountdown('registerLimit', null, 'register');
+        $this->form->initRateLimitCountdown('validateAndThrottle', RegisterForm::class, 'register');
 
         $this->form->firstname = fake('nl_BE')->firstName();
         $this->form->lastname = fake('nl_BE')->lastName();
@@ -53,36 +52,29 @@ final class Register extends General
     {
 
         try {
-            $this->form->initRateLimitCountdown('registerLimit', null, 'register');
-            $this->form->registerLimit();
+            $this->form->validateAndThrottle();
+
+            $this->ulid = (string) Str::ulid();
+
+            $this->user = User::createOrFirst([
+                'email' => $this->form->email,
+                'name' => $this->form->getFullName(),
+            ]);
+
+            $this->dispatch('passkeyPropertiesValidated', [
+                'passkeyOptions' => json_decode((string) $this->generatePasskeyOptions()),
+            ]);
 
         } catch (TooManyRequestsException $exception) {
 
-            $this->addError('form.email', __('auth.throttle', [
-                'seconds' => $exception->secondsUntilAvailable,
-                'minutes' => ceil($exception->minutesUntilAvailable),
-            ]));
+            $this->form->secondsUntilReset = $exception->secondsUntilAvailable;
+            ray('exception thrown', $exception->getMessage());
 
-            Toaster::error($exception->getMessage());
-
-            return;
         } catch (ValidationException $exception) {
-            $this->addError('form.email', $exception->getMessage());
-            Toaster::error('auth.failed');
 
-            return;
+            $this->addError('form.email', $exception->getMessage());
         }
 
-        $this->ulid = (string) Str::ulid();
-
-        $this->user = User::createOrFirst([
-            'email' => $this->form->email,
-            'name' => $this->form->getFullName(),
-        ]);
-
-        $this->dispatch('passkeyPropertiesValidated', [
-            'passkeyOptions' => json_decode((string) $this->generatePasskeyOptions()),
-        ]);
     }
 
     public function updated(string $field, string|bool $value): void

@@ -7,6 +7,7 @@ namespace Modules\ClassicAuth\Livewire;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\ForgotPasswordForm;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -44,9 +45,16 @@ final class Forgot extends General
         $this->validateOnly('form.email');
     }
 
+    #[Computed]
+    public function isFormValid(): bool
+    {
+        return ! $this->getErrorBag()->any()
+            && $this->form->email !== '';
+    }
+
     public function render(): View
     {
-        return view('auth::livewire.forgot', ['intent' => 'passkey'])
+        return view('auth::livewire.forgot', ['intent' => 'password'])
             ->title(__('Reset password'));
     }
 }

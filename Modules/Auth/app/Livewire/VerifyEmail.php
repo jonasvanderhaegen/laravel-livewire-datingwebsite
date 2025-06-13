@@ -6,18 +6,26 @@ namespace Modules\Auth\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
+use Modules\Auth\Livewire\Forms\VerifyEmailForm;
+use Modules\Core\Concerns\RateLimitDurations;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
 final class VerifyEmail extends General
 {
-    use WithRateLimiting;
+    use RateLimitDurations, WithRateLimiting;
+
+    public VerifyEmailForm $form;
 
     public string $activeTab = 'ios';
+
+    public function isFormValid(): true
+    {
+        return true;
+    }
 
     // @codeCoverageIgnoreStart
     public function mount(): void
@@ -49,7 +57,7 @@ final class VerifyEmail extends General
      * Send an email verification notification to the user.
      */
     // @codeCoverageIgnoreStart
-    public function submit(): void
+    public function resendVerification(): void
     {
         /** @var User $user */
         $user = Auth::user();
@@ -66,10 +74,10 @@ final class VerifyEmail extends General
         }
 
         try {
-            // throttle by email: max 3 sends per hour
+            // throttle by email: max 3 sends per 15 min
             $this->rateLimitByEmail(
                 3,
-                3600,
+                $this->longDuration(),
                 $user->email,
                 'resendVerification'
             );
@@ -88,7 +96,7 @@ final class VerifyEmail extends General
 
         // allowed: send the email
         $user->sendEmailVerificationNotification();
-        Session::flash('status', 'verification-link-sent');
+        session()->flash('status', 'verification-link-sent');
     }
 
     // @codeCoverageIgnoreEnd

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Masmerise\Toaster\Toaster;
@@ -29,6 +30,14 @@ final class Reset extends General
     public string $email = '';
 
     public bool $showPassword = false;
+
+    #[Computed]
+    public function isFormValid(): bool
+    {
+        return ! $this->getErrorBag()->any()
+            && $this->form->email !== ''
+            && $this->form->password !== '';
+    }
 
     public function render(): View
     {

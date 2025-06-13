@@ -1,37 +1,19 @@
 <x-customtheme::page-layouts.auth>
     <x-slot name="topLeft">
-        <form
-            x-data="{
-                remaining: @entangle('secondsUntilReset'),
-                timer: null,
-                startTimer() {
-                    // clear any old timer
-                    if (this.timer) clearInterval(this.timer)
-                    // only start if remaining > 0
-                    if (this.remaining > 0) {
-                        this.timer = setInterval(() => {
-                            if (this.remaining > 0) {
-                                this.remaining--
-                            } else {
-                                clearInterval(this.timer)
-                            }
-                        }, 1000)
-                    }
-                },
-            }"
-            x-init="startTimer()"
-            x-effect="startTimer()"
-            class="rounded-4xl bg-white p-8 shadow-md md:space-y-6 dark:bg-gray-800"
-            action="#"
-            wire:submit.prevent="submit"
-        >
-            <h1 class="text-xl font-bold text-gray-900 dark:text-white">
-                {{ __('Please verify your email address by clicking on the link we just emailed to you.') }}
-            </h1>
+        <x-core::form :form="$this->form"
+                      submit="resendVerification"
+                      :title="__('Please verify your email address by clicking on the link we just emailed to you.')"
+                      :button-text="__('Resend verification email')"
+                      class="rounded-4xl bg-white p-8 shadow-md space-y-6 dark:bg-gray-800">
 
-            @if (session('status') === 'verification-link-sent')
+            <x-slot name="fields">
+
+            </x-slot>
+
+
+            <x-slot name="status">
                 <div
-                    class="mb-4 flex items-center rounded-lg border border-green-300 bg-green-50 p-4 text-sm text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
+                    class="mb-4 flex items-center rounded-4xl border border-green-300 bg-green-50 p-4 text-sm text-green-800 dark:border-green-800 dark:bg-gray-800 dark:text-green-400"
                     role="alert"
                 >
                     <svg
@@ -50,28 +32,11 @@
                         {{ __('A new verification link has been sent to the email address you provided during registration.') }}
                     </div>
                 </div>
-            @endif
+            </x-slot>
 
-            <fieldset :disabled="remaining > 0" class="space-y-4 md:space-y-6">
-                <button
-                    type="submit"
-                    class="w-full rounded-full bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 focus:outline-none disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-500 dark:focus:ring-blue-800"
-                >
-                    <template x-if="remaining > 0">
-                        <span>
-                            Resend verification email again in
-                            <span
-                                x-text="Math.floor(remaining / 60) + ':' + String(remaining % 60).padStart(2, '0')"
-                            ></span>
-                        </span>
-                    </template>
-                    <template x-if="remaining === 0">
-                        <span>Resend verification email</span>
-                    </template>
-                </button>
-            </fieldset>
-        </form>
+        </x-core::form>
     </x-slot>
+
 
     <x-slot name="topRight">
         <x-customtheme::page-partials.auth.registration-onboarding-steps />

@@ -63,6 +63,8 @@ final class ResetPasskey extends General
             );
         }
 
+        $this->form->initRateLimitCountdown('validateAndThrottle', null, 'reset-passkey');
+
     }
 
     public function render(): View
@@ -104,10 +106,15 @@ final class ResetPasskey extends General
 
     }
 
+    public function isFormValid(): bool
+    {
+        return true;
+    }
+
     public function submit(): void
     {
         try {
-            $this->form->rateLimitForm();
+            $this->form->validateAndThrottle();
 
             $this->user = User::whereEmail($this->email)->firstOrFail();
 

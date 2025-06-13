@@ -13,6 +13,7 @@ use Modules\Profile\Models\Profile;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Spatie\Onboard\Concerns\Onboardable;
+use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
 
 /**
  * @property Profile $profile
@@ -20,7 +21,7 @@ use Spatie\Onboard\Concerns\Onboardable;
 final class User extends Authenticatable implements HasPasskeys, MustVerifyEmail, Onboardable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasTraitsFromModules, InteractsWithPasskeys, Notifiable;
+    use HasFactory, HasOneTimePasswords, HasTraitsFromModules, InteractsWithPasskeys, Notifiable;
 
     /**
      * The attributes that are mass assignable.

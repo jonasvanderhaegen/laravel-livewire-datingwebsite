@@ -34,18 +34,15 @@ final class RegisterForm extends Form
     /**
      * @throws TooManyRequestsException
      */
-    public function registerLimit(): void
+    public function validateAndThrottle(): void
     {
         // 2) IP-based quick throttle: max 5 registrations per minute
-        $this->rateLimit(5, $this->shortDuration('auth.passwords.passkeys.throttle'));
+        $this->rateLimit(4, $this->shortDuration('auth.passwords.passkeys.throttle'));
 
         // 3) Account-level throttle: max 15 registrations per 15min per email
-        $this->rateLimitByEmail(15, $this->longDuration(), $this->email, 'register');
+        $this->rateLimitByEmail(7, $this->longDuration(), $this->email, 'register');
 
         $this->validate();
-
-        $this->clearRateLimiter();                 // clear IP bucket
-        $this->clearRateLimiter('registerLimit'); // clear method bucket
     }
 
     public function getFullName(): string

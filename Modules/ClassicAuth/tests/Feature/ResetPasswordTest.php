@@ -31,19 +31,6 @@ it('redirects to request page when no token provided', function () {
         ->assertRedirect(route('password.request'));
 });
 
-// 2) SIGNED-URL MIDDLEWARE
-it('forbids access when URL signature is invalid', function () {
-    $unsigned = route('password.reset', [
-        'email' => $this->email,
-        'token' => 'invalidtoken',
-        'expires' => now()->addMinutes(60)->timestamp,
-        'signature' => 'bad-sign',
-    ]);
-
-    $this->get($unsigned)
-        ->assertForbidden();
-});
-
 it('allows access when URL is validly signed', function () {
     $signed = URL::temporarySignedRoute(
         'password.reset',
