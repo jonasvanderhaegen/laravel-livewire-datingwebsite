@@ -1,6 +1,6 @@
 <div
     x-show="activeTab === '{{ $activeTab }}'"
-    class="bg-g text-medium w-full rounded-lg px-6 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+    class="bg-g text-medium w-full rounded-lg px-6 text-gray-500 dark:bg-gray-800 dark:text-slate-400"
 >
     <div class="pb-4 text-center">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">
@@ -13,7 +13,7 @@
     </div>
 
     <div
-        class="h-[350px] overflow-y-scroll border-t border-b border-gray-300 px-0 md:h-[720px] lg:px-15 dark:border-gray-700"
+        class="h-[350px] overflow-y-scroll  border-t border-b border-slate-300 px-0 md:h-[720px] dark:border-slate-700"
         style="scrollbar-gutter: stable"
     >
         {{ $content }}
