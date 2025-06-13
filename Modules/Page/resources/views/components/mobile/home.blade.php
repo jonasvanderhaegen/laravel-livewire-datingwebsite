@@ -60,7 +60,7 @@
                     class="transition duration-200 ease-in-out will-change-transform group-hover:-translate-x-1"
                 >
                     <h1
-                        class="mb-4 bg-clip-text text-3xl leading-none font-extrabold tracking-tight text-transparent xl:text-5xl"
+                        class="mb-4 pb-1 bg-clip-text text-3xl leading-none font-extrabold tracking-tight text-transparent xl:text-5xl"
                         style="
                             background-image: linear-gradient(
                                 90deg,
