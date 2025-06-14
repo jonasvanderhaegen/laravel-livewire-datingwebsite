@@ -9,19 +9,22 @@ use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\LoginForm;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
 // @codeCoverageIgnoreStart
 final class Login extends General
 {
+    use HasMobileDesktopViews;
+
     public LoginForm $form;
 
     public bool $showPassword = false;
 
     public function render(): View
     {
-        return view('classicauth::livewire.login')
+        return view("classicauth::livewire.{$this->addTo('login')}")
             ->title(__('Login'));
     }
 
@@ -33,7 +36,7 @@ final class Login extends General
     #[Computed]
     public function isFormValid(): bool
     {
-        return ! $this->getErrorBag()->any()
+        return $this->isMobile() || ! $this->getErrorBag()->any()
         && $this->form->email !== ''
         && $this->form->password !== '';
     }

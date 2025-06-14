@@ -1,5 +1,9 @@
 <input
-    wire:model.live.debounce="{{ $field }}"
+    @if($isMobile ?? false)
+        wire:model="{{ $field }}"
+    @else
+        wire:model.live.debounce="{{ $field }}"
+    @endif
     type="{{ $type }}"
     id="{{ $field }}"
     name="{{ $field }}"

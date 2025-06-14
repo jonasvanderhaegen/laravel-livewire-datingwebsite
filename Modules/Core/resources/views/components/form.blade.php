@@ -5,6 +5,7 @@
     'buttonTextRetry' => __('You can retry in'),
     'buttonText' => __('Submit'),
     'title' => null,
+    'subtitle' => null,
     'status' => null
 ])
 
@@ -34,7 +35,14 @@
 >
 
     @isset($title)
-    <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{$title}}</h1>
+    <h1 @class([
+      'text-xl font-bold text-gray-900 dark:text-white',
+      'mb-0' => isset($subtitle)
+    ])>{{$title}}</h1>
+    @endisset
+
+    @isset($subtitle)
+        <h3 class="font-light text-gray-900 dark:text-white">{{$subtitle}}</h3>
     @endisset
 
     @session('status')

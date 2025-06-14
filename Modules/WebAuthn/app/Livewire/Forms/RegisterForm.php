@@ -29,6 +29,7 @@ final class RegisterForm extends Form
 
     public string $dob = '';
 
+    #[Validate('required|accepted')]
     public bool $terms = false;
 
     /**

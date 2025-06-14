@@ -7,13 +7,17 @@ namespace Modules\Settings\Livewire\Components\Account;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Profile\Models\Profile;
 use Modules\Settings\Livewire\Forms\Account\GeneralForm;
 
 // @codeCoverageIgnoreStart
 final class GeneralComponent extends Component
 {
+    use HasMobileDesktopViews;
+
     public GeneralForm $form;
 
     public int $userId;
@@ -69,6 +73,15 @@ final class GeneralComponent extends Component
     public function render(): View
     {
         return view('settings::livewire.components.account.general');
+    }
+
+    #[Computed]
+    public function isValid(): bool
+    {
+        return $this->isMobile() || ! empty($this->form->first_name)
+            && ! empty($this->form->last_name)
+            && ! empty($this->form->birth_date)
+            && ! $this->getErrorBag()->any();
     }
 
     /**

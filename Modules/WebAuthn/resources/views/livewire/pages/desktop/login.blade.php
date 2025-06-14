@@ -1,5 +1,8 @@
 <x-customtheme::page-layouts.auth :activeTab="$this->activeTab">
     <x-slot name="topLeft">
+
+        <x-webauthn::authenticate-script />
+
         <form
             x-data="{
                 remaining: @entangle('form.secondsUntilReset'),
@@ -31,7 +34,7 @@
                     class="group isolate mx-auto mb-15 flex cursor-pointer transition duration-500 ease-out will-change-transform hover:scale-110"
                 >
                     <div
-                        class="absolute top-16 left-14 z-0 size-35 self-center justify-self-center bg-blue-400/70 blur-3xl transition duration-500 ease-out group-hover:bg-blue-600/70 dark:bg-slate-950 dark:group-hover:bg-blue-500/70"
+                        class="absolute top-10 left-5 z-0 size-80 self-center justify-self-center bg-blue-950/70 blur-3xl transition duration-500 ease-out group-hover:bg-blue-850/70  "
                         aria-hidden="true"
                     ></div>
 
@@ -41,10 +44,33 @@
                 </button>
 
                 <h1
-                    class="mb-5 text-center text-xl font-bold text-white md:mb-20"
+                    class="mb-5 text-center text-xl font-bold text-white"
                 >
                     Click lock to start log in
                 </h1>
+
+                <a
+                    href="{{ route('register') }}"
+                    wire:navigate.hover
+                    class="mb-4 flex cursor-pointer items-center justify-center text-center text-sm font-medium text-blue-400"
+                >
+                    Create account if you don't have account yet
+                    <svg
+                        class="ms-2 h-4 w-4 rtl:rotate-180"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 10"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9"
+                        />
+                    </svg>
+                </a>
 
                 <a
                     href="{{ route('passkeys.instructions') }}"

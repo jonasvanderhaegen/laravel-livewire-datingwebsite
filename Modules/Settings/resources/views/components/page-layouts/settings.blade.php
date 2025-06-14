@@ -1,8 +1,8 @@
 <main>
     <x-flowbite::boxed-width
         @class([
-            'px-4 lg:px-6 rounded-4xl ',
-            $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : ' backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-slate-50 2xl:max-w-[93rem] !px-9 py-4',
+            'px-4 lg:px-6 ',
+            $isMobile ?? false ? 'bg-slate-50 dark:bg-gray-900' : 'rounded-4xl backdrop-blur-md transition duration-200 ease-out dark:bg-slate-950/60 bg-slate-50 2xl:max-w-[93rem] !px-9 py-4',
         ])
     >
         <x-slot name="body">
@@ -42,7 +42,7 @@
                 </div>
 
                 <div
-                    class="-me-4 gap-4 md:-me-0 md:py-4 xl:grid xl:grid-cols-2"
+                    class="-me-3 gap-4 md:-me-0 md:py-4 xl:grid xl:grid-cols-2"
                 >
                     <div
                         class="col-span-2 rounded-lg md:mb-4 md:rounded-full md:bg-white md:p-4 md:shadow-sm xl:mb-0 md:dark:bg-gray-800"
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="py-8">
+            <div class="pb-8 sm:pb-0">
                 {{ $slot }}
             </div>
         </x-slot>

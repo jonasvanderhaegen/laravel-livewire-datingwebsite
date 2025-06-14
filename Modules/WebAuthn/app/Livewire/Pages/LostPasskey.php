@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Livewire\Forms\LostPasskeyForm;
@@ -15,6 +16,8 @@ use Modules\WebAuthn\Livewire\Forms\LostPasskeyForm;
 // @codeCoverageIgnoreStart
 final class LostPasskey extends General
 {
+    use HasMobileDesktopViews;
+
     public LostPasskeyForm $form;
 
     public string $activeTab = 'ios';
@@ -22,7 +25,7 @@ final class LostPasskey extends General
     #[Computed]
     public function isFormValid(): bool
     {
-        return ! $this->getErrorBag()->any()
+        return $this->isMobile() || ! $this->getErrorBag()->any()
             && $this->form->email !== '';
     }
 
@@ -50,7 +53,10 @@ final class LostPasskey extends General
             Toaster::error(__('Too many attempts, wait for :minutes minutes',
                 ['minutes' => $e->minutesUntilAvailable]));
         } catch (ThrottleRequestsException $e) {
-            Toaster::error($e->getMessage());
+
+            if ($this->isMobile()) {
+                Toaster::error($e->getMessage());
+            }
         }
     }
 
@@ -61,7 +67,7 @@ final class LostPasskey extends General
 
     public function render(): View
     {
-        return view('auth::livewire.forgot', ['intent' => 'passkey'])
+        return view("webauthn::livewire.pages.{$this->addTo('lost')}", ['intent' => 'passkey'])
             ->title('Forgot or lost passkey');
     }
 }

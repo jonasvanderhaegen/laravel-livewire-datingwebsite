@@ -11,7 +11,7 @@
 
                 </div>
                 <div class="mr-auto place-self-center lg:col-span-6 w-full">
-                    <x-flowbite::svg.auth-login class="w-full" />
+                    <x-flowbite::svg.man-pointing-smartphone class="w-full" />
                 </div>
             </div>
         </x-slot>

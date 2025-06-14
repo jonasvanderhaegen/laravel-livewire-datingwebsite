@@ -7,6 +7,7 @@ namespace Modules\WebAuthn\Livewire\Pages;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Livewire\Forms\LoginForm;
@@ -17,6 +18,8 @@ use Spatie\LaravelPasskeys\Support\Config;
 // @codeCoverageIgnoreStart
 final class Login extends General
 {
+    use HasMobileDesktopViews;
+
     public string $activeTab = 'ios';
 
     public LoginForm $form;
@@ -28,6 +31,8 @@ final class Login extends General
 
     public function submit(): void
     {
+        ray('click with mobile');
+
         try {
             $this->form->initRateLimitCountdown('rateLimitForm', null, 'login');
             $this->form->rateLimitForm();
@@ -87,7 +92,7 @@ final class Login extends General
 
     public function render(): View
     {
-        return view('webauthn::livewire.pages.login')
+        return view("webauthn::livewire.pages.{$this->addTo('login')}")
             ->title('Login');
     }
 

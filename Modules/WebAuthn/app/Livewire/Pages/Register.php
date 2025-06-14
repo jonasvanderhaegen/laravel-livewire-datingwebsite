@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
+use Masmerise\Toaster\Toaster;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Concerns\HandlesPasskeys;
@@ -23,7 +25,7 @@ use Webauthn\Exception\InvalidDataException;
 // @codeCoverageIgnoreStart
 final class Register extends General
 {
-    use HandlesPasskeys;
+    use HandlesPasskeys, HasMobileDesktopViews;
 
     public RegisterForm $form;
 
@@ -37,12 +39,13 @@ final class Register extends General
     {
         $this->form->initRateLimitCountdown('validateAndThrottle', RegisterForm::class, 'register');
 
+        /*
         $this->form->firstname = fake('nl_BE')->firstName();
         $this->form->lastname = fake('nl_BE')->lastName();
         $this->form->email = fake('nl_BE')->email();
         $this->form->dob = '23-04-1991';
         $this->form->terms = true;
-
+        */
     }
 
     /**
@@ -71,8 +74,9 @@ final class Register extends General
             ray('exception thrown', $exception->getMessage());
 
         } catch (ValidationException $exception) {
-
-            $this->addError('form.email', $exception->getMessage());
+            if ($this->isMobile()) {
+                Toaster::error($exception->getMessage());
+            }
         }
 
     }
@@ -115,7 +119,7 @@ final class Register extends General
     #[Computed]
     public function isFormValid(): bool
     {
-        return ! $this->getErrorBag()->any()
+        return $this->isMobile() || ! $this->getErrorBag()->any()
             && $this->form->firstname !== ''
             && $this->form->lastname !== ''
             && $this->form->email !== ''
@@ -125,7 +129,7 @@ final class Register extends General
 
     public function render(): View
     {
-        return view('webauthn::livewire.pages.register')
+        return view("webauthn::livewire.pages.{$this->addTo('register')}")
             ->title('Register');
     }
 }

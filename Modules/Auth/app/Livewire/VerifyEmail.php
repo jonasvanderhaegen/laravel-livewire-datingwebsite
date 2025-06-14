@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Masmerise\Toaster\Toaster;
 use Modules\Auth\Livewire\Forms\VerifyEmailForm;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Concerns\RateLimitDurations;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -16,7 +17,7 @@ use Modules\CustomTheme\Livewire\Layouts\General;
 
 final class VerifyEmail extends General
 {
-    use RateLimitDurations, WithRateLimiting;
+    use HasMobileDesktopViews, RateLimitDurations, WithRateLimiting;
 
     public VerifyEmailForm $form;
 
@@ -103,7 +104,7 @@ final class VerifyEmail extends General
 
     public function render(): View
     {
-        return view('auth::livewire.verify-email')
+        return view("auth::livewire.{$this->addTo('verify-email')}")
             ->title(__('Verify Email Address'));
     }
 }
