@@ -2,7 +2,7 @@
     <x-flowbite::boxed-width class="py-8 sm:py-16 lg:py-24">
         <x-slot name="body">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-                <div class="mx-auto flex items-center justify-center lg:block">
+                <div class="mx-auto lg:w-full flex items-center justify-center lg:block">
                     {{ $topLeft }}
                 </div>
 

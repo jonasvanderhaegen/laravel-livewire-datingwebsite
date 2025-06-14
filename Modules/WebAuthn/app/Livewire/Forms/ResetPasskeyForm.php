@@ -34,14 +34,15 @@ final class ResetPasskeyForm extends Form
     /**
      * @throws TooManyRequestsException
      */
-    public function rateLimitForm(): void
+    public function validateAndThrottle(): void
     {
-        $this->validate();
         // 1) Quick IP‐burst guard: max 5 tries / minute
         $this->rateLimit(5, $this->shortDuration());
 
-        // 2) Account‐scoped guard: max 3 resets / hour per email
-        $this->rateLimitByEmail(3, $this->longDuration(), $this->email, 'resetPasskey');
+        // 2) Account‐scoped guard: max 7 resets / hour per email
+        $this->rateLimitByEmail(7, $this->longDuration(), $this->email, 'reset-passkey');
+
+        $this->validate();
     }
 }
 // @codeCoverageIgnoreEnd

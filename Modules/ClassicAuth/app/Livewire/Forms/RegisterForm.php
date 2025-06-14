@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\ClassicAuth\Livewire\Forms;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -23,7 +24,9 @@ final class RegisterForm extends Form
     use WithRateLimiting;
 
     #[Validate('required', 'string', 'max:255')]
-    public string $name = '';
+    public string $firstname = '';
+
+    public string $lastname = '';
 
     public string $email = '';
 
@@ -32,7 +35,7 @@ final class RegisterForm extends Form
     public string $password = '';
 
     #[Validate('required|accepted')]
-    public bool $confirm = false;
+    public bool $terms = false;
 
     public int $secondsUntilReset = 0;
 
@@ -94,8 +97,15 @@ final class RegisterForm extends Form
 
         // 4) Create and log in the user
         event(new Registered(
-            $user = User::create($this->except(['dob', 'confirm', 'secondsUntilReset']))
+            $user = User::create($this->only(['email', 'password']))
         ));
+
+        $user->profile()->update([
+            'first_name' => $this->firstname,
+            'last_name' => $this->lastname,
+            'birth_date' => Carbon::createFromFormat('d-m-Y', $this->dob)
+                ->format('Y-m-d'),
+        ]);
 
         Auth::login($user);
 

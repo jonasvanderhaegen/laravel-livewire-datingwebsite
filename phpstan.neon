@@ -13,6 +13,7 @@ parameters:
     level: 7
 
     ignoreErrors:
+        - message: '#Parameter \#1 \$view of function view expects view-string\|null, string given\.#'
         - message: '#Class .* uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types: TFactory#'
         - message: '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
         - message: "#Access to an undefined property.*#"

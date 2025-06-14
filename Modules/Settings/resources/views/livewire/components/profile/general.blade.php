@@ -648,7 +648,7 @@
             </div>
         </div>
 
-        <div class="mt-5 flex h-[10px] justify-end">
+        <div class="pb-2 pe-2 mt-5 flex h-[10px] justify-end">
             <x-settings::action-message class="" on="saved">
                 {{ __('Saved.') }}
             </x-settings::action-message>

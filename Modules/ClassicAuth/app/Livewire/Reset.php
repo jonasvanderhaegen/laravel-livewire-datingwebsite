@@ -8,16 +8,20 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\ResetPasswordForm;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
 // @codeCoverageIgnoreStart
 final class Reset extends General
 {
+    use HasMobileDesktopViews;
+
     public ResetPasswordForm $form;
 
     #[Url]
@@ -30,12 +34,17 @@ final class Reset extends General
 
     public bool $showPassword = false;
 
+    #[Computed]
+    public function isFormValid(): bool
+    {
+        return $this->isMobile() || ! $this->getErrorBag()->any()
+            && $this->form->email !== ''
+            && $this->form->password !== '';
+    }
+
     public function render(): View
     {
-        /** @var view-string $viewName */
-        $viewName = 'classicauth::livewire.reset';
-
-        return view($viewName)
+        return view("classicauth::livewire.{$this->addTo('reset')}")
             ->title(__('Reset password'));
     }
 

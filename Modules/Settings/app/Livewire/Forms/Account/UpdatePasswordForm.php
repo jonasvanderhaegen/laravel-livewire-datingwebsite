@@ -7,7 +7,6 @@ namespace Modules\Settings\Livewire\Forms\Account;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Attributes\Computed;
 use Livewire\Form;
 use Modules\Core\Concerns\WithRateLimiting;
 use Modules\Core\Exceptions\TooManyRequestsException;
@@ -46,15 +45,6 @@ final class UpdatePasswordForm extends Form
                     ->symbols(),
             ],
         ];
-    }
-
-    #[Computed]
-    public function isValid(): bool
-    {
-        return ! $this->getErrorBag()->any()
-            && $this->current_password !== ''
-            && $this->password !== ''
-            && $this->password !== $this->current_password;
     }
 
     public function updatePassword(): void

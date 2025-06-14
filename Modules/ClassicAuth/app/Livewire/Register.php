@@ -7,14 +7,18 @@ namespace Modules\ClassicAuth\Livewire;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\RegisterForm;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
 // @codeCoverageIgnoreStart
 final class Register extends General
 {
+    use HasMobileDesktopViews;
+
     public RegisterForm $form;
 
     public bool $showPassword = false;
@@ -26,7 +30,8 @@ final class Register extends General
 
     public function mount(): void
     {
-        $this->form->name = fake('nl_BE')->name();
+        $this->form->firstname = fake('nl_BE')->firstName();
+        $this->form->lastname = fake('nl_BE')->lastName();
         $this->form->email = fake('nl_BE')->email();
         $this->form->password = 'M@trix3017';
         $this->form->dob = '23-04-1991';
@@ -39,7 +44,6 @@ final class Register extends General
     {
         try {
             $this->form->attemptRegister();
-            $this->form->initRateLimitCountdown('attemptRegister', null, 'register');
 
             // if we get here, registration succeeded
             $this->redirectRoute('protected.discover', navigate: true);
@@ -62,24 +66,25 @@ final class Register extends General
         }
     }
 
-    public function updatedFormEmail(): void
+    #[Computed]
+    public function isFormValid(): bool
     {
-        $this->validateOnly('form.email');
+        return $this->isMobile() || ! $this->getErrorBag()->any()
+            && $this->form->firstname !== ''
+            && $this->form->lastname !== ''
+            && $this->form->email !== ''
+            && $this->form->dob !== ''
+            && $this->form->terms;
     }
 
-    public function updatedFormPassword(): void
+    public function updated(string $field): void
     {
-        $this->validateOnly('form.password');
-    }
-
-    public function updatedFormDob(): void
-    {
-        $this->validateOnly('form.dob');
+        $this->validateOnly($field);
     }
 
     public function render(): View
     {
-        return view('classicauth::livewire.register')
+        return view("classicauth::livewire.{$this->addTo('register')}")
             ->title(__('Register'));
     }
 }

@@ -14,6 +14,6 @@ Route::middleware(['guest', 'throttle:guest-auth'])->group(function () {
     Route::get('forgot-password', Modules\ClassicAuth\Livewire\Forgot::class)->name('password.request');
 
     Route::get('reset-password', Modules\ClassicAuth\Livewire\Reset::class)->middleware([
-        'signed', 'throttle:6,1',
+        'throttle:6,1',
     ])->name('password.reset');
 });

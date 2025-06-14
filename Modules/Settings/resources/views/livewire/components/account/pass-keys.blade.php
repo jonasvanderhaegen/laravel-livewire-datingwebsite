@@ -53,6 +53,7 @@
                             Google password manager
                         </option>
 
+                        @unless($isMobile ?? false)
                         <option value="Chrome profile">
                             Google Chrome profile
                         </option>
@@ -62,7 +63,7 @@
                         <option value="1Password">
                             1Password, password manager
                         </option>
-                        <option value="Other">Other</option>
+                        @endunless
                     </select>
                     <p
                         id="floating_helper_text"
@@ -121,9 +122,9 @@
                 <h3 class="font-medium text-gray-900 dark:text-white">
                     {{ __('Your Passkeys') }} ({{ $passkeys->count() }}/6)
                 </h3>
-                <ul class="mt-2">
+                <ul class="mt-2 space-y-2">
                     @foreach ($passkeys as $passkey)
-                        <li class="flex items-center justify-between px-2 py-2">
+                        <li class="flex items-center justify-between">
                             <div class="flex flex-col">
                                 <span class="font-semibold">
                                     {{ $passkey->name }}

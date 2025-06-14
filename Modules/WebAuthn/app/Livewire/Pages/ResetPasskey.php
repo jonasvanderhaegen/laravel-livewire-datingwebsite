@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
 use Masmerise\Toaster\Toaster;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 use Modules\WebAuthn\Concerns\HandlesPasskeys;
@@ -24,7 +25,7 @@ use Webauthn\Exception\InvalidDataException;
 // @codeCoverageIgnoreStart
 final class ResetPasskey extends General
 {
-    use HandlesPasskeys;
+    use HandlesPasskeys, HasMobileDesktopViews;
 
     public string $activeTab = 'ios';
 
@@ -63,11 +64,13 @@ final class ResetPasskey extends General
             );
         }
 
+        $this->form->initRateLimitCountdown('validateAndThrottle', null, 'reset-passkey');
+
     }
 
     public function render(): View
     {
-        return view('webauthn::livewire.pages.reset-passkey')
+        return view("webauthn::livewire.pages.{$this->addTo('reset')}")
             ->title('Reset Passkey');
     }
 
@@ -104,10 +107,15 @@ final class ResetPasskey extends General
 
     }
 
+    public function isFormValid(): bool
+    {
+        return true;
+    }
+
     public function submit(): void
     {
         try {
-            $this->form->rateLimitForm();
+            $this->form->validateAndThrottle();
 
             $this->user = User::whereEmail($this->email)->firstOrFail();
 

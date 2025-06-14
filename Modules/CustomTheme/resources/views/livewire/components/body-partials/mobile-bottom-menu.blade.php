@@ -171,7 +171,12 @@
             </a>
 
             <a
-                href="{{ 'login' }}"
+                @auth
+                    href="{{ route('settings.account') }}"
+                @endauth
+                @guest
+                    href="{{ route('login') }}"
+                @endguest
                 wire:navigate.hover
                 type="button"
                 class="group inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800"

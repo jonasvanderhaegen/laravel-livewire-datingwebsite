@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Settings\Livewire\Forms\Account;
 
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Modules\Core\Rules\StrictDob;
@@ -29,15 +28,6 @@ final class GeneralForm extends Form
             'birth_date' => ['required', 'string', new StrictDob],
 
         ];
-    }
-
-    #[Computed]
-    public function isValid(): bool
-    {
-        return ! empty($this->first_name)
-            && ! empty($this->last_name)
-            && ! empty($this->birth_date)
-            && ! $this->getErrorBag()->any();
     }
 }
 // @codeCoverageIgnoreEnd

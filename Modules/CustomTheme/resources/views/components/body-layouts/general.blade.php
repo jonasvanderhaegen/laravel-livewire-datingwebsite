@@ -51,7 +51,6 @@
     </head>
 
     <body
-        @unless($isMobile ?? false)
         x-cloak
         x-data="{
             showDocsNavigation: false,
@@ -77,7 +76,6 @@
                 document.body.style.overflow = ''
             }
         "
-        @endunless
         @class([
             ' font-sans text-slate-900 antialiased dark:text-slate-50',
             $isMobile ?? false ? 'min-h-screen bg-white pb-27 dark:bg-slate-950' : 'overflow-x-clip relative max-w-screen bg-blue-950',

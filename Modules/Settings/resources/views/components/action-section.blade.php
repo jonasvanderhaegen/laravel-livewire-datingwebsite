@@ -15,7 +15,7 @@
     </x-settings::section-title>
 
     <div class="mt-5 md:col-span-2 md:mt-0">
-        <div class="rounded-4xl bg-white px-6 py-8 shadow dark:bg-gray-800">
+        <div class="rounded-4xl bg-white ps-6 pt-8 pb-3 pe-3 shadow dark:bg-gray-800">
             {{ $content }}
         </div>
     </div>

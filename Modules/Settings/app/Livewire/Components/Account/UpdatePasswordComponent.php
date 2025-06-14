@@ -6,14 +6,18 @@ namespace Modules\Settings\Livewire\Components\Account;
 
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\Settings\Livewire\Forms\Account\UpdatePasswordForm;
 
 // @codeCoverageIgnoreStart
 final class UpdatePasswordComponent extends Component
 {
+    use HasMobileDesktopViews;
+
     public bool $showPassword = false;
 
     public UpdatePasswordForm $form;
@@ -21,6 +25,15 @@ final class UpdatePasswordComponent extends Component
     public function updatedFormCurrentPassword(): void
     {
         $this->validateOnly('form.current_password');
+    }
+
+    #[Computed]
+    public function isValid(): bool
+    {
+        return $this->isMobile() || ! $this->getErrorBag()->any()
+            && $this->form->current_password !== ''
+            && $this->form->password !== ''
+            && $this->form->password !== $this->current_password;
     }
 
     public function submit(): void

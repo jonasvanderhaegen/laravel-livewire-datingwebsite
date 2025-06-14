@@ -11,7 +11,8 @@ beforeEach(function (): void {
     if (Module::find('ClassicAuth')->isDisabled()) {
         $this->markTestSkipped('ClassicAuth module is disabled');
     } else {
-        $this->correctName = 'John Doe';
+        $this->correctFirstName = 'John';
+        $this->correctLastName = 'Doe';
         $this->correctEmail = 'test@example.com';
         $this->correctPassword = 'P@ssword123!123456';
         $this->correctDob = '01-01-2000';
@@ -27,11 +28,12 @@ beforeEach(function (): void {
 test('register using the RegisterForm on Register Component is successful', function () {
 
     $response = Livewire::test(Register::class)
-        ->set('form.name', $this->correctName)
+        ->set('form.firstname', $this->correctFirstName)
+        ->set('form.lastname', $this->correctLastName)
         ->set('form.email', $this->correctEmail)
         ->set('form.password', $this->correctPassword)
         ->set('form.dob', $this->correctDob)
-        ->set('form.confirm', $this->correctConfirm)
+        ->set('form.terms', $this->correctConfirm)
         ->call('submit');
 
     $this->assertDatabaseHas('users', [
@@ -46,11 +48,12 @@ test('cannot register with an email that is already taken', function () {
     $existing = User::factory()->create();
 
     Livewire::test(Register::class)
-        ->set('form.name', $this->correctName)
+        ->set('form.firstname', $this->correctFirstName)
+        ->set('form.lastname', $this->correctLastName)
         ->set('form.email', $existing->email)
         ->set('form.password', $this->correctPassword)
         ->set('form.dob', $this->correctDob)
-        ->set('form.confirm', $this->correctConfirm)
+        ->set('form.terms', $this->correctConfirm)
         ->call('submit')
         ->assertHasErrors([
             'form.email' => 'unique',
@@ -60,11 +63,12 @@ test('cannot register with an email that is already taken', function () {
 test('cannot register with an email that is incorrect', function () {
 
     Livewire::test(Register::class)
-        ->set('form.name', $this->correctName)
+        ->set('form.firstname', $this->correctFirstName)
+        ->set('form.lastname', $this->correctLastName)
         ->set('form.email', $this->incorrectEmail)
         ->set('form.password', $this->correctPassword)
         ->set('form.dob', $this->correctDob)
-        ->set('form.confirm', $this->correctConfirm)
+        ->set('form.terms', $this->correctConfirm)
         ->call('submit')
         ->assertHasErrors([
             'form.email',
