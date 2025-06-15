@@ -21,16 +21,32 @@ trait WithRateLimiting
         ?string $component = null,
         string|bool $auth = false
     ): void {
+
         if (session()->has("{$auth}_email") && $auth) {
             $email = session("{$auth}_email");
             $key = "{$auth}_email:$email";
 
-            $this->secondsUntilReset = RateLimiter::availableIn($key);
+            if (RateLimiter::availableIn($key)) {
+                $this->secondsUntilReset = RateLimiter::availableIn($key);
 
-            return;
+                return;
+            }
         }
 
         $this->secondsUntilReset = $this->secondsUntilReset($method, $component);
+    }
+
+    /**
+     * Clear a Livewire‐specific rate limit counter.
+     */
+    public function clearRateLimiter(?string $method = null, ?string $component = null): void
+    {
+        $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
+        $component ??= static::class;
+
+        $key = $this->getRateLimitKey($method, $component);
+
+        RateLimiter::clear($key);
     }
 
     /**
@@ -45,10 +61,6 @@ trait WithRateLimiting
         string $email,
         string|bool $auth
     ): void {
-        if (app()->environment(['local'])) {
-            return;
-        }
-
         $key = "{$auth}_email:$email";
 
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
@@ -71,18 +83,7 @@ trait WithRateLimiting
     }
 
     /**
-     * Clear a Livewire‐specific rate limit counter.
-     */
-    protected function clearRateLimiter(?string $method = null, ?string $component = null): void
     {
-        $method ??= debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 2)[1]['function'];
-        $component ??= static::class;
-
-        $key = $this->getRateLimitKey($method, $component);
-
-        RateLimiter::clear($key);
-    }
-
     /**
      * Build the unique key for a method/component/IP combination.
      */

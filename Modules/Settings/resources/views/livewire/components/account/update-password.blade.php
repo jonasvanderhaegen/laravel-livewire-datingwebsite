@@ -35,7 +35,7 @@
         </x-settings::action-message>
 
         <x-settings::button
-            :disabled="! $form->isValid()"
+            :disabled="! $this->isValid()"
             wire:loading.delay.long.attr="disabled"
         >
             {{ __('Save') }}

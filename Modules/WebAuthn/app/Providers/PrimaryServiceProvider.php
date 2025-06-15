@@ -25,6 +25,8 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->mergeConfigForPasswordBroker();
         $this->overrideSpatieActions();
+        $this->overrideSpatieOneTimePasswordConfig();
+
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
     }
@@ -35,6 +37,16 @@ final class PrimaryServiceProvider extends ServiceProvider
             'auth.passwords' => array_merge(
                 config('auth.passwords', []),
                 config('webauthn.auth.passwords', [])
+            ),
+        ]);
+    }
+
+    public function overrideSpatieOneTimePasswordConfig(): void
+    {
+        config([
+            'one-time-passwords' => array_merge(
+                config('one-time-passwords', []),
+                config('webauthn.one-time-passwords', [])
             ),
         ]);
     }

@@ -6,21 +6,25 @@ namespace Modules\ClassicAuth\Livewire;
 
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Masmerise\Toaster\Toaster;
 use Modules\ClassicAuth\Livewire\Forms\LoginForm;
+use Modules\Core\Concerns\HasMobileDesktopViews;
 use Modules\Core\Exceptions\TooManyRequestsException;
 use Modules\CustomTheme\Livewire\Layouts\General;
 
 // @codeCoverageIgnoreStart
 final class Login extends General
 {
+    use HasMobileDesktopViews;
+
     public LoginForm $form;
 
     public bool $showPassword = false;
 
     public function render(): View
     {
-        return view('classicauth::livewire.login')
+        return view("classicauth::livewire.{$this->addTo('login')}")
             ->title(__('Login'));
     }
 
@@ -29,14 +33,17 @@ final class Login extends General
         $this->form->initRateLimitCountdown('attemptLogin', null, 'login');
     }
 
-    public function toggleShowPassword(): void
+    #[Computed]
+    public function isFormValid(): bool
     {
-        $this->showPassword = ! $this->showPassword;
+        return $this->isMobile() || ! $this->getErrorBag()->any()
+        && $this->form->email !== ''
+        && $this->form->password !== '';
     }
 
-    public function updatedFormEmail(): void
+    public function updated(string $field): void
     {
-        $this->validateOnly('form.email');
+        $this->validateOnly($field);
     }
 
     public function submit(): void

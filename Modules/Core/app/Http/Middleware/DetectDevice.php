@@ -20,11 +20,13 @@ final class DetectDevice
     public function handle(Request $request, Closure $next): SymfonyResponse
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
-            view()->share('isMobile', true);
-        } else {
-            view()->share('isMobile', false);
-        }
+        $isMobile = $agent->isMobile();
+
+        // make it available to views...
+        view()->share('isMobile', $isMobile);
+
+        // …and also stick it on the Request object
+        $request->attributes->set('isMobile', $isMobile);
 
         return $next($request);
     }

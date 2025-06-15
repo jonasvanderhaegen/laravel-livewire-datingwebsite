@@ -70,45 +70,5 @@ final class ForgotPasswordForm extends Form
         // 5) Clear the input
         $this->reset('email');
     }
-
-    public function sendResetUrl2(): void
-    {
-        $this->validate();
-
-        try {
-            $this->rateLimit(5, 60);
-        } catch (TooManyRequestsException $e) {
-            throw $e;
-        }
-
-        $status = Password::sendResetLink(['email' => $this->email]);
-
-        switch ($status) {
-            case Password::INVALID_USER:
-                // 2) Account-scoped throttle: max 2 sends per hour per email
-                try {
-                    $this->rateLimitByEmail(2, 3600, $this->email, 'forgotPassword');
-                } catch (TooManyRequestsException $e) {
-                    throw $e;
-                }
-
-                break;
-
-            case Password::RESET_THROTTLED:
-                $throttle = config('auth.passwords.users.throttle', 60);
-                $message = __(Password::RESET_THROTTLED);
-
-                throw new ThrottleRequestsException(
-                    $message,
-                    null,
-                    ['Retry-After' => $throttle]
-                );
-
-            case Password::RESET_LINK_SENT:
-                $this->reset('email');
-                break;
-        }
-
-    }
 }
 // @codeCoverageIgnoreEnd
