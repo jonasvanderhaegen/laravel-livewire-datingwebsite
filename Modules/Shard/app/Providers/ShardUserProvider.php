@@ -24,6 +24,8 @@ final class ShardUserProvider implements UserProvider
             return null;
         }
 
+        session(['user_shard' => $shard]);
+
         ShardResolver::setShard($shard);
 
         // cache the *attributes* for 30 seconds
@@ -62,7 +64,7 @@ final class ShardUserProvider implements UserProvider
     public function retrieveByToken($identifier, #[SensitiveParameter] $token)
     {
         // 1) find the shard (session or Redis)
-        $shard = session('user_shard') ?: $this->resolveUserShard->byId($identifier);
+        $shard = session('user_shard') ?: $this->resolveUserShard->byUlid($identifier);
         if (! $shard) {
             return null;
         }

@@ -39,6 +39,10 @@ final class LocationComponent extends Component
         $this->jsLocation = (bool) $profile->js_location;
         $this->lat = $profile->lat;
         $this->lng = $profile->lng;
+
+        if (! auth()->user()->hasCompletedOnboarding()) {
+            $this->dispatch('locationEnabled', $this->jsLocation);
+        }
     }
 
     /**
@@ -49,7 +53,7 @@ final class LocationComponent extends Component
     {
         $shard = session('user_shard');
 
-        Profile::on($shard)->whereKey($this->profileId)->update([
+        Profile::on($shard)->firstWhere('id',$this->profileId)->update([
             'js_location' => true,
             'lat' => $location['latitude'],
             'lng' => $location['longitude'],
@@ -60,6 +64,10 @@ final class LocationComponent extends Component
         $this->jsLocation = true;
         $this->lat = $location['latitude'];
         $this->lng = $location['longitude'];
+
+        if (! auth()->user()->hasCompletedOnboarding()) {
+            $this->dispatch('locationEnabled', $this->jsLocation);
+        }
 
         $this->dispatch('saved');
     }
@@ -77,6 +85,10 @@ final class LocationComponent extends Component
         cache()->forget('settings:account:locationcomp:'.auth()->id());
 
         $this->jsLocation = false;
+
+        if (! auth()->user()->hasCompletedOnboarding()) {
+            $this->dispatch('locationEnabled', $this->jsLocation);
+        }
 
         $this->dispatch('saved');
     }

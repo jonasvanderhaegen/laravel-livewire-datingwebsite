@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -85,6 +84,10 @@ final class Profile extends Model
         'bodytype_notsay' => 'boolean',
         'height_notsay' => 'boolean',
         'pronouns_notsay' => 'boolean',
+    ];
+
+    protected $appends = [
+        'sharded_languages',
     ];
 
     /**
@@ -270,8 +273,20 @@ final class Profile extends Model
      */
     public function languages(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class)
+        return $this
+            ->belongsToMany(Language::class)
             ->using(LanguageProfile::class);
+    }
+
+    public function getShardedLanguagesAttribute(): \Illuminate\Support\Collection
+    {
+        // 1) find out which shard we’re on
+        $shard = $this->getConnectionName();
+
+        // 2) pull the pivot IDs from that shard
+        return LanguageProfile::on($shard)
+            ->where('profile_id', $this->getKey())
+            ->pluck('language_id');
     }
 
     /**
@@ -344,37 +359,6 @@ final class Profile extends Model
     protected function birthDateFormatted(): Attribute
     {
         return Attribute::make(get: fn () => $this->birth_date?->format('d-m-Y'));
-    }
-
-    protected function loadForBinding(string $field, int|string $value): self
-    {
-        return $this->newQuery()
-            ->with([
-                'dynamicExtras:profile_id,age,zodiac',
-                'photos:id,url,primary',
-                'languages:identifier',
-                'ethnicities:identifier',
-                'pets:identifier',
-                'genders:identifier',
-                'orientations:identifier',
-            ])
-            ->select([
-                'id', 'user_id', 'birth_date',
-                'first_name', 'last_name', 'public',
-                'pets_notsay', 'language_notsay', 'ethnicity_notsay',
-                'pronouns', 'custom_pronouns', 'pronouns_notsay',
-                'relationship_type', 'children', 'children_notsay',
-                'orientations_notsay', 'drugs', 'drugs_notsay',
-                'drink', 'drink_notsay', 'smoke', 'smoke_notsay',
-                'zodiac_notsay', 'religion', 'religion_notsay',
-                'employment', 'employment_notsay', 'education',
-                'education_notsay', 'diet', 'diet_notsay',
-                'politics', 'politics_notsay', 'bodytype_notsay',
-                'height_notsay',
-            ])
-            ->where($field, $value)
-            ->first()
-            ?? throw (new ModelNotFoundException)->setModel(self::class);
     }
 }
 // @codeCoverageIgnoreEnd

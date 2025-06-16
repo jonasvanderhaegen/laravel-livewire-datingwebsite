@@ -13,6 +13,12 @@ final class Language extends Model
 
     protected $fillable = [];
 
+    public function getConnectionName(): ?string
+    {
+        // replace 'mysql' below with whatever `config('database.default')` returns
+        return config('database.default');
+    }
+
     /**
      * @return BelongsToMany<Profile, $this>
      */
