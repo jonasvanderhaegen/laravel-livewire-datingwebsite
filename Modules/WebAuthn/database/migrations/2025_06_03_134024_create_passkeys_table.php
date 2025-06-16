@@ -15,13 +15,10 @@ return new class extends Migration
 
         $authenticatableTableName = (new $authenticatableClass)->getTable();
 
-        Schema::create('passkeys', function (Blueprint $table) use ($authenticatableTableName, $authenticatableClass) {
+        Schema::create('passkeys', function (Blueprint $table) {
             $table->id();
 
-            $table
-                ->foreignIdFor($authenticatableClass, 'authenticatable_id')
-                ->constrained(table: $authenticatableTableName, indexName: 'passkeys_authenticatable_fk')
-                ->cascadeOnDelete();
+            $table->foreignUlid('authenticatable_id')->index();
 
             $table->text('name');
             $table->text('credential_id');

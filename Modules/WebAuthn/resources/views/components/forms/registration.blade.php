@@ -6,6 +6,9 @@
               class="rounded-4xl bg-white p-8 shadow-md space-y-6 dark:bg-gray-800">
 
     <x-slot name="fields">
+
+        <x-webauthn::attestation-script />
+
         <div class="grid grid-cols-2 gap-x-6 gap-y-4">
             <x-flowbite::input.text-field
                 field="form.firstname"

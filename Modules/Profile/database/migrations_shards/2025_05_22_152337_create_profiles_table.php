@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,13 +16,13 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->ulid('ulid')->unique()->index();
+            $table->foreignUlid('user_id')->constrained()->cascadeOnDelete();
 
             $table->tinyInteger('public')->default(false);
 
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
 
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('js_location')->default(0);
 
             $table->tinyInteger('orientations_notsay')->default(0);

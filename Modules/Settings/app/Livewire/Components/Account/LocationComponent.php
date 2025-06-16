@@ -9,83 +9,87 @@ use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Modules\Profile\Models\Profile;
 
-// @codeCoverageIgnoreStart
 final class LocationComponent extends Component
 {
-    public Profile $profile;
+    public int $profileId;
 
+    public bool $jsLocation = false;
+
+    public ?float $lat = null;
+
+    public ?float $lng = null;
+
+    /**
+     * Fetch once on mount and hydrate simple public props.
+     */
     public function mount(): void
     {
-        $this->profile = auth()->user()->profile;
+        $shard = session('user_shard');
+
+        $profile = cache()->remember('settings:account:locationcomp:'.auth()->id(),
+            30,
+            fn () => Profile::on($shard)
+            ->findOrFail(
+                session('profile_id')
+                ?? Profile::on($shard)->firstWhere('user_id', auth()->id())->id,
+                ['id', 'lat', 'lng', 'js_location']
+            ));
+
+        $this->profileId = $profile->id;
+        $this->jsLocation = (bool) $profile->js_location;
+        $this->lat = $profile->lat;
+        $this->lng = $profile->lng;
     }
 
     /**
-     * Handle a successful geolocation lookup.
-     *
-     * @param  array{latitude: float, longitude: float}  $location
+     * Update the stored model *and* our public props,
+     * so the UI can re-render without an extra query.
      */
     public function GeolocationPosition(array $location): void
     {
-        cache()->forget('settings:account:location:'.auth()->id());
+        $shard = session('user_shard');
 
-        $this->profile->update([
+        Profile::on($shard)->whereKey($this->profileId)->update([
             'js_location' => true,
             'lat' => $location['latitude'],
             'lng' => $location['longitude'],
         ]);
 
-        // Uncomment and adjust if onboarding logic is needed:
-        /*
-        if (! auth()->user()->hasCompletedOnboarding()) {
-            if (! auth()->user()->hasOnboardingStep('location')) {
-                auth()->user()->markOnboardingStep('location');
-            }
+        cache()->forget('settings:account:locationcomp:'.auth()->id());
 
-            $this->redirectRoute('onboard.step2');
-            Toaster::success('Location saved, next step');
-        }
-        */
+        $this->jsLocation = true;
+        $this->lat = $location['latitude'];
+        $this->lng = $location['longitude'];
 
         $this->dispatch('saved');
     }
 
-    /**
-     * Handle a geolocation error.
-     */
     public function GeolocationPositionError(string $error): void
     {
         Toaster::error($error);
 
-        $this->profile->update(['js_location' => false]);
+        $shard = session('user_shard');
+
+        Profile::on($shard)
+            ->whereKey($this->profileId)
+            ->update(['js_location' => false]);
+
+        cache()->forget('settings:account:locationcomp:'.auth()->id());
+
+        $this->jsLocation = false;
+
+        $this->dispatch('saved');
     }
 
     public function dispatchToScript(): void
     {
-        // TODO: Ratelimit this too
         $this->dispatch('requestLocation');
-    }
-
-    public function submitLocation(): void
-    {
-        // Intentionally empty (if no server‐side submission beyond JS event)
     }
 
     public function render(): View
     {
-        /** @var bool $locationEnabled */
-        $locationEnabled = cache()->rememberForever(
-            'settings:account:location:'.auth()->id(),
-            fn (): bool => (bool) $this->profile->js_location
-        );
-
-        if (! auth()->user()->hasCompletedOnboarding()) {
-            $this->dispatch('locationEnabled', $locationEnabled);
-        }
-
-        return view(
-            'settings::livewire.components.account.location',
-            compact('locationEnabled')
-        );
+        return view('settings::livewire.components.account.location', [
+            'locationEnabled' => $this->jsLocation,
+        ]);
     }
 }
-// @codeCoverageIgnoreEnd

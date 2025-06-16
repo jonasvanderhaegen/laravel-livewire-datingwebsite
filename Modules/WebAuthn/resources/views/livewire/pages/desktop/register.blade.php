@@ -1,5 +1,3 @@
-@include('passkeys::livewire.partials.createScript')
-
 <x-customtheme::page-layouts.auth :activeTab="$this->activeTab">
     <x-slot name="topLeft">
 

@@ -14,9 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
-use Laravel\Scout\Searchable;
+// use Laravel\Scout\Searchable;
 use Modules\Browser\Models\Pass;
 use Modules\Browser\Traits\HasLikes;
 use Modules\Profile\Database\Factories\ProfileFactory;
@@ -25,6 +23,7 @@ use Modules\Profile\Models\Pivots\GenderProfile;
 use Modules\Profile\Models\Pivots\LanguageProfile;
 use Modules\Profile\Models\Pivots\OrientationProfile;
 use Modules\Profile\Models\Pivots\PetProfile;
+use Modules\Shard\Concerns\Shardable;
 
 // @codeCoverageIgnoreStart
 
@@ -61,7 +60,7 @@ use Modules\Profile\Models\Pivots\PetProfile;
  */
 final class Profile extends Model
 {
-    use HasFactory, HasLikes, Searchable;
+    use HasFactory, HasLikes, Shardable;
 
     public $casts = [
         'lat' => 'float',
@@ -329,19 +328,7 @@ final class Profile extends Model
         return ProfileFactory::new();
     }
 
-    protected static function booted(): void
-    {
-        self::creating(function (Profile $profile) {
-            // only set it if it isn't already set
-            if (empty($profile->ulid)) {
-                $profile->ulid = (string) Str::ulid();
-            }
-        });
-
-        self::saved(function (self $profile) {
-            $data = Cache::forget("profile.route.ulid.{$profile->ulid}");
-        });
-    }
+    protected static function booted(): void {}
 
     /**
      * @return Attribute<string, mixed>

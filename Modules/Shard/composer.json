@@ -1,0 +1,30 @@
+{
+    "name": "Skylence/shard",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jonas Vanderhaegen",
+            "email": "jonasvanderh@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Shard\\": "app/",
+            "Modules\\Shard\\Database\\Factories\\": "database/factories/",
+            "Modules\\Shard\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Shard\\Tests\\": "tests/"
+        }
+    }
+}

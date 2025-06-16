@@ -12,5 +12,6 @@
     "Settings": true,
     "OnboardUser": true,
     "Statistics": true,
-    "Browser": true
+    "Browser": true,
+    "Shard": true
 }

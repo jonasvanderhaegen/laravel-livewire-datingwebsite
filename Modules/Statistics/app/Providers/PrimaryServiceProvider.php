@@ -6,6 +6,7 @@ namespace Modules\Statistics\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Concerns\HasSamePrimaryServiceProviderFunctions;
+use Modules\Statistics\Console\RefreshUserDensity;
 
 final class PrimaryServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,15 @@ final class PrimaryServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->registerCommands();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+    }
+
+    public function registerCommands(): void
+    {
+        $this->commands([
+            RefreshUserDensity::class,
+        ]);
     }
 
     /**

@@ -13,17 +13,9 @@ return new class extends Migration
 
         DB::statement(<<<'SQL'
             CREATE VIEW user_density AS
-            SELECT
-              -- bucket into grid by rounding
-              ROUND(p.lat, 1)  AS lat_bucket,
-              ROUND(p.lng, 1) AS lng_bucket,
-
-              -- count how many users in each bucket
-              COUNT(*)             AS user_count
-            FROM profiles p
-            WHERE p.lat IS NOT NULL
-              AND p.lng IS NOT NULL
-            GROUP BY lat_bucket, lng_bucket;
+            SELECT lat_bucket, lng_bucket, SUM(user_count) AS user_count
+              FROM user_density_aggregated
+             GROUP BY lat_bucket, lng_bucket;
         SQL
         );
     }

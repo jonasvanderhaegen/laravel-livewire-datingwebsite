@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Profile\Concerns;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Profile\Models\Interest;
@@ -17,17 +16,6 @@ use Modules\Profile\Models\Profile;
 
 trait HasProfile
 {
-    public function initializeHasProfile(): void
-    {
-        static::created(function (Model $model) {
-            if (! $model->profile()->exists()) {
-                $model->profile()->create([
-                    'ulid' => $model->ulid,
-                ]);
-            }
-        });
-    }
-
     /**
      * @return HasOne<Profile, $this>
      */

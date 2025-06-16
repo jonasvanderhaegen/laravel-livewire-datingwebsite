@@ -5,8 +5,6 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Profile\Models\Pet;
-use Modules\Profile\Models\Profile;
 
 return new class extends Migration
 {
@@ -20,11 +18,6 @@ return new class extends Migration
             $table->string('identifier');
         });
 
-        Schema::create('pet_profile', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Profile::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Pet::class)->constrained()->cascadeOnDelete();
-        });
     }
 
     /**
@@ -33,6 +26,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('pets');
-        Schema::dropIfExists('pet_profile');
     }
 };

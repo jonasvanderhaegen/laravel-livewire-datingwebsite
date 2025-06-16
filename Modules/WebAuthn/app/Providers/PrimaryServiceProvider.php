@@ -58,7 +58,13 @@ final class PrimaryServiceProvider extends ServiceProvider
                 config('passkeys.actions', []),
                 config('webauthn.passkeys.actions', [])
             ),
+            'passkeys.models' => array_merge(
+                config('passkeys.models', []),
+                config('webauthn.passkeys.models', [])
+            ),
         ]);
+
+        // ray(config('passkeys'));
     }
 
     public function registerCommands(): void

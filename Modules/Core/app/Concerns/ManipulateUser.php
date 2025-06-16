@@ -8,14 +8,18 @@ trait ManipulateUser
 {
     public function initializeManipulateUser(): void
     {
-        /*
-        $this->mergeFillable(['ulid']);
-
-        static::creating(function ($user) {
-            if (empty($user->ulid)) {
-                $user->ulid = (string) Str::ulid();
-            }
-        });
-        */
+        $this->mergeFillable(
+            [
+                'id',
+                // Spatie OnboardUser
+                'onboarding_steps',
+                'onboarding_complete',
+                'remember_token',
+                // Timestamps (if you really need to mass-assign them)
+                'email_verified_at',
+                'created_at',
+                'updated_at',
+            ]
+        );
     }
 }

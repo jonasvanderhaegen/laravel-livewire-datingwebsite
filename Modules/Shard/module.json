@@ -1,0 +1,11 @@
+{
+    "name": "Shard",
+    "alias": "shard",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Shard\\Providers\\PrimaryServiceProvider"
+    ],
+    "files": []
+}

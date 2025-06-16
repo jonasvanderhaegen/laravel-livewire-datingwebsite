@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Profile::class)->constrained()->cascadeOnDelete();
+            // $table->foreignIdFor(Profile::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('min_age')->default(18);
             $table->tinyInteger('max_age')->default(99);
             $table->smallInteger('max_distance')->default(50);

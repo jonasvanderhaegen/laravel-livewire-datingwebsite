@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\WebAuthn\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Modules\WebAuthn\Events\Registered as RegisteredEvent;
-use Modules\WebAuthn\Listeners\Registered as RegisteredListener;
 
 final class EventServiceProvider extends ServiceProvider
 {
@@ -15,11 +13,7 @@ final class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [
-        RegisteredEvent::class => [
-            RegisteredListener::class,
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Indicates if events should be discovered.

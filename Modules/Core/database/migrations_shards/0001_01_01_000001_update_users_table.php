@@ -14,6 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropPrimary('users_id_primary');
+            $table->dropColumn('id');
+            $table->ulid('id')->primary()->first();
             $table->string('name')->nullable()->change();
             $table->string('password')->nullable()->change();
         });

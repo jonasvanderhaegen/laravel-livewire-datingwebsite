@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('interest_profile', function (Blueprint $table) {
             // No need for a surrogate id on a pure pivot
-            $table->foreignIdFor(Interest::class)
-                ->constrained()
-                ->cascadeOnDelete();
+            // interest_id with an index, but no FK
+            $table->unsignedBigInteger((new Interest)->getForeignKey());
+            $table->index((new Interest)->getForeignKey());
 
             $table->foreignIdFor(Profile::class)
                 ->constrained()

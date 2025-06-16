@@ -1,5 +1,3 @@
-@include('passkeys::livewire.partials.createScript')
-
 <section class="bg-white dark:bg-gray-900">
 
     <x-flowbite::boxed-width class="pt-8">

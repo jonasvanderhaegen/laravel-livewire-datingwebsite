@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Core\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Redis;
 use Modules\Profile\Models\Profile;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -35,6 +36,35 @@ final class Reset extends Command
      */
     public function handle(): void
     {
+        $this->info('Delete all data and run migrations.');
+
+        $this->call('cache:clear');
+
+        Redis::del([
+            'user_shard:emails',
+            'user_shard:ids',
+            'user_shard:ulids',
+        ]);
+
+        $this->call('migrate:fresh');
+
+        $this->call('migrate:shards', [
+            '--refresh' => true,
+        ]);
+
+        $this->call('db:seed');
+
+        $this->call('module:seed', [
+            '--all' => true,
+        ]);
+
+        /*
+        $this->call('module:seed', [
+            '--all' => true,
+        ]);
+        */
+
+        /*
         $this->call('migrate:fresh', [
             '--seed' => true,
         ]);
@@ -54,6 +84,7 @@ final class Reset extends Command
         $this->call('cache:clear');
 
         $this->info('All done!');
+        */
     }
 
     /**
